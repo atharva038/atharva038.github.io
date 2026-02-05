@@ -61,17 +61,17 @@ function App() {
         <header className="mb-16 sm:mb-20 lg:mb-24">
           <div className="max-w-4xl">
             {/* Small Identity Line */}
-            <p className="text-xs sm:text-sm text-[#6b5d52] dark:text-[#737373] font-mono mb-3 sm:mb-4">
+            <p className="text-sm sm:text-base text-[#6b5d52] dark:text-[#737373] font-mono mb-3 sm:mb-4">
               SKILL → PROOF → PRODUCT
             </p>
             
             {/* Hero Line - Large, Different Font */}
-            <h1 className="font-hero text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#0a0a0a] dark:text-[#e5e5e5] leading-tight mb-4 sm:mb-6">
+            <h1 className="font-hero text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#0a0a0a] dark:text-[#e5e5e5] leading-tight mb-4 sm:mb-6">
               This is a portfolio of shipped systems — not claims.
             </h1>
             
             {/* Supporting Line - Muted */}
-            <p className="text-sm sm:text-base text-[#6b5d52] dark:text-[#737373] leading-relaxed max-w-2xl">
+            <p className="text-base sm:text-lg md:text-xl text-[#6b5d52] dark:text-[#737373] leading-relaxed max-w-2xl">
               Explore capabilities to see the skills involved, proof of work, and the products built with them.
             </p>
           </div>
@@ -89,10 +89,10 @@ function App() {
         {/* Instructional Text Below Cards */}
         {!selectedCapability && (
           <section className="text-center py-12 sm:py-16 lg:py-20">
-            <h2 className="text-lg sm:text-xl text-[#0a0a0a] dark:text-[#e5e5e5] mb-3">
+            <h2 className="text-xl sm:text-2xl text-[#0a0a0a] dark:text-[#e5e5e5] mb-3">
               Select a capability to explore
             </h2>
-            <p className="text-sm text-[#6b5d52] dark:text-[#737373] max-w-md mx-auto px-4">
+            <p className="text-base sm:text-lg text-[#6b5d52] dark:text-[#737373] max-w-md mx-auto px-4">
               Each capability reveals skills, proof, and real products.
             </p>
           </section>

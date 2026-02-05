@@ -43,13 +43,13 @@ const CapabilitySelector = ({ capabilities, selectedCapability, onSelect }) => {
             `} />
             
             {/* Icon - minimal movement */}
-            <div className="relative text-2xl sm:text-3xl mb-3 sm:mb-4 opacity-90">
+            <div className="relative text-3xl sm:text-4xl mb-3 sm:mb-4 opacity-90">
               {capability.icon}
             </div>
             
             {/* Title - clean typography */}
             <h3 className={`
-              relative text-sm sm:text-base font-semibold mb-2 tracking-tight
+              relative text-base sm:text-lg font-semibold mb-2 tracking-tight
               transition-colors duration-200
               ${isSelected ? 'text-[#0a0a0a] dark:text-[#ffffff]' : 'text-[#1a1410] dark:text-[#e5e5e5] group-hover:text-[#0a0a0a] dark:group-hover:text-[#ffffff]'}
             `}>
@@ -57,7 +57,7 @@ const CapabilitySelector = ({ capabilities, selectedCapability, onSelect }) => {
             </h3>
             
             {/* Description - subtle and readable */}
-            <p className="relative text-xs text-[#6b5d52] dark:text-[#8a8a8a] leading-relaxed">
+            <p className="relative text-xs sm:text-sm text-[#6b5d52] dark:text-[#8a8a8a] leading-relaxed">
               {capability.description}
             </p>
             

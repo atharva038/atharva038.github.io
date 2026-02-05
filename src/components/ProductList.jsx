@@ -19,7 +19,7 @@ const ProductList = ({ products, onSelect, selectedProduct }) => {
   if (!products || products.length === 0) {
     return (
       <div className="text-center py-8 sm:py-12 text-[#6b5d52] dark:text-[#737373]">
-        <p className="text-sm">No products match this capability</p>
+        <p className="text-base">No products match this capability</p>
       </div>
     );
   }
@@ -32,7 +32,7 @@ const ProductList = ({ products, onSelect, selectedProduct }) => {
       transition={{ duration: 0.3 }}
       className="space-y-3 sm:space-y-4"
     >
-      <h2 className="text-xs sm:text-sm font-mono text-[#6b5d52] dark:text-[#737373] uppercase tracking-wider mb-4 sm:mb-6">
+      <h2 className="text-sm sm:text-base font-mono text-[#6b5d52] dark:text-[#737373] uppercase tracking-wider mb-4 sm:mb-6">
         Products built with this capability
       </h2>
       
@@ -55,24 +55,24 @@ const ProductList = ({ products, onSelect, selectedProduct }) => {
             whileTap={{ scale: 0.98 }}
           >
             <div className="flex items-start justify-between mb-2">
-              <h3 className="text-sm sm:text-base font-medium text-[#0a0a0a] dark:text-[#e5e5e5] pr-2">
+              <h3 className="text-base sm:text-lg font-medium text-[#0a0a0a] dark:text-[#e5e5e5] pr-2">
                 {product.name}
               </h3>
               <StatusTag status={product.status} />
             </div>
             
-            <p className="text-xs sm:text-sm text-[#6b5d52] dark:text-[#737373] mb-3 line-clamp-2">
+            <p className="text-sm sm:text-base text-[#6b5d52] dark:text-[#737373] mb-3 line-clamp-2">
               {product.problem}
             </p>
             
             <div className="flex flex-wrap gap-1.5">
               {product.stack.slice(0, 4).map((tech) => (
-                <span key={tech} className="px-2 py-0.5 text-xs font-mono bg-[#d4cfc5] dark:bg-[#262626] text-[#6b5d52] dark:text-[#737373] rounded">
+                <span key={tech} className="px-2 py-0.5 text-xs sm:text-sm font-mono bg-[#d4cfc5] dark:bg-[#262626] text-[#6b5d52] dark:text-[#737373] rounded">
                   {tech}
                 </span>
               ))}
               {product.stack.length > 4 && (
-                <span className="px-2 py-0.5 text-xs font-mono text-[#6b5d52] dark:text-[#737373]">
+                <span className="px-2 py-0.5 text-xs sm:text-sm font-mono text-[#6b5d52] dark:text-[#737373]">
                   +{product.stack.length - 4}
                 </span>
               )}
