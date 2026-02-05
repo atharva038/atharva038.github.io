@@ -1,0 +1,128 @@
+[
+  {
+    "id": "analytics-dashboard",
+    "name": "Analytics Dashboard",
+    "capabilities": ["dashboards", "frontend-systems"],
+    "problem": "Marketing team needed real-time campaign performance visibility without SQL knowledge",
+    "role": "Full-stack developer",
+    "stack": ["React", "Node.js", "PostgreSQL", "Chart.js", "Redis"],
+    "status": "Production",
+    "impact": [
+      "5 marketing managers use daily",
+      "Reduced report generation time from 2 hours to 30 seconds",
+      "Enabled data-driven campaign optimization"
+    ],
+    "preview": {
+      "type": "chart",
+      "data": "line-graph"
+    }
+  },
+  {
+    "id": "task-api",
+    "name": "Task Management API",
+    "capabilities": ["api-engineering", "real-world-products"],
+    "problem": "Team collaboration tool needed scalable backend for 10k+ concurrent users",
+    "role": "Backend engineer",
+    "stack": ["Node.js", "Express", "MongoDB", "Redis", "JWT"],
+    "status": "Production-ready",
+    "impact": [
+      "Handles 500k requests/day",
+      "99.9% uptime over 6 months",
+      "Sub-100ms response time (p95)"
+    ],
+    "preview": {
+      "type": "api",
+      "data": "endpoints"
+    }
+  },
+  {
+    "id": "component-library",
+    "name": "Component Library",
+    "capabilities": ["frontend-systems"],
+    "problem": "Design inconsistencies across 8 product teams slowed development",
+    "role": "Frontend architect",
+    "stack": ["React", "TypeScript", "Storybook", "Tailwind", "Rollup"],
+    "status": "Live",
+    "impact": [
+      "40+ reusable components",
+      "Adopted by 3 engineering teams",
+      "Reduced UI bug reports by 60%"
+    ],
+    "preview": {
+      "type": "components",
+      "data": "showcase"
+    }
+  },
+  {
+    "id": "habit-tracker",
+    "name": "Habit Tracker MVP",
+    "capabilities": ["rapid-mvps", "real-world-products"],
+    "problem": "Personal project to learn about habit formation and gamification",
+    "role": "Solo developer",
+    "stack": ["React", "Firebase", "Tailwind", "Vercel"],
+    "status": "Live",
+    "impact": [
+      "Built and deployed in 72 hours",
+      "150+ active users in first month",
+      "Learned Firebase real-time patterns"
+    ],
+    "preview": {
+      "type": "app",
+      "data": "mobile-preview"
+    }
+  },
+  {
+    "id": "ecommerce-platform",
+    "name": "E-commerce Platform",
+    "capabilities": ["real-world-products", "api-engineering", "frontend-systems"],
+    "problem": "Local business needed online store with inventory sync and payment processing",
+    "role": "Full-stack developer",
+    "stack": ["Next.js", "PostgreSQL", "Stripe", "AWS S3"],
+    "status": "Production",
+    "impact": [
+      "Processed $50k in first quarter",
+      "200+ products with real-time inventory",
+      "Mobile-first checkout flow (80% mobile traffic)"
+    ],
+    "preview": {
+      "type": "product",
+      "data": "storefront"
+    }
+  },
+  {
+    "id": "realtime-collab",
+    "name": "Real-time Collaboration Tool",
+    "capabilities": ["api-engineering", "frontend-systems"],
+    "problem": "Remote team needed instant document collaboration without latency issues",
+    "role": "Full-stack engineer",
+    "stack": ["React", "Socket.io", "Node.js", "CRDTs", "Redis"],
+    "status": "Scaling",
+    "impact": [
+      "Supports 50+ concurrent editors per document",
+      "Sub-50ms latency for operations",
+      "Zero conflicts with CRDT implementation"
+    ],
+    "preview": {
+      "type": "interactive",
+      "data": "live-demo"
+    }
+  },
+  {
+    "id": "portfolio-generator",
+    "name": "Portfolio Generator",
+    "capabilities": ["rapid-mvps", "frontend-systems"],
+    "problem": "Developers needed fast way to create professional portfolios without code",
+    "role": "Product engineer",
+    "stack": ["React", "Supabase", "Tailwind", "Markdown"],
+    "status": "Live",
+    "impact": [
+      "Shipped in 5 days (hackathon project)",
+      "80+ portfolios generated",
+      "Featured on Product Hunt"
+    ],
+    "preview": {
+      "type": "generator",
+      "data": "template-showcase"
+    }
+  }
+]

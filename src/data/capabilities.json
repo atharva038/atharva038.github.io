@@ -1,0 +1,32 @@
+[
+  {
+    "id": "dashboards",
+    "label": "Build Dashboards",
+    "icon": "📊",
+    "description": "Data-rich interfaces that make complex information actionable"
+  },
+  {
+    "id": "api-engineering",
+    "label": "API Engineering",
+    "icon": "🔌",
+    "description": "Backend systems that scale and integrate seamlessly"
+  },
+  {
+    "id": "frontend-systems",
+    "label": "Frontend Systems",
+    "icon": "⚡",
+    "description": "Production-grade UI architecture and component systems"
+  },
+  {
+    "id": "real-world-products",
+    "label": "Real-World Products",
+    "icon": "🎯",
+    "description": "End-to-end solutions solving actual user problems"
+  },
+  {
+    "id": "rapid-mvps",
+    "label": "Rapid MVPs",
+    "icon": "🚀",
+    "description": "Ship fast without compromising quality or fundamentals"
+  }
+]
