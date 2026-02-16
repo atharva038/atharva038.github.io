@@ -14,38 +14,38 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 px-6">
+    <section id="contact" className="py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
-          <span className="text-accent-dim text-sm font-mono tracking-widest uppercase">
+          <span className="text-accent-dim text-xs sm:text-sm font-mono tracking-widest uppercase">
             The Endgame
           </span>
-          <h2 className="text-4xl md:text-5xl font-serif font-bold mt-3 text-gradient-heading">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mt-3 text-gradient-heading">
             Your Move
           </h2>
-          <p className="text-muted-foreground mt-3 max-w-md mx-auto">
+          <p className="text-sm sm:text-base text-muted-foreground mt-3 max-w-md mx-auto">
             The board is set. Let's make the next move together.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-5 gap-10">
+        <div className="grid md:grid-cols-5 gap-8 sm:gap-10">
           <motion.form
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="md:col-span-3 space-y-5"
+            className="md:col-span-3 space-y-4 sm:space-y-5"
             onSubmit={(e) => {
               e.preventDefault();
               window.location.href = `mailto:${personalInfo.email}?subject=Hello from ${form.name}&body=${form.message}`;
             }}
           >
             <div>
-              <label htmlFor="name" className="block text-sm text-muted-foreground mb-1.5">
+              <label htmlFor="name" className="block text-xs sm:text-sm text-muted-foreground mb-1.5">
                 Name
               </label>
               <input
@@ -55,12 +55,12 @@ export default function Contact() {
                 value={form.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 rounded-xl bg-surface border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-accent-dim transition-colors"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-surface border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-accent-dim transition-colors"
                 placeholder="Your name"
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm text-muted-foreground mb-1.5">
+              <label htmlFor="email" className="block text-xs sm:text-sm text-muted-foreground mb-1.5">
                 Email
               </label>
               <input
@@ -70,12 +70,12 @@ export default function Contact() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 rounded-xl bg-surface border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-accent-dim transition-colors"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-surface border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-accent-dim transition-colors"
                 placeholder="your@email.com"
               />
             </div>
             <div>
-              <label htmlFor="message" className="block text-sm text-muted-foreground mb-1.5">
+              <label htmlFor="message" className="block text-xs sm:text-sm text-muted-foreground mb-1.5">
                 Message
               </label>
               <textarea
@@ -84,16 +84,16 @@ export default function Contact() {
                 value={form.message}
                 onChange={handleChange}
                 required
-                rows={5}
-                className="w-full px-4 py-3 rounded-xl bg-surface border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-accent-dim transition-colors resize-none"
+                rows={4}
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-surface border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-accent-dim transition-colors resize-none"
                 placeholder="Let's build something great..."
               />
             </div>
             <button
               type="submit"
-              className="px-6 py-3 bg-white text-background font-semibold rounded-xl hover:bg-accent-muted transition-colors flex items-center gap-2"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base bg-white text-background font-semibold rounded-xl hover:bg-accent-muted transition-colors flex items-center gap-2"
             >
-              <Send size={16} />
+              <Send size={15} />
               Send Message
             </button>
           </motion.form>
@@ -102,10 +102,10 @@ export default function Contact() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="md:col-span-2 space-y-6"
+            className="md:col-span-2 space-y-5 sm:space-y-6"
           >
-            <div className="p-5 rounded-xl bg-surface border border-border">
-              <h3 className="font-serif font-bold text-foreground mb-4">
+            <div className="p-4 sm:p-5 rounded-xl bg-surface border border-border">
+              <h3 className="font-serif font-bold text-foreground mb-3 sm:mb-4 text-sm sm:text-base">
                 Connect
               </h3>
               <div className="space-y-3">
@@ -116,7 +116,7 @@ export default function Contact() {
                   className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <Github size={18} />
-                  <span className="text-sm">atharva038</span>
+                  <span className="text-xs sm:text-sm">atharva038</span>
                 </a>
                 <a
                   href={personalInfo.linkedin}
@@ -125,23 +125,23 @@ export default function Contact() {
                   className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <Linkedin size={18} />
-                  <span className="text-sm">Atharva Joshi</span>
+                  <span className="text-xs sm:text-sm">Atharva Joshi</span>
                 </a>
                 <a
                   href={`mailto:${personalInfo.email}`}
                   className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <Mail size={18} />
-                  <span className="text-sm">{personalInfo.email}</span>
+                  <span className="text-xs sm:text-sm break-all">{personalInfo.email}</span>
                 </a>
               </div>
             </div>
 
-            <div className="p-5 rounded-xl bg-surface border border-border text-center">
+            <div className="p-4 sm:p-5 rounded-xl bg-surface border border-border text-center">
               <div className="flex justify-center mb-3 text-accent-muted">
-                <ChessKing size={40} />
+                <ChessKing size={36} />
               </div>
-              <p className="text-sm text-muted-foreground italic font-serif">
+              <p className="text-xs sm:text-sm text-muted-foreground italic font-serif">
                 "The game of chess is not just about king & queen, it's about
                 all 16 pieces working together."
               </p>
