@@ -146,3 +146,18 @@
   animation: gradient-shift 8s ease infinite;
 }
 
+/* Experience section shimmer sweep */
+@keyframes experience-shimmer-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.experience-shimmer {
+  animation: experience-shimmer-sweep 3s ease-in-out infinite;
+}
+
+/* Radial gradient utility */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
