@@ -32,7 +32,7 @@ export default function Experience() {
   return (
     <section id="experience" className="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden">
       {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/[0.015] blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-surface blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
@@ -56,7 +56,7 @@ export default function Experience() {
         {/* Timeline */}
         <div className="relative">
           {/* Vertical timeline line */}
-          <div className="absolute left-6 sm:left-8 top-0 bottom-0 w-px bg-white/5" />
+          <div className="absolute left-6 sm:left-8 top-0 bottom-0 w-px bg-surface" />
 
           {/* Animated progress line */}
           <motion.div
@@ -86,7 +86,7 @@ export default function Experience() {
                     className={`absolute left-3.5 sm:left-5.5 top-5 sm:top-6 w-5 h-5 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center cursor-pointer z-10 transition-all duration-300 ${
                       isActive
                         ? "border-electric bg-electric/20 shadow-[0_0_15px_rgba(56,189,248,0.5)] scale-125"
-                        : "border-white/20 bg-background hover:border-electric/50 hover:bg-electric/10 hover:shadow-[0_0_10px_rgba(56,189,248,0.3)] hover:scale-110"
+                        : "border-border-hover bg-background hover:border-electric/50 hover:bg-electric/10 hover:shadow-[0_0_10px_var(--glow-color1)] hover:scale-110"
                     }`}
                     onClick={() => setActiveId(isActive ? null : exp.id)}
                     whileHover={{ scale: 1.2 }}
@@ -94,7 +94,7 @@ export default function Experience() {
                   >
                     <div
                       className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                        isActive ? "bg-electric" : "bg-white/30"
+                        isActive ? "bg-electric" : "bg-surface-light"
                       }`}
                     />
                   </motion.div>
@@ -115,12 +115,12 @@ export default function Experience() {
                     className={`group relative rounded-3xl border cursor-pointer transition-all duration-300 overflow-hidden ${
                       isActive
                         ? "glass-panel border-electric/30 shadow-[0_4px_30px_rgba(56,189,248,0.15)]"
-                        : "glass border-white/5 hover:border-white/10 hover:bg-white/5"
+                        : "glass border-border hover:border-border hover:bg-surface"
                     }`}
                   >
                     {/* Shimmer overlay on hover */}
                     <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent experience-shimmer" />
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-transparent via-surface-light to-transparent experience-shimmer" />
                     </div>
 
                     {/* Massive Background Chess Piece Watermark */}
@@ -134,7 +134,7 @@ export default function Experience() {
                         <div className="flex-1 min-w-0">
                           {/* Type badge */}
                           <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                            <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] sm:text-xs text-electric font-mono uppercase tracking-wider">
+                            <div className="px-3 py-1 rounded-full bg-surface border border-border text-[10px] sm:text-xs text-electric font-mono uppercase tracking-wider">
                               {typeLabel[exp.type]}
                             </div>
                             <span className="text-[10px] sm:text-xs text-muted-foreground font-mono">
@@ -156,7 +156,7 @@ export default function Experience() {
                           <motion.div
                             animate={{ rotate: isActive ? 90 : 0 }}
                             transition={{ duration: 0.3 }}
-                            className="p-2 rounded-full bg-white/5 text-muted hover:bg-white/10 transition-colors"
+                            className="p-2 rounded-full bg-surface text-muted hover:bg-surface transition-colors"
                           >
                             <ChevronRight size={16} />
                           </motion.div>

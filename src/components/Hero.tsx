@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin } from "lucide-react";
 import InfinitePlaneBg from "@/components/ui/infinite-plane";
 import { personalInfo } from "@/data/portfolio-data";
-
+ 
 export default function Hero() {
   return (
     <section id="hero" className="relative w-full h-screen overflow-hidden flex items-center justify-center">
@@ -17,7 +17,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="glass-panel rounded-[2rem] p-8 sm:p-14 border border-white/10 shadow-2xl relative overflow-hidden"
+          className="glass-panel rounded-[2rem] p-8 sm:p-14 border border-border shadow-2xl relative overflow-hidden"
         >
           {/* Internal Glow Effect */}
           <div className="absolute -top-32 -left-32 w-64 h-64 bg-electric/20 rounded-full blur-[80px]" />
@@ -36,7 +36,7 @@ export default function Hero() {
             <div className="mt-8 sm:mt-10 flex flex-wrap gap-4 sm:gap-5 justify-center">
               <a
                 href="#projects"
-                className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-white text-background font-semibold rounded-xl hover:bg-auto transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-white/10 tracking-wide"
+                className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-white text-black font-semibold rounded-xl transition-transform hover:scale-105 active:scale-95 shadow-lg tracking-wide"
               >
                 View My Work
               </a>
@@ -45,7 +45,7 @@ export default function Hero() {
                   href={personalInfo.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="glass-button p-3 sm:p-4 text-foreground rounded-xl flex items-center justify-center hover:text-white"
+                  className="glass-button p-3 sm:p-4 text-foreground rounded-xl flex items-center justify-center hover:text-foreground"
                   aria-label="GitHub"
                 >
                   <Github size={22} />
@@ -67,7 +67,7 @@ export default function Hero() {
 
       <a
         href="#about"
-        className="absolute bottom-6 sm:bottom-10 text-muted-foreground/60 hover:text-white transition-colors bounce-arrow z-10 p-2 glass-button rounded-full"
+        className="absolute bottom-6 sm:bottom-10 text-muted-foreground/60 hover:text-foreground transition-colors bounce-arrow z-10 p-2 glass-button rounded-full"
       >
         <ArrowDown size={24} />
       </a>

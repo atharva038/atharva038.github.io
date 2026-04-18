@@ -74,7 +74,7 @@ function ArchNode({ layer }: { layer: ArchLayer }) {
       </p>
       <div className="space-y-0.5">
         {layer.items.map((item) => (
-          <p key={item} className="text-[11px] text-white/65 leading-snug">
+          <p key={item} className="text-[11px] text-muted-foreground leading-snug">
             {item}
           </p>
         ))}
@@ -89,14 +89,14 @@ function ArchitectureDiagram({ layers }: { layers: ArchLayer[] }) {
   const integrationLayers = layers.filter((l) => l.isIntegration);
 
   return (
-    <div className="rounded-2xl bg-white/[0.02] border border-white/[0.05] p-5 sm:p-7 overflow-x-auto hover:scale-[1.01] transition-transform duration-300 origin-center cursor-zoom-in">
+    <div className="rounded-2xl bg-surface border border-border p-5 sm:p-7 overflow-x-auto hover:scale-[1.01] transition-transform duration-300 origin-center cursor-zoom-in">
       {/* Main flow row */}
       <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap min-w-max mx-auto">
         {mainLayers.map((layer, i) => (
           <div key={layer.id} className="flex items-center gap-2 sm:gap-3">
             <ArchNode layer={layer} />
             {i < mainLayers.length - 1 && (
-              <ArrowRight size={14} className="text-white/20 shrink-0" />
+              <ArrowRight size={14} className="text-muted shrink-0" />
             )}
           </div>
         ))}
@@ -105,7 +105,7 @@ function ArchitectureDiagram({ layers }: { layers: ArchLayer[] }) {
       {/* Integration row */}
       {integrationLayers.length > 0 && (
         <div className="flex flex-col items-center mt-4 sm:mt-5">
-          <ArrowDown size={14} className="text-white/20 mb-3" />
+          <ArrowDown size={14} className="text-muted mb-3" />
           <div className="flex gap-3 flex-wrap justify-center">
             {integrationLayers.map((layer) => (
               <ArchNode key={layer.id} layer={layer} />
@@ -119,7 +119,7 @@ function ArchitectureDiagram({ layers }: { layers: ArchLayer[] }) {
 
 // ─── Section divider ─────────────────────────────────────────────────────────
 function Divider() {
-  return <div className="h-px bg-white/[0.05] mx-8" />;
+  return <div className="h-px bg-surface mx-8" />;
 }
 
 // ─── Section heading ─────────────────────────────────────────────────────────
@@ -199,7 +199,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           role="dialog"
           aria-modal="true"
           aria-label={`${project.title} case study`}
-          className="relative w-full sm:max-w-4xl max-h-[94dvh] sm:max-h-[88vh] rounded-t-[28px] sm:rounded-3xl bg-[#0f0f14] border border-white/[0.07] flex flex-col overflow-hidden pointer-events-auto"
+          className="relative w-full sm:max-w-4xl max-h-[94dvh] sm:max-h-[88vh] rounded-t-[28px] sm:rounded-3xl bg-background border border-border flex flex-col overflow-hidden pointer-events-auto"
           initial={{ opacity: 0, scale: 0.97, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.97, y: 30 }}
@@ -207,7 +207,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           onClick={(e) => e.stopPropagation()}
         >
           {/* ── Progress bar ───────────────────────────────────────────── */}
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-white/[0.05] z-20 rounded-full overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-surface z-20 rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-electric rounded-full"
               animate={{ width: `${scrollProgress}%` }}
@@ -218,7 +218,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* ── Close button ───────────────────────────────────────────── */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/[0.06] border border-white/[0.08] text-muted-foreground hover:text-white hover:bg-white/[0.1] transition-all duration-200"
+            className="absolute top-4 right-4 z-20 p-2 rounded-full bg-surface border border-border text-muted-foreground hover:text-foreground hover:bg-white/[0.1] transition-all duration-200"
             aria-label="Close case study"
           >
             <X size={16} />
@@ -274,7 +274,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-electric text-white text-sm font-medium hover:bg-electric/85 transition-colors duration-200"
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-electric text-foreground text-sm font-medium hover:bg-electric/85 transition-colors duration-200"
                     >
                       <ExternalLink size={14} />
                       Live Demo
@@ -285,7 +285,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.06] border border-white/[0.1] text-foreground/90 text-sm font-medium hover:bg-white/[0.1] transition-colors duration-200"
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface border border-border text-foreground text-sm font-medium hover:bg-white/[0.1] transition-colors duration-200"
                     >
                       <Github size={14} />
                       GitHub
@@ -370,7 +370,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     variants={sectionVariant}
                     initial="hidden"
                     animate="visible"
-                    className="p-4 rounded-2xl bg-white/[0.025] border border-white/[0.06] hover:border-electric/[0.2] transition-colors duration-200"
+                    className="p-4 rounded-2xl bg-surface border border-border hover:border-electric/[0.2] transition-colors duration-200"
                   >
                     <div className="w-8 h-8 rounded-lg bg-electric/[0.1] border border-electric/[0.18] flex items-center justify-center text-electric mb-3">
                       {ICON_MAP[feature.icon] ?? <Zap size={16} />}
@@ -401,7 +401,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     variants={sectionVariant}
                     initial="hidden"
                     animate="visible"
-                    className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] border-l-[3px]"
+                    className="p-5 rounded-2xl bg-surface border border-border border-l-[3px]"
                     style={{ borderLeftColor: "rgba(245,158,11,0.45)" }}
                   >
                     <h4 className="text-sm font-semibold text-foreground mb-1.5">{ch.title}</h4>
@@ -432,7 +432,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                       {cat.items.map((item) => (
                         <span
                           key={item}
-                          className="text-[11px] px-2.5 py-[3px] rounded-full bg-white/[0.05] border border-white/[0.08] text-foreground/65"
+                          className="text-[11px] px-2.5 py-[3px] rounded-full bg-surface border border-border text-muted-foreground"
                         >
                           {item}
                         </span>
@@ -443,12 +443,12 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               </div>
 
               {/* Scroll end indicator */}
-              <div className="flex items-center gap-3 mt-10 pt-6 border-t border-white/[0.05]">
-                <div className="flex-1 h-px bg-white/[0.04]" />
-                <span className="text-[10px] font-mono uppercase tracking-widest text-white/20">
+              <div className="flex items-center gap-3 mt-10 pt-6 border-t border-border">
+                <div className="flex-1 h-px bg-surface" />
+                <span className="text-[10px] font-mono uppercase tracking-widest text-muted">
                   End of Case Study
                 </span>
-                <div className="flex-1 h-px bg-white/[0.04]" />
+                <div className="flex-1 h-px bg-surface" />
               </div>
             </motion.section>
           </div>

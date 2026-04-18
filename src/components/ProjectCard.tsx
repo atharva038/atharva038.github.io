@@ -31,7 +31,7 @@ export function ProjectCard({ project, onClick, featured = false }: ProjectCardP
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"
         style={{
-          boxShadow: "0 0 0 1px rgba(56,189,248,0.3), inset 0 8px 40px rgba(56,189,248,0.15)",
+          boxShadow: "0 0 0 1px var(--glow-color1), inset 0 8px 40px rgba(56,189,248,0.15)",
         }}
       />
       
@@ -63,7 +63,7 @@ export function ProjectCard({ project, onClick, featured = false }: ProjectCardP
 
         {featured && (
           <div className="absolute top-4 left-4 z-10">
-            <span className="text-[10px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full bg-electric/20 border border-electric/30 text-electric font-semibold backdrop-blur-md shadow-[0_0_15px_rgba(56,189,248,0.3)]">
+            <span className="text-[10px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full bg-electric/20 border border-electric/30 text-electric font-semibold backdrop-blur-md shadow-[0_0_15px_var(--glow-color1)]">
               Featured
             </span>
           </div>
@@ -83,7 +83,7 @@ export function ProjectCard({ project, onClick, featured = false }: ProjectCardP
             {(cs?.tags ?? [project.category]).map((tag) => (
               <span
                 key={tag}
-                className="text-[11px] uppercase tracking-wider px-3 py-1 rounded-full bg-white/5 border border-white/10 text-muted-foreground font-medium group-hover:border-electric/30 group-hover:text-electric transition-colors"
+                className="text-[11px] uppercase tracking-wider px-3 py-1 rounded-full bg-surface border border-border text-muted-foreground font-medium group-hover:border-electric group-hover:text-electric transition-colors"
               >
                 {tag}
               </span>

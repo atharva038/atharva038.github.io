@@ -54,7 +54,7 @@ export default function Contact() {
                 value={form.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 sm:px-5 py-3 sm:py-4 text-sm sm:text-base rounded-2xl glass border border-white/10 text-foreground placeholder:text-muted focus:outline-none focus:border-electric focus:ring-1 focus:ring-electric transition-all duration-300"
+                className="w-full px-4 sm:px-5 py-3 sm:py-4 text-sm sm:text-base rounded-2xl glass border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-electric focus:ring-1 focus:ring-electric transition-all duration-300"
                 placeholder="Your name"
               />
             </div>
@@ -69,7 +69,7 @@ export default function Contact() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 sm:px-5 py-3 sm:py-4 text-sm sm:text-base rounded-2xl glass border border-white/10 text-foreground placeholder:text-muted focus:outline-none focus:border-electric focus:ring-1 focus:ring-electric transition-all duration-300"
+                className="w-full px-4 sm:px-5 py-3 sm:py-4 text-sm sm:text-base rounded-2xl glass border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-electric focus:ring-1 focus:ring-electric transition-all duration-300"
                 placeholder="your@email.com"
               />
             </div>
@@ -84,13 +84,13 @@ export default function Contact() {
                 onChange={handleChange}
                 required
                 rows={4}
-                className="w-full px-4 sm:px-5 py-3 sm:py-4 text-sm sm:text-base rounded-2xl glass border border-white/10 text-foreground placeholder:text-muted focus:outline-none focus:border-electric focus:ring-1 focus:ring-electric transition-all duration-300 resize-none"
+                className="w-full px-4 sm:px-5 py-3 sm:py-4 text-sm sm:text-base rounded-2xl glass border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-electric focus:ring-1 focus:ring-electric transition-all duration-300 resize-none"
                 placeholder="Let's build something great..."
               />
             </div>
             <button
               type="submit"
-              className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-white text-background font-semibold rounded-xl hover:bg-electric hover:text-white hover:shadow-[0_0_20px_rgba(56,189,248,0.4)] transition-all duration-300 flex items-center justify-center gap-2 group w-full sm:w-auto"
+              className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-foreground text-background font-semibold rounded-xl hover:bg-electric hover:text-foreground hover:shadow-[0_0_20px_var(--glow-color1)] transition-all duration-300 flex items-center justify-center gap-2 group w-full sm:w-auto"
             >
               <Send size={18} className="group-hover:translate-x-1 transition-transform" />
               Send Message
@@ -115,7 +115,7 @@ export default function Contact() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 text-muted-foreground hover:text-electric transition-colors"
                 >
-                  <div className="p-2 rounded-lg bg-white/5">
+                  <div className="p-2 rounded-lg bg-surface">
                     <Github size={20} />
                   </div>
                   <span className="text-sm sm:text-base">atharva038</span>
@@ -126,7 +126,7 @@ export default function Contact() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 text-muted-foreground hover:text-electric transition-colors"
                 >
-                  <div className="p-2 rounded-lg bg-white/5">
+                  <div className="p-2 rounded-lg bg-surface">
                     <Linkedin size={20} />
                   </div>
                   <span className="text-sm sm:text-base">Atharva Joshi</span>
@@ -135,7 +135,7 @@ export default function Contact() {
                   href={`mailto:${personalInfo.email}`}
                   className="flex items-center gap-4 text-muted-foreground hover:text-electric transition-colors"
                 >
-                  <div className="p-2 rounded-lg bg-white/5">
+                  <div className="p-2 rounded-lg bg-surface">
                     <Mail size={20} />
                   </div>
                   <span className="text-sm sm:text-base break-all">{personalInfo.email}</span>

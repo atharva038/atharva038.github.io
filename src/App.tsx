@@ -7,29 +7,34 @@ import Projects from "@/components/Projects";
 import Achievements from "@/components/Achievements";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import GlobalRipple from "@/components/ui/global-ripple";
 
 function App() {
   return (
-    <div className="relative min-h-screen text-foreground overflow-x-hidden selection:bg-electric selection:text-background">
-      {/* Ambient Animated Background */}
-      <div className="ambient-bg">
-        <div className="ambient-orb orb-1"></div>
-        <div className="ambient-orb orb-2"></div>
-        <div className="ambient-orb orb-3"></div>
-      </div>
+    <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
+      <GlobalRipple />
+      <div className="relative min-h-screen text-foreground overflow-x-hidden selection:bg-electric selection:text-background">
+        {/* Ambient Animated Background */}
+        <div className="ambient-bg">
+          <div className="ambient-orb orb-1"></div>
+          <div className="ambient-orb orb-2"></div>
+          <div className="ambient-orb orb-3"></div>
+        </div>
 
-      <div className="relative z-10 font-sans">
-        <Navbar />
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Achievements />
-        <Contact />
-        <Footer />
+        <div className="relative z-10 font-sans">
+          <Navbar />
+          <Hero />
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Achievements />
+          <Contact />
+          <Footer />
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 

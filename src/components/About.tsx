@@ -90,7 +90,7 @@ export default function About() {
                     variants={fadeUp}
                     className="glass p-8 sm:p-10 rounded-3xl text-left group relative overflow-hidden flex flex-col justify-end min-h-[160px]"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-surface to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     <p className="text-4xl sm:text-5xl font-bold text-foreground mb-2 relative z-10 tracking-tight group-hover:scale-105 group-hover:text-electric origin-left transition-all duration-300">
                       {stat.value}

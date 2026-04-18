@@ -14,7 +14,7 @@ function MarqueeRow({ skills, reverse = false }: { skills: { name: string; icon:
           return (
             <div
               key={`${skill.name}-${i}`}
-              className="flex items-center gap-2 sm:gap-3 px-5 sm:px-6 py-2 sm:py-3 mx-2 sm:mx-3 rounded-full glass hover:bg-white/10 text-sm sm:text-base text-foreground whitespace-nowrap transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(56,189,248,0.2)] cursor-default"
+              className="flex items-center gap-2 sm:gap-3 px-5 sm:px-6 py-2 sm:py-3 mx-2 sm:mx-3 rounded-full glass hover:bg-surface text-sm sm:text-base text-foreground whitespace-nowrap transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_var(--glow-color1)] cursor-default"
             >
               <img src={skill.icon} alt={skill.name} className="w-5 h-5 sm:w-6 sm:h-6 object-contain drop-shadow-md" />
               <span className="font-medium tracking-wide">{skill.name}</span>
@@ -72,14 +72,14 @@ export default function Skills() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: catIdx * 0.1, duration: 0.6, type: "spring" }}
-                className="p-6 sm:p-8 rounded-3xl group hover:-translate-y-2 transition-all duration-500 relative overflow-hidden flex flex-col backdrop-blur-2xl bg-white/5 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_40px_rgba(56,189,248,0.2)]"
+                className="p-6 sm:p-8 rounded-3xl group hover:-translate-y-2 transition-all duration-500 relative overflow-hidden flex flex-col backdrop-blur-2xl bg-surface border border-border shadow-[0_8px_32px_var(--glass-shadow)] hover:bg-surface hover:border-border-hover hover:shadow-[0_0_40px_var(--glow-color1)]"
               >
                 {/* Glass edge highlights */}
                 <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/10 pointer-events-none" />
-                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-surface-light to-transparent" />
                 
                 {/* Diagonal glassy sheen */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-br from-surface via-transparent to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 
                 {/* Background ambient hover glow */}
                 <div className="absolute -inset-24 bg-gradient-to-br from-electric/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none" />
@@ -93,7 +93,7 @@ export default function Skills() {
                     return (
                       <span
                         key={skill.name}
-                        className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm rounded-xl glass bg-white/5 text-foreground hover:bg-white/10 hover:text-white transition-colors duration-200"
+                        className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm rounded-xl glass bg-surface text-foreground hover:bg-surface hover:text-foreground transition-colors duration-200"
                       >
                         <img src={skill.icon} alt={skill.name} className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
                         {skill.name}

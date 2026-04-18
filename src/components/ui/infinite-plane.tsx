@@ -208,7 +208,7 @@ void main() {
     >
       <canvas ref={canvasRef} className="block w-full h-full" />
       {error && (
-        <div className="absolute inset-0 bg-black/80 flex items-center justify-center text-white font-mono text-sm p-4">
+        <div className="absolute inset-0 bg-black/80 flex items-center justify-center text-foreground font-mono text-sm p-4">
           {error}
         </div>
       )}
