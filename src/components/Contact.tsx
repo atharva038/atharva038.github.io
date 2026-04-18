@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, Github, Mail, Linkedin } from "lucide-react";
 import { personalInfo } from "@/data/portfolio-data";
-import { ChessKing } from "@/components/ui/chess-pieces";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -20,15 +19,15 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-10 sm:mb-16"
+          className="text-center mb-16 sm:mb-24"
         >
-          <span className="text-accent-dim text-xs sm:text-sm font-mono tracking-widest uppercase">
+          <span className="text-electric text-sm font-mono tracking-widest uppercase mb-3 block opacity-80">
             The Endgame
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mt-3 text-gradient-heading">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold tracking-tight text-gradient-heading">
             Your Move
           </h2>
-          <p className="text-sm sm:text-base text-muted-foreground mt-3 max-w-md mx-auto">
+          <p className="text-base sm:text-lg font-light text-muted-foreground mt-4 max-w-lg mx-auto">
             The board is set. Let's make the next move together.
           </p>
         </motion.div>
@@ -55,7 +54,7 @@ export default function Contact() {
                 value={form.name}
                 onChange={handleChange}
                 required
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-surface border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-accent-dim transition-colors"
+                className="w-full px-4 sm:px-5 py-3 sm:py-4 text-sm sm:text-base rounded-2xl glass border border-white/10 text-foreground placeholder:text-muted focus:outline-none focus:border-electric focus:ring-1 focus:ring-electric transition-all duration-300"
                 placeholder="Your name"
               />
             </div>
@@ -70,7 +69,7 @@ export default function Contact() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-surface border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-accent-dim transition-colors"
+                className="w-full px-4 sm:px-5 py-3 sm:py-4 text-sm sm:text-base rounded-2xl glass border border-white/10 text-foreground placeholder:text-muted focus:outline-none focus:border-electric focus:ring-1 focus:ring-electric transition-all duration-300"
                 placeholder="your@email.com"
               />
             </div>
@@ -85,15 +84,15 @@ export default function Contact() {
                 onChange={handleChange}
                 required
                 rows={4}
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-surface border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-accent-dim transition-colors resize-none"
+                className="w-full px-4 sm:px-5 py-3 sm:py-4 text-sm sm:text-base rounded-2xl glass border border-white/10 text-foreground placeholder:text-muted focus:outline-none focus:border-electric focus:ring-1 focus:ring-electric transition-all duration-300 resize-none"
                 placeholder="Let's build something great..."
               />
             </div>
             <button
               type="submit"
-              className="px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base bg-white text-background font-semibold rounded-xl hover:bg-accent-muted transition-colors flex items-center gap-2"
+              className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-white text-background font-semibold rounded-xl hover:bg-electric hover:text-white hover:shadow-[0_0_20px_rgba(56,189,248,0.4)] transition-all duration-300 flex items-center justify-center gap-2 group w-full sm:w-auto"
             >
-              <Send size={15} />
+              <Send size={18} className="group-hover:translate-x-1 transition-transform" />
               Send Message
             </button>
           </motion.form>
@@ -104,47 +103,44 @@ export default function Contact() {
             viewport={{ once: true }}
             className="md:col-span-2 space-y-5 sm:space-y-6"
           >
-            <div className="p-4 sm:p-5 rounded-xl bg-surface border border-border">
-              <h3 className="font-serif font-bold text-foreground mb-3 sm:mb-4 text-sm sm:text-base">
+            <div className="glass-panel p-6 sm:p-8 rounded-3xl group relative overflow-hidden h-full flex flex-col justify-center">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-electric/10 rounded-full blur-[40px] translate-x-1/2 -translate-y-1/2 group-hover:bg-electric/20 transition-colors duration-500" />
+              <h3 className="font-serif font-bold text-foreground mb-6 sm:mb-8 text-2xl sm:text-3xl relative z-10 text-center sm:text-left">
                 Connect
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-6 relative z-10 flex flex-col items-center sm:items-start text-center sm:text-left">
                 <a
                   href={personalInfo.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-4 text-muted-foreground hover:text-electric transition-colors"
                 >
-                  <Github size={18} />
-                  <span className="text-xs sm:text-sm">atharva038</span>
+                  <div className="p-2 rounded-lg bg-white/5">
+                    <Github size={20} />
+                  </div>
+                  <span className="text-sm sm:text-base">atharva038</span>
                 </a>
                 <a
                   href={personalInfo.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-4 text-muted-foreground hover:text-electric transition-colors"
                 >
-                  <Linkedin size={18} />
-                  <span className="text-xs sm:text-sm">Atharva Joshi</span>
+                  <div className="p-2 rounded-lg bg-white/5">
+                    <Linkedin size={20} />
+                  </div>
+                  <span className="text-sm sm:text-base">Atharva Joshi</span>
                 </a>
                 <a
                   href={`mailto:${personalInfo.email}`}
-                  className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-4 text-muted-foreground hover:text-electric transition-colors"
                 >
-                  <Mail size={18} />
-                  <span className="text-xs sm:text-sm break-all">{personalInfo.email}</span>
+                  <div className="p-2 rounded-lg bg-white/5">
+                    <Mail size={20} />
+                  </div>
+                  <span className="text-sm sm:text-base break-all">{personalInfo.email}</span>
                 </a>
               </div>
-            </div>
-
-            <div className="p-4 sm:p-5 rounded-xl bg-surface border border-border text-center">
-              <div className="flex justify-center mb-3 text-accent-muted">
-                <ChessKing size={36} />
-              </div>
-              <p className="text-xs sm:text-sm text-muted-foreground italic font-serif">
-                "The game of chess is not just about king & queen, it's about
-                all 16 pieces working together."
-              </p>
             </div>
           </motion.div>
         </div>

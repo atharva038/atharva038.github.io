@@ -1,78 +1,76 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin } from "lucide-react";
 import InfinitePlaneBg from "@/components/ui/infinite-plane";
-import { ChessKing } from "@/components/ui/chess-pieces";
 import { personalInfo } from "@/data/portfolio-data";
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative w-full h-screen overflow-hidden">
-      <div className="absolute inset-0">
+    <section id="hero" className="relative w-full h-screen overflow-hidden flex items-center justify-center">
+      {/* 3D Infinite Plane Background */}
+      <div className="absolute inset-0 pointer-events-none opacity-40">
         <InfinitePlaneBg planeHeight={0} speed={0.8} />
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-
-      <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center px-4 sm:px-6">
+      {/* Main Glass Panel */}
+      <div className="relative z-10 px-4 sm:px-6 w-full max-w-4xl mt-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex flex-col items-center"
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="glass-panel rounded-[2rem] p-8 sm:p-14 border border-white/10 shadow-2xl relative overflow-hidden"
         >
-          <motion.div
-            className="mb-4 sm:mb-6 text-white/80"
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <ChessKing size={48} />
-          </motion.div>
+          {/* Internal Glow Effect */}
+          <div className="absolute -top-32 -left-32 w-64 h-64 bg-electric/20 rounded-full blur-[80px]" />
+          <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-purple-500/20 rounded-full blur-[80px]" />
 
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-serif font-bold text-gradient-heading leading-tight">
-            {personalInfo.name}
-          </h1>
+          <div className="relative flex flex-col items-center text-center">
 
-          <p className="mt-3 sm:mt-4 text-sm sm:text-lg md:text-xl text-muted-foreground max-w-xl">
-            {personalInfo.title} &bull; {personalInfo.subtitle}
-          </p>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-bold text-gradient-heading leading-tight tracking-tight">
+              {personalInfo.name}
+            </h1>
 
-          <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4 justify-center">
-            <a
-              href="#projects"
-              className="px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base bg-white text-background font-semibold rounded-lg hover:bg-accent-muted transition-colors"
-            >
-              View My Moves
-            </a>
-            <a
-              href={personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base border border-border text-foreground rounded-lg hover:border-accent-muted hover:text-white transition-colors flex items-center gap-2"
-            >
-              <Github size={16} />
-              GitHub
-            </a>
-            <a
-              href={personalInfo.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base border border-border text-foreground rounded-lg hover:border-accent-muted hover:text-white transition-colors flex items-center gap-2"
-            >
-              <Linkedin size={16} />
-              LinkedIn
-            </a>
+            <p className="mt-4 sm:mt-6 text-base sm:text-xl text-muted-foreground max-w-2xl font-light">
+              <span className="text-foreground font-medium">{personalInfo.title}</span> &bull; {personalInfo.subtitle}
+            </p>
+
+            <div className="mt-8 sm:mt-10 flex flex-wrap gap-4 sm:gap-5 justify-center">
+              <a
+                href="#projects"
+                className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-white text-background font-semibold rounded-xl hover:bg-auto transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-white/10 tracking-wide"
+              >
+                View My Work
+              </a>
+              <div className="flex gap-3">
+                <a
+                  href={personalInfo.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass-button p-3 sm:p-4 text-foreground rounded-xl flex items-center justify-center hover:text-white"
+                  aria-label="GitHub"
+                >
+                  <Github size={22} />
+                </a>
+                <a
+                  href={personalInfo.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass-button p-3 sm:p-4 text-foreground rounded-xl flex items-center justify-center hover:text-electric"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={22} />
+                </a>
+              </div>
+            </div>
           </div>
         </motion.div>
-
-        <motion.a
-          href="#about"
-          className="absolute bottom-8 sm:bottom-10 text-muted-foreground hover:text-foreground transition-colors"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <ArrowDown size={22} />
-        </motion.a>
       </div>
+
+      <a
+        href="#about"
+        className="absolute bottom-6 sm:bottom-10 text-muted-foreground/60 hover:text-white transition-colors bounce-arrow z-10 p-2 glass-button rounded-full"
+      >
+        <ArrowDown size={24} />
+      </a>
     </section>
   );
 }

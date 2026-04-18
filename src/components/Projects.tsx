@@ -1,93 +1,98 @@
-import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
-import { Component as ProjectSlider } from "@/components/ui/argent-loop-infinite-slider";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "@/data/portfolio-data";
+import type { Project } from "@/data/portfolio-data";
+import { ProjectCard } from "./ProjectCard";
+import { ProjectModal } from "./ProjectModal";
 
 export default function Projects() {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  const featured = projects[0];
+  const rest = projects.slice(1);
+
   return (
-    <section id="projects">
-      <ProjectSlider />
+    <>
+      <section
+        id="projects"
+        className="relative py-20 sm:py-32 px-4 sm:px-6 overflow-hidden"
+      >
 
-      {/* Projects list after slider */}
-      <div className="bg-background py-14 sm:py-20 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center text-accent-dim text-xs sm:text-sm font-mono tracking-widest uppercase mb-8 sm:mb-12"
+        <div className="relative max-w-6xl mx-auto">
+
+          {/* ── Section Header ──────────────────────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="text-center mb-16 sm:mb-24"
           >
-            All Projects
-          </motion.p>
+            <span className="text-electric text-sm font-mono tracking-widest uppercase mb-3 block opacity-80">
+              Selected Work
+            </span>
 
-          <div className="flex flex-col divide-y divide-border">
-            {projects.map((project, idx) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="group py-5 sm:py-6 first:pt-0 last:pb-0"
-              >
-                <div className="flex items-start justify-between gap-3 sm:gap-4">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-2 flex-wrap">
-                      <span className="text-xs font-mono text-white/20">
-                        {(idx + 1).toString().padStart(2, "0")}
-                      </span>
-                      <h3 className="text-base sm:text-lg font-serif font-semibold text-foreground group-hover:text-white transition-colors">
-                        {project.title}
-                      </h3>
-                      <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-accent-dim px-2 py-0.5 rounded-full border border-border bg-white/[0.02]">
-                        {project.category}
-                      </span>
-                    </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-gradient-heading tracking-tight mb-4">
+              Products I've Built
+            </h2>
 
-                    <p className="text-xs sm:text-sm text-muted-foreground line-clamp-1 ml-0 sm:ml-9 mb-2">
-                      {project.description}
-                    </p>
+            <p className="text-base sm:text-lg text-muted-foreground font-light max-w-lg mx-auto leading-relaxed">
+              Real-world systems designed and engineered from scratch.
+            </p>
+          </motion.div>
 
-                    <div className="flex flex-wrap gap-1.5 ml-0 sm:ml-9">
-                      {project.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-white/40"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+          {/* ── Card Grid ───────────────────────────────────────────── */}
+          <div className="flex flex-col gap-4">
 
-                  <div className="flex items-center gap-2 shrink-0 pt-1">
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-1.5 sm:p-2 rounded-full border border-border text-muted-foreground hover:text-white hover:border-border-hover transition-colors"
-                      >
-                        <Github size={14} />
-                      </a>
-                    )}
-                    {project.live && (
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-1.5 sm:p-2 rounded-full border border-border text-muted-foreground hover:text-white hover:border-border-hover transition-colors"
-                      >
-                        <ExternalLink size={14} />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+            {/* Featured — full width */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <ProjectCard
+                project={featured}
+                featured
+                onClick={() => setSelectedProject(featured)}
+              />
+            </motion.div>
+
+            {/* Medium cards — 2 columns */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {rest.map((project, i) => (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{
+                    duration: 0.5,
+                    delay: i * 0.08,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                >
+                  <ProjectCard
+                    project={project}
+                    onClick={() => setSelectedProject(project)}
+                  />
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* ── Modal ────────────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {selectedProject?.caseStudy && (
+          <ProjectModal
+            key={selectedProject.id}
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 }

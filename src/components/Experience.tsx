@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Briefcase, GraduationCap, Trophy, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { experiences } from "@/data/portfolio-data";
 import {
   ChessKing,
@@ -18,12 +18,6 @@ const pieceMap = {
   knight: ChessKnight,
   bishop: ChessBishop,
   pawn: ChessPawn,
-} as const;
-
-const typeIconMap = {
-  work: Briefcase,
-  education: GraduationCap,
-  achievement: Trophy,
 } as const;
 
 const typeLabel = {
@@ -46,15 +40,15 @@ export default function Experience() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-10 sm:mb-16"
+          className="text-center mb-16 sm:mb-24"
         >
-          <span className="text-accent-dim text-xs sm:text-sm font-mono tracking-widest uppercase">
+          <span className="text-electric text-sm font-mono tracking-widest uppercase mb-3 block opacity-80">
             The Game Record
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mt-3 text-gradient-heading">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold tracking-tight text-gradient-heading">
             Experience
           </h2>
-          <p className="text-sm sm:text-base text-muted-foreground mt-3 max-w-md mx-auto">
+          <p className="text-base sm:text-lg font-light text-muted-foreground mt-4 max-w-lg mx-auto">
             Every grandmaster's journey is recorded move by move. Here's mine.
           </p>
         </motion.div>
@@ -62,11 +56,11 @@ export default function Experience() {
         {/* Timeline */}
         <div className="relative">
           {/* Vertical timeline line */}
-          <div className="absolute left-6 sm:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-border-hover to-transparent" />
+          <div className="absolute left-6 sm:left-8 top-0 bottom-0 w-px bg-white/5" />
 
           {/* Animated progress line */}
           <motion.div
-            className="absolute left-6 sm:left-8 top-0 w-px bg-gradient-to-b from-accent-muted to-transparent"
+            className="absolute left-6 sm:left-8 top-0 w-px bg-gradient-to-b from-electric to-transparent shadow-[0_0_10px_rgba(56,189,248,0.5)]"
             initial={{ height: 0 }}
             whileInView={{ height: "100%" }}
             viewport={{ once: true }}
@@ -76,7 +70,6 @@ export default function Experience() {
           <div className="space-y-4 sm:space-y-6">
             {experiences.map((exp, index) => {
               const PieceIcon = pieceMap[exp.piece];
-              const TypeIcon = typeIconMap[exp.type];
               const isActive = activeId === exp.id;
 
               return (
@@ -92,8 +85,8 @@ export default function Experience() {
                   <motion.div
                     className={`absolute left-3.5 sm:left-5.5 top-5 sm:top-6 w-5 h-5 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center cursor-pointer z-10 transition-all duration-300 ${
                       isActive
-                        ? "border-accent bg-accent scale-125"
-                        : "border-border-hover bg-surface hover:border-accent-muted hover:scale-110"
+                        ? "border-electric bg-electric/20 shadow-[0_0_15px_rgba(56,189,248,0.5)] scale-125"
+                        : "border-white/20 bg-background hover:border-electric/50 hover:bg-electric/10 hover:shadow-[0_0_10px_rgba(56,189,248,0.3)] hover:scale-110"
                     }`}
                     onClick={() => setActiveId(isActive ? null : exp.id)}
                     whileHover={{ scale: 1.2 }}
@@ -101,7 +94,7 @@ export default function Experience() {
                   >
                     <div
                       className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                        isActive ? "bg-background" : "bg-accent-dim"
+                        isActive ? "bg-electric" : "bg-white/30"
                       }`}
                     />
                   </motion.div>
@@ -117,53 +110,53 @@ export default function Experience() {
                   )}
 
                   {/* Card */}
-                  <motion.div
+                  <div
                     onClick={() => setActiveId(isActive ? null : exp.id)}
-                    className={`group relative rounded-2xl border cursor-pointer transition-all duration-500 ${
+                    className={`group relative rounded-3xl border cursor-pointer transition-all duration-300 overflow-hidden ${
                       isActive
-                        ? "bg-surface-light border-border-hover shadow-[0_0_40px_rgba(255,255,255,0.03)]"
-                        : "bg-surface border-border hover:border-border-hover hover:bg-surface-light"
+                        ? "glass-panel border-electric/30 shadow-[0_4px_30px_rgba(56,189,248,0.15)]"
+                        : "glass border-white/5 hover:border-white/10 hover:bg-white/5"
                     }`}
-                    layout
                   >
                     {/* Shimmer overlay on hover */}
                     <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent experience-shimmer" />
                     </div>
 
+                    {/* Massive Background Chess Piece Watermark */}
+                    <div className="absolute -right-16 -bottom-16 opacity-5 group-hover:opacity-10 transition-all duration-700 pointer-events-none transform group-hover:scale-110 group-hover:-rotate-6 z-0">
+                      <PieceIcon size={240} />
+                    </div>
+
                     {/* Card header */}
-                    <div className="p-4 sm:p-6 relative">
+                    <div className="p-4 sm:p-6 relative z-10">
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1 min-w-0">
                           {/* Type badge */}
                           <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-light border border-border text-[10px] sm:text-xs text-accent-dim font-mono uppercase tracking-wider">
-                              <TypeIcon size={12} />
+                            <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] sm:text-xs text-electric font-mono uppercase tracking-wider">
                               {typeLabel[exp.type]}
                             </div>
-                            <span className="text-[10px] sm:text-xs text-muted font-mono">
+                            <span className="text-[10px] sm:text-xs text-muted-foreground font-mono">
                               {exp.duration}
                             </span>
                           </div>
 
                           {/* Role & org */}
-                          <h3 className="text-base sm:text-xl font-semibold text-foreground leading-tight">
+                          <h3 className="text-base sm:text-xl font-bold text-foreground leading-tight tracking-tight">
                             {exp.role}
                           </h3>
-                          <p className="text-xs sm:text-sm text-accent-dim mt-0.5 sm:mt-1 font-medium">
+                          <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 sm:mt-1 font-medium">
                             {exp.organization}
                           </p>
                         </div>
 
-                        {/* Chess piece + expand arrow */}
+                        {/* expand arrow */}
                         <div className="flex items-center gap-2 shrink-0">
-                          <div className="text-accent-muted opacity-60 group-hover:opacity-100 transition-opacity">
-                            <PieceIcon size={32} />
-                          </div>
                           <motion.div
                             animate={{ rotate: isActive ? 90 : 0 }}
                             transition={{ duration: 0.3 }}
-                            className="text-muted"
+                            className="p-2 rounded-full bg-white/5 text-muted hover:bg-white/10 transition-colors"
                           >
                             <ChevronRight size={16} />
                           </motion.div>
@@ -233,7 +226,7 @@ export default function Experience() {
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </motion.div>
+                  </div>
                 </motion.div>
               );
             })}

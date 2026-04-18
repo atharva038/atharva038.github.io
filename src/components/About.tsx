@@ -1,81 +1,85 @@
 import { motion } from "framer-motion";
-import { GraduationCap, Target } from "lucide-react";
 import { personalInfo, stats } from "@/data/portfolio-data";
-import { ChessKing, ChessRook, ChessKnight, ChessPawn } from "@/components/ui/chess-pieces";
-
-const pieceMap = {
-  king: ChessKing,
-  rook: ChessRook,
-  knight: ChessKnight,
-  pawn: ChessPawn,
-} as const;
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.6 },
+    transition: { delay: i * 0.1, duration: 0.6, type: "spring", stiffness: 50 },
   }),
 };
 
 export default function About() {
   return (
-    <section id="about" className="py-16 sm:py-24 px-4 sm:px-6">
+    <section id="about" className="py-20 sm:py-32 px-4 sm:px-6 relative">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-10 sm:mb-16"
+          className="text-center mb-16 sm:mb-24"
         >
-          <span className="text-accent-dim text-xs sm:text-sm font-mono tracking-widest uppercase">
+          <span className="text-electric text-sm font-mono tracking-widest uppercase mb-3 block opacity-80">
             The Middlegame
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mt-3 text-gradient-heading">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-gradient-heading tracking-tight">
             About Me
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-5 sm:space-y-6"
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="space-y-6 sm:space-y-8"
           >
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              {personalInfo.bio}
-            </p>
-
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-xl bg-surface border border-border">
-              <GraduationCap className="text-accent-muted mt-1 shrink-0" size={20} />
-              <div>
-                <p className="font-semibold text-foreground text-sm sm:text-base">
-                  {personalInfo.degree}
-                </p>
-                <p className="text-xs sm:text-sm text-muted-foreground">
-                  {personalInfo.college}
-                </p>
-              </div>
+            <div className="glass-panel p-8 sm:p-10 rounded-3xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-electric/10 rounded-full blur-[60px] transform translate-x-1/2 -translate-y-1/2 transition-transform duration-700 group-hover:scale-150" />
+              
+              <p className="text-lg sm:text-xl text-foreground leading-relaxed font-light relative z-10">
+                {personalInfo.bio}
+              </p>
             </div>
 
-            <div className="flex items-start gap-3 p-3 sm:p-4 rounded-xl bg-surface border border-border">
-              <Target className="text-accent-muted mt-1 shrink-0" size={20} />
-              <div>
-                <p className="font-semibold text-foreground text-sm sm:text-base">The Endgame Goal</p>
-                <p className="text-xs sm:text-sm text-muted-foreground italic">
-                  "{personalInfo.goal}"
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="glass p-6 sm:p-8 rounded-3xl flex flex-col justify-center group hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-electric/10 rounded-full blur-[40px] translate-x-1/2 -translate-y-1/2 group-hover:scale-150 transition-transform duration-700" />
+                <p className="text-xs font-mono tracking-[0.2em] uppercase text-electric mb-2 relative z-10">
+                  Education
                 </p>
+                <div className="relative z-10">
+                  <p className="font-semibold text-foreground text-lg sm:text-xl">
+                    {personalInfo.degree}
+                  </p>
+                  <p className="text-base text-muted-foreground mt-1 font-light">
+                    {personalInfo.college}
+                  </p>
+                </div>
+              </div>
+
+              <div className="glass p-6 sm:p-8 rounded-3xl flex flex-col justify-center group hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden">
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-[40px] translate-x-1/4 translate-y-1/4 group-hover:scale-150 transition-transform duration-700" />
+                <p className="text-xs font-mono tracking-[0.2em] uppercase text-purple-400 mb-2 relative z-10">
+                  Mission
+                </p>
+                <div className="relative z-10">
+                  <p className="font-semibold text-foreground text-lg sm:text-xl line-clamp-1">
+                    The Endgame Goal
+                  </p>
+                  <p className="text-base text-muted-foreground mt-1 italic font-light">
+                    "{personalInfo.goal}"
+                  </p>
+                </div>
               </div>
             </div>
           </motion.div>
 
-          <div className="space-y-5 sm:space-y-6">
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6">
               {stats.map((stat, i) => {
-                const PieceIcon = pieceMap[stat.piece];
                 return (
                   <motion.div
                     key={stat.label}
@@ -84,13 +88,14 @@ export default function About() {
                     whileInView="visible"
                     viewport={{ once: true }}
                     variants={fadeUp}
-                    className="p-4 sm:p-5 rounded-xl bg-surface border border-border text-center hover:border-border-hover transition-colors"
+                    className="glass p-8 sm:p-10 rounded-3xl text-left group relative overflow-hidden flex flex-col justify-end min-h-[160px]"
                   >
-                    <div className="flex justify-center mb-2 text-accent-muted">
-                      <PieceIcon size={28} />
-                    </div>
-                    <p className="text-xl sm:text-2xl font-bold text-foreground">{stat.value}</p>
-                    <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    <p className="text-4xl sm:text-5xl font-bold text-foreground mb-2 relative z-10 tracking-tight group-hover:scale-105 group-hover:text-electric origin-left transition-all duration-300">
+                      {stat.value}
+                    </p>
+                    <p className="text-xs sm:text-sm text-muted-foreground uppercase tracking-[0.15em] font-medium relative z-10">
                       {stat.label}
                     </p>
                   </motion.div>
@@ -99,17 +104,18 @@ export default function About() {
             </div>
 
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="p-4 sm:p-5 rounded-xl bg-surface border border-border text-center"
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="glass-panel p-8 sm:p-10 rounded-3xl text-center relative overflow-hidden"
             >
-              <p className="text-muted-foreground italic font-serif text-base sm:text-lg">
+              <div className="absolute -left-10 w-32 h-32 bg-purple-500/20 blur-[50px] rounded-full" />
+              <p className="text-foreground italic font-serif text-lg sm:text-xl lg:text-2xl leading-relaxed relative z-10">
                 "In chess, as in life, the best move is always the one you make
                 next."
               </p>
-              <span className="text-xs text-accent-dim mt-2 block">
+              <span className="text-sm text-electric mt-4 block font-medium tracking-wide uppercase relative z-10">
                 My Philosophy
               </span>
             </motion.div>

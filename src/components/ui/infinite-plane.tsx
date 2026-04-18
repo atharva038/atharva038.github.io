@@ -16,7 +16,7 @@ export interface InfinitePlaneBgProps {
 }
 
 const raymarchedSceneShader = `#version 300 es
-precision highp float;
+precision mediump float;
 
 uniform float u_time;
 uniform vec2  u_resolution;
@@ -49,7 +49,7 @@ vec3 calcNormal(vec3 p) {
 // Raymarch loop
 float rayMarch(vec3 ro, vec3 rd) {
   float d = 0.0;
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < 40; i++) {
     vec3 p = ro + rd * d;
     float dist = mapScene(p);
     if (dist < u_epsilon || d > 20.0) break;
@@ -91,6 +91,7 @@ const InfinitePlaneBg: FC<InfinitePlaneBgProps> = ({
   ariaLabel = "Infinite plane shader background",
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isVisibleRef = useRef(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -152,9 +153,9 @@ void main() {
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
     gl.bufferData(gl.ARRAY_BUFFER, quad, gl.STATIC_DRAW);
 
-    // Resize handler
+    // Resize handler — cap DPR at 1.0; on Retina this cuts pixel count by 4×
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.0);
       canvas.width  = canvas.clientWidth  * dpr;
       canvas.height = canvas.clientHeight * dpr;
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -162,18 +163,26 @@ void main() {
     window.addEventListener("resize", resize);
     resize();
 
+    // Pause GPU work when the canvas scrolls off-screen
+    const io = new IntersectionObserver(
+      ([entry]) => { isVisibleRef.current = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    io.observe(canvas);
+
     // Render loop
     let rafId: number;
     const render = (t: number) => {
+      rafId = requestAnimationFrame(render);
+      if (!isVisibleRef.current) return; // skip draw when not in view
+
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.useProgram(program);
 
-      // Bind quad
       gl.enableVertexAttribArray(posLoc);
       gl.bindBuffer(gl.ARRAY_BUFFER, buf);
       gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
 
-      // Set uniforms
       gl.uniform2f(resLoc, canvas.width, canvas.height);
       gl.uniform1f(timeLoc, t * 0.001);
       gl.uniform1f(planeLoc, planeHeight);
@@ -181,14 +190,13 @@ void main() {
       gl.uniform1f(speedLoc, speed);
 
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      rafId = requestAnimationFrame(render);
     };
     rafId = requestAnimationFrame(render);
 
-    // Cleanup
     return () => {
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(rafId);
+      io.disconnect();
     };
   }, [planeHeight, epsilon, speed]);
 
