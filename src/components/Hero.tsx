@@ -25,6 +25,26 @@ export default function Hero() {
 
           <div className="relative flex flex-col items-center text-center">
 
+            {/* Profile Photo */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
+              animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              className="relative w-32 h-32 sm:w-40 sm:h-40 mb-6 sm:mb-8 group"
+            >
+              {/* Glowing Aura Behind Photo */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-electric to-purple-500 opacity-40 blur-[24px] group-hover:opacity-80 group-hover:scale-110 transition-all duration-700" />
+              
+              {/* Glassmorphic Image Container */}
+              <div className="relative w-full h-full rounded-full p-[3px] bg-gradient-to-b from-white/30 to-white/5 shadow-2xl backdrop-blur-md overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-500">
+                <img
+                  src="/me.jpeg"
+                  alt={personalInfo.name}
+                  className="w-full h-full object-cover rounded-[calc(100%-3px)] border border-black/10 dark:border-white/5"
+                />
+              </div>
+            </motion.div>
+
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-bold text-gradient-heading leading-tight tracking-tight">
               {personalInfo.name}
             </h1>
