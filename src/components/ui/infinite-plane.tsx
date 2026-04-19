@@ -83,6 +83,79 @@ void main() {
 }
 `;
 
+const raymarchedSceneShaderWebGL1 = `
+precision mediump float;
+
+uniform float u_time;
+uniform vec2  u_resolution;
+uniform float u_planeHeight;
+uniform float u_epsilon;
+uniform float u_speed;
+
+float sdPlane(vec3 p, float h) {
+  return p.y - h;
+}
+
+float mapScene(vec3 p) {
+  return sdPlane(p, u_planeHeight);
+}
+
+vec3 calcNormal(vec3 p) {
+  vec2 e = vec2(u_epsilon, 0.0);
+  return normalize(vec3(
+    mapScene(p + e.xyy) - mapScene(p - e.xyy),
+    mapScene(p + e.yxy) - mapScene(p - e.yxy),
+    mapScene(p + e.yyx) - mapScene(p - e.yyx)
+  ));
+}
+
+float rayMarch(vec3 ro, vec3 rd) {
+  float d = 0.0;
+  for (int i = 0; i < 40; i++) {
+    vec3 p = ro + rd * d;
+    float dist = mapScene(p);
+    if (dist < u_epsilon || d > 20.0) break;
+    d += dist;
+  }
+  return d;
+}
+
+void main() {
+  vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / u_resolution.y;
+  vec3 ro = vec3(0.0, u_planeHeight + 1.5, -1.5) * u_speed;
+  vec3 rd = normalize(vec3(uv, 1.0));
+
+  float d = rayMarch(ro, rd);
+  vec3 color = vec3(0.0);
+
+  if (d < 20.0) {
+    vec3 p = ro + rd * d;
+    vec3 n = calcNormal(p);
+    vec3 lightDir = normalize(vec3(1.0, 1.0, -1.0));
+    float diff = max(dot(n, lightDir), 0.0);
+
+    float check = mod(floor(p.x) + floor(p.z - u_time * u_speed), 2.0);
+    vec3 mat = mix(vec3(0.2), vec3(0.6), check);
+
+    color = mat * diff;
+  }
+
+  gl_FragColor = vec4(color, 1.0);
+}
+`;
+
+const fullScreenVertexShaderWebGL2 = `#version 300 es
+in vec2 a_position;
+void main() {
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+
+const fullScreenVertexShaderWebGL1 = `
+attribute vec2 a_position;
+void main() {
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+
 const InfinitePlaneBg: FC<InfinitePlaneBgProps> = ({
   planeHeight = 0,
   epsilon = 0.001,
@@ -98,11 +171,21 @@ const InfinitePlaneBg: FC<InfinitePlaneBgProps> = ({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext("webgl2");
+    const gl2 = canvas.getContext("webgl2");
+    const gl1 =
+      canvas.getContext("webgl") ||
+      canvas.getContext("experimental-webgl");
+    const gl =
+      (gl2 as WebGL2RenderingContext | null) ||
+      (gl1 as WebGLRenderingContext | null);
+
     if (!gl) {
-      setError("WebGL2 not supported in this browser.");
+      setError("WebGL not supported in this browser.");
       return;
     }
+
+    const isWebGL2 = gl instanceof WebGL2RenderingContext;
+    setError(null);
 
     // Compile a shader and check for errors
     const compileShader = (type: GLenum, src: string) => {
@@ -118,14 +201,14 @@ const InfinitePlaneBg: FC<InfinitePlaneBgProps> = ({
       return sh;
     };
 
-    // Vertex shader for full-screen quad
-    const vsSrc = `#version 300 es
-in vec2 a_position;
-void main() {
-  gl_Position = vec4(a_position, 0.0, 1.0);
-}`;
+    const vsSrc = isWebGL2
+      ? fullScreenVertexShaderWebGL2
+      : fullScreenVertexShaderWebGL1;
+    const fsSrc = isWebGL2
+      ? raymarchedSceneShader
+      : raymarchedSceneShaderWebGL1;
     const vs = compileShader(gl.VERTEX_SHADER, vsSrc);
-    const fs = compileShader(gl.FRAGMENT_SHADER, raymarchedSceneShader);
+    const fs = compileShader(gl.FRAGMENT_SHADER, fsSrc);
     if (!vs || !fs) return;
 
     // Link program
@@ -140,12 +223,24 @@ void main() {
     }
 
     // Look up attribute & uniform locations
-    const posLoc   = gl.getAttribLocation(program, "a_position");
-    const resLoc   = gl.getUniformLocation(program, "u_resolution")!;
-    const timeLoc  = gl.getUniformLocation(program, "u_time")!;
-    const planeLoc = gl.getUniformLocation(program, "u_planeHeight")!;
-    const epsLoc   = gl.getUniformLocation(program, "u_epsilon")!;
-    const speedLoc = gl.getUniformLocation(program, "u_speed")!;
+    const posLoc = gl.getAttribLocation(program, "a_position");
+    const resLoc = gl.getUniformLocation(program, "u_resolution");
+    const timeLoc = gl.getUniformLocation(program, "u_time");
+    const planeLoc = gl.getUniformLocation(program, "u_planeHeight");
+    const epsLoc = gl.getUniformLocation(program, "u_epsilon");
+    const speedLoc = gl.getUniformLocation(program, "u_speed");
+
+    if (
+      posLoc < 0 ||
+      !resLoc ||
+      !timeLoc ||
+      !planeLoc ||
+      !epsLoc ||
+      !speedLoc
+    ) {
+      setError("Shader uniforms/attributes unavailable.");
+      return;
+    }
 
     // Full-screen quad buffer
     const quad = new Float32Array([-1, -1,  1, -1,  -1, 1,  1, 1]);
@@ -197,6 +292,10 @@ void main() {
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(rafId);
       io.disconnect();
+      gl.deleteBuffer(buf);
+      gl.deleteProgram(program);
+      gl.deleteShader(vs);
+      gl.deleteShader(fs);
     };
   }, [planeHeight, epsilon, speed]);
 
