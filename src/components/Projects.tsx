@@ -8,8 +8,11 @@ import { ProjectModal } from "./ProjectModal";
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  const featured = projects[0];
-  const rest = projects.slice(1);
+  const topFeatured = projects.find((project) => project.title === "SmartNShine") ?? projects[0];
+  const bottomFeatured = projects.find((project) => project.title === "KnockNFix") ?? projects[projects.length - 1];
+  const middleProjects = projects.filter(
+    (project) => project.id !== topFeatured.id && project.id !== bottomFeatured.id,
+  );
 
   return (
     <>
@@ -44,7 +47,7 @@ export default function Projects() {
           {/* ── Card Grid ───────────────────────────────────────────── */}
           <div className="flex flex-col gap-4">
 
-            {/* Featured — full width */}
+            {/* Top featured — full width */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -52,15 +55,15 @@ export default function Projects() {
               transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             >
               <ProjectCard
-                project={featured}
+                project={topFeatured}
                 featured
-                onClick={() => setSelectedProject(featured)}
+                onClick={() => setSelectedProject(topFeatured)}
               />
             </motion.div>
 
-            {/* Medium cards — 2 columns */}
+            {/* Center cards — 2 columns */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {rest.map((project, i) => (
+              {middleProjects.map((project, i) => (
                 <motion.div
                   key={project.id}
                   initial={{ opacity: 0, y: 30 }}
@@ -79,6 +82,20 @@ export default function Projects() {
                 </motion.div>
               ))}
             </div>
+
+            {/* Bottom featured — full width */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <ProjectCard
+                project={bottomFeatured}
+                featured
+                onClick={() => setSelectedProject(bottomFeatured)}
+              />
+            </motion.div>
           </div>
         </div>
       </section>

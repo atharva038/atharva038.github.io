@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import type { Project } from "@/data/portfolio-data";
 
 interface ProjectCardProps {
@@ -10,6 +11,11 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, onClick, featured = false }: ProjectCardProps) {
   const cs = project.caseStudy;
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  useEffect(() => {
+    setImageLoaded(false);
+  }, [project.image]);
 
   return (
     <motion.article
@@ -46,13 +52,19 @@ export function ProjectCard({ project, onClick, featured = false }: ProjectCardP
             ? "w-full lg:w-[52%] aspect-video lg:aspect-auto"
             : "w-full aspect-[16/9]"
           }
+          px-1.5 sm:px-2.5 py-1.5 sm:py-2
         `}
       >
+        <div
+          className={`absolute inset-0 bg-surface/80 transition-opacity duration-300 ${imageLoaded ? "opacity-0" : "opacity-100"}`}
+        />
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover opacity-65 group-hover:opacity-85 group-hover:scale-[1.04] transition-all duration-500"
+          className={`w-full h-full object-cover group-hover:scale-[1.04] transition-all duration-500 ${imageLoaded ? "opacity-65 group-hover:opacity-85" : "opacity-0"}`}
           loading="lazy"
+          decoding="async"
+          onLoad={() => setImageLoaded(true)}
         />
         {/* Bottom fade overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/30 to-transparent" />
@@ -78,6 +90,24 @@ export function ProjectCard({ project, onClick, featured = false }: ProjectCardP
         `}
       >
         <div>
+          {/* Top action */}
+          {project.live && (
+            <div className="mb-4">
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wider px-3 py-1.5 rounded-full bg-electric/15 border border-electric/35 text-electric hover:bg-electric/25 transition-colors"
+                aria-label={`Open live demo for ${project.title}`}
+              >
+                Live Demo
+                <ExternalLink size={12} />
+              </a>
+            </div>
+          )}
+
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-4 relative z-10">
             {(cs?.tags ?? [project.category]).map((tag) => (

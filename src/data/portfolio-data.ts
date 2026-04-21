@@ -128,8 +128,9 @@ export const projects: Project[] = [
     description:
       "A local service finder platform connecting users with trusted professionals. Features real-time search, map integration, and booking system.",
     tech: ["React", "Node.js", "MongoDB", "Mapbox", "Express"],
-    image: "/img/knocknfix.png",
+    image: "/img/knocknfix.webp",
     github: "https://github.com/atharva038",
+    live: "https://knocknfix.live",
     caseStudy: {
       tagline: "Local Service Marketplace for Tier-2 Cities",
       tags: ["Marketplace", "Payments", "Location"],
@@ -188,13 +189,72 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 4,
+    category: "AI Tool",
+    title: "Medisage",
+    description:
+      "Agentic AI solution for pharmacists that assists with medicine intelligence, safer dispensing, and quick clinical guidance workflows. Deployed on a VPS for reliable production access.",
+    tech: ["React", "Node.js", "Express", "Agentic AI", "MongoDB"],
+    image: "/img/medisage.webp",
+    github: "https://github.com/atharva038",
+    live: "https://medisage.me",
+    caseStudy: {
+      tagline: "Agentic AI Copilot for Pharmacists",
+      tags: ["Healthcare AI", "Agentic AI", "VPS Deployment"],
+      overview:
+        "Medisage is an agentic AI platform built for pharmacists to speed up medicine lookups, reduce dispensing errors, and improve patient counseling quality. The production app is deployed on a VPS for full control over uptime, security configuration, and backend scaling.",
+      problem: [
+        "Pharmacists lose time switching between drug references during busy dispensing hours.",
+        "Manual cross-checking of interactions and dosage guidance can cause delays and risk oversight.",
+        "Smaller clinics and pharmacies often lack affordable AI tooling tailored to pharmacy workflows.",
+      ],
+      solution:
+        "Built an agentic AI assistant that can interpret medication queries, check key safety signals, and provide concise, workflow-ready outputs for pharmacists. Added a role-oriented UX and deployed the full stack on a VPS with process management and reverse proxy setup for stable real-world usage.",
+      architecture: [
+        { id: "fe", label: "Frontend", color: "blue", items: ["React", "Tailwind CSS"] },
+        { id: "be", label: "Backend", color: "green", items: ["Node.js", "Express.js", "Auth"] },
+        { id: "ai", label: "AI Agents", color: "purple", items: ["LLM API", "Agent Orchestration"] },
+        { id: "ops", label: "Deployment", color: "orange", items: ["Linux VPS", "Nginx", "PM2"], isIntegration: true },
+      ],
+      features: [
+        { icon: "Sparkles", title: "Agentic Query Handling", description: "Handles pharmacist prompts with multi-step reasoning to return concise, usable guidance." },
+        { icon: "Target", title: "Medication Safety Focus", description: "Highlights key checks like interaction signals and usage considerations in a clear format." },
+        { icon: "LayoutDashboard", title: "Workflow-Ready Dashboard", description: "Simple pharmacist-first interface for fast search, history review, and response tracking." },
+        { icon: "Zap", title: "VPS Production Hosting", description: "Deployed on a VPS with Nginx and PM2 for consistent uptime and direct infrastructure control." },
+      ],
+      challenges: [
+        {
+          title: "Domain Accuracy",
+          description:
+            "Healthcare responses required strict prompt constraints and response shaping to reduce ambiguity and improve consistency in pharmacist-facing outputs.",
+        },
+        {
+          title: "Latency Under Load",
+          description:
+            "Optimized request handling and caching so pharmacists receive quick responses during high-traffic hours.",
+        },
+        {
+          title: "Secure VPS Operations",
+          description:
+            "Configured HTTPS, process supervision, and server hardening practices to keep the deployment stable and secure.",
+        },
+      ],
+      techStack: [
+        { category: "Frontend", items: ["React", "Tailwind CSS"] },
+        { category: "Backend", items: ["Node.js", "Express.js", "MongoDB"] },
+        { category: "AI", items: ["LLM API", "Agentic Orchestration", "Prompt Engineering"] },
+        { category: "Deployment", items: ["Linux VPS", "Nginx", "PM2", "SSL"] },
+      ],
+    },
+  },
+  {
     id: 1,
     category: "AI Tool",
     title: "SmartNShine",
     description:
       "AI-powered ATS resume generator that crafts optimized resumes tailored to job descriptions. Full-stack app with AI integration for smart content suggestions and formatting.",
     tech: ["React", "Node.js", "Express", "AI/ML", "Tailwind"],
-    image: "/img/smartnshine.png",
+    image: "/img/smartnshine.webp",
     github: "https://github.com/atharva038",
     live: "https://smartnshine.app",
     caseStudy: {
@@ -252,17 +312,17 @@ export const projects: Project[] = [
     category: "Website",
     title: "Zenith 26",
     description:
-      "Next-level college event website showcasing cutting-edge frontend design. A visual masterpiece with immersive animations, smooth transitions, and a bold creative direction.",
-    tech: ["React", "Tailwind", "Framer Motion", "GSAP"],
-    image: "/img/zenith.png",
+      "Next-level college event website showcasing cutting-edge frontend design with immersive 3D moments using Three.js and React Three Fiber.",
+    tech: ["React", "Tailwind", "Framer Motion", "GSAP", "Three.js", "React Three Fiber"],
+    image: "/img/zenith.webp",
     video: "https://res.cloudinary.com/djohaxwla/video/upload/v1771379448/Gameverse.mp4",
     live: "https://zenithsggs.com/gameverse",
     github: "https://github.com/atharva038",
     caseStudy: {
-      tagline: "Immersive Tech Fest Website — 10K+ Visitors",
-      tags: ["Frontend Lead", "Animation", "10K+ Users"],
+      tagline: "Immersive Tech Fest Website",
+      tags: ["Project Lead", "Animation", "High-Traffic Ready"],
       overview:
-        "Official website for SGGSIET's tech fest Zenith 26. Architected and led the entire frontend — from design system to deployment. The site served 10,000+ visitors with immersive GSAP scroll animations, Framer Motion transitions, and a bold custom design language. Zero templates. Built from scratch.",
+        "Official website for SGGSIET's tech fest Zenith 26. Architected and led the entire frontend — from design system to deployment. Built for real event traffic with immersive GSAP scroll animations, Framer Motion transitions, and a bold custom design language. Zero templates. Built from scratch.",
       problem: [
         "College event websites are typically static, templated, and fail to generate genuine excitement.",
         "No existing tech fest site captured the energy and scale Zenith 26 deserved.",
@@ -270,17 +330,18 @@ export const projects: Project[] = [
         "Required coordinating multiple developers with varying skill levels under a single design vision.",
       ],
       solution:
-        "Designed and built a fully custom frontend from scratch with zero templates. Used GSAP ScrollTrigger for complex scroll-based animations, Framer Motion for component transitions, and a custom design system built on Tailwind. Established component contracts for the team and deployed on Vercel with CI/CD.",
+        "Designed and built a fully custom frontend from scratch with zero templates. Used GSAP ScrollTrigger for complex scroll-based animations, Framer Motion for component transitions, and Three.js scenes with React Three Fiber for immersive visual moments. Established component contracts for the team and deployed on Vercel with CI/CD.",
       architecture: [
         { id: "ui", label: "UI Layer", color: "blue", items: ["React", "Tailwind CSS", "Custom DS"] },
         { id: "anim", label: "Animation", color: "purple", items: ["GSAP", "Framer Motion"] },
+        { id: "three", label: "3D Layer", color: "pink", items: ["Three.js", "React Three Fiber"] },
         { id: "build", label: "Build", color: "green", items: ["Vite", "TypeScript"] },
         { id: "deploy", label: "Deployment", color: "orange", items: ["Vercel", "GitHub CI"], isIntegration: true },
       ],
       features: [
         { icon: "Layers", title: "Scroll-Driven Animations", description: "GSAP ScrollTrigger animations that react to scroll position for a cinematic, immersive experience." },
         { icon: "Palette", title: "Custom Design System", description: "Built consistent design tokens, components, and motion primitives used across the entire site." },
-        { icon: "Zap", title: "Performance at Scale", description: "Optimized for 10K+ concurrent visitors with lazy loading, code splitting, and Vercel edge CDN." },
+        { icon: "Zap", title: "Performance at Scale", description: "Optimized for high event-day traffic with lazy loading, code splitting, and Vercel edge CDN." },
         { icon: "Users", title: "Team Coordination", description: "Led and coordinated frontend developers with shared code standards, review processes, and design specs." },
       ],
       challenges: [
@@ -303,6 +364,7 @@ export const projects: Project[] = [
       techStack: [
         { category: "Frontend", items: ["React", "Tailwind CSS"] },
         { category: "Animation", items: ["GSAP", "Framer Motion"] },
+        { category: "3D", items: ["Three.js", "React Three Fiber"] },
         { category: "Build", items: ["Vite", "TypeScript"] },
         { category: "Deploy", items: ["Vercel", "GitHub CI"] },
       ],
@@ -358,7 +420,7 @@ export const experiences: ExperienceItem[] = [
   {
     id: 3,
     type: "work",
-    role: "Frontend Lead",
+    role: "Project Lead",
     organization: "Zenith 26 — College Tech Fest",
     duration: "2025 — 2026",
     description:
@@ -366,7 +428,7 @@ export const experiences: ExperienceItem[] = [
     highlights: [
       "Architected the entire frontend from scratch",
       "Integrated GSAP & Framer Motion animations",
-      "10K+ visitors during the event",
+      "Handled real event-day traffic during Zenith 26",
     ],
     tech: ["React", "Tailwind", "Framer Motion", "GSAP"],
     piece: "rook",
