@@ -51,17 +51,20 @@ export default function Skills() {
           </p>
         </motion.div>
 
-        {/* Infinite Marquee Slider */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mb-16 sm:mb-24"
-        >
-          <MarqueeRow skills={firstHalf} />
-          <MarqueeRow skills={secondHalf} reverse />
-        </motion.div>
+      </div>
 
+      {/* Infinite Marquee Slider (Full Width) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="mb-16 sm:mb-24 relative left-1/2 -translate-x-1/2 w-screen"
+      >
+        <MarqueeRow skills={firstHalf} />
+        <MarqueeRow skills={secondHalf} reverse />
+      </motion.div>
+
+      <div className="max-w-6xl mx-auto">
         {/* Category Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {skillCategories.map((category, catIdx) => {
