@@ -1,15 +1,62 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Send, Github, Mail, Linkedin } from "lucide-react";
+import emailjs from "@emailjs/browser";
 import { personalInfo } from "@/data/portfolio-data";
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    if (submitStatus !== "success") return;
+    const timer = setTimeout(() => setSubmitStatus("idle"), 5000);
+    return () => clearTimeout(timer);
+  }, [submitStatus]);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_im12pji";
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_llw2pyt";
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "gCfpr50F88PRPOQbK";
+
+      if (!templateId || !publicKey) {
+        throw new Error("Missing EmailJS template ID or public key");
+      }
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          phone: form.phone,
+          message: form.message,
+          to_name: personalInfo.shortName,
+        },
+        publicKey,
+      );
+
+      setSubmitStatus("success");
+      setForm({ name: "", email: "", phone: "", message: "" });
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -38,10 +85,7 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="md:col-span-3 space-y-4 sm:space-y-5"
-            onSubmit={(e) => {
-              e.preventDefault();
-              window.location.href = `mailto:${personalInfo.email}?subject=Hello from ${form.name}&body=${form.message}`;
-            }}
+            onSubmit={handleSubmit}
           >
             <div>
               <label htmlFor="name" className="block text-xs sm:text-sm text-muted-foreground mb-1.5">
@@ -74,6 +118,21 @@ export default function Contact() {
               />
             </div>
             <div>
+              <label htmlFor="phone" className="block text-xs sm:text-sm text-muted-foreground mb-1.5">
+                Phone
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+                required
+                className="w-full px-4 sm:px-5 py-3 sm:py-4 text-sm sm:text-base rounded-2xl glass border border-border text-foreground placeholder:text-muted focus:outline-none focus:border-electric focus:ring-1 focus:ring-electric transition-all duration-300"
+                placeholder="Your phone number"
+              />
+            </div>
+            <div>
               <label htmlFor="message" className="block text-xs sm:text-sm text-muted-foreground mb-1.5">
                 Message
               </label>
@@ -90,11 +149,24 @@ export default function Contact() {
             </div>
             <button
               type="submit"
-              className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-foreground text-background font-semibold rounded-xl hover:bg-electric hover:text-foreground hover:shadow-[0_0_20px_var(--glow-color1)] transition-all duration-300 flex items-center justify-center gap-2 group w-full sm:w-auto"
+              disabled={isSubmitting}
+              className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-foreground text-background font-semibold rounded-xl hover:bg-electric hover:text-foreground hover:shadow-[0_0_20px_var(--glow-color1)] transition-all duration-300 flex items-center justify-center gap-2 group w-full sm:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
             >
               <Send size={18} className="group-hover:translate-x-1 transition-transform" />
-              Send Message
+              {isSubmitting ? "Sending..." : "Send Message"}
             </button>
+
+            {submitStatus === "success" && (
+              <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3 text-sm text-green-200">
+                Message sent successfully. I will get back to you soon.
+              </div>
+            )}
+
+            {submitStatus === "error" && (
+              <div className="rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                Failed to send message. Please try again or contact me directly via email.
+              </div>
+            )}
           </motion.form>
 
           <motion.div

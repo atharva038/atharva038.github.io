@@ -10,7 +10,7 @@ export const personalInfo = {
   goal: "Become a builder-founder — build real products, solve practical problems, and eventually run my own startup.",
   github: "https://github.com/atharva038",
   linkedin: "https://linkedin.com/in/atharva-joshi-8a7b19319",
-  email: "atharva038@gmail.com",
+  email: "atharvasjoshi2005@gmail.com",
 };
 
 export const navLinks = [
