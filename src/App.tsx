@@ -1,19 +1,40 @@
+import { lazy, Suspense, useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Experience from "@/components/Experience";
-import Projects from "@/components/Projects";
-import Achievements from "@/components/Achievements";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import GlobalRipple from "@/components/ui/global-ripple";
 
+const About = lazy(() => import("@/components/About"));
+const Skills = lazy(() => import("@/components/Skills"));
+const Experience = lazy(() => import("@/components/Experience"));
+const Projects = lazy(() => import("@/components/Projects"));
+const Achievements = lazy(() => import("@/components/Achievements"));
+const Contact = lazy(() => import("@/components/Contact"));
+const Footer = lazy(() => import("@/components/Footer"));
+
+function SectionFallback() {
+  return <div className="h-24 sm:h-32" aria-hidden="true" />;
+}
+
 function App() {
+  const [enableEffects, setEnableEffects] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px), (prefers-reduced-motion: reduce)");
+
+    const updateEffects = () => {
+      setEnableEffects(!mediaQuery.matches);
+    };
+
+    updateEffects();
+    mediaQuery.addEventListener("change", updateEffects);
+
+    return () => mediaQuery.removeEventListener("change", updateEffects);
+  }, []);
+
   return (
     <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
-      <GlobalRipple />
+      {enableEffects && <GlobalRipple />}
       <div className="relative min-h-screen text-foreground overflow-x-hidden selection:bg-electric selection:text-background">
         {/* Ambient Animated Background */}
         <div className="ambient-bg">
@@ -25,13 +46,15 @@ function App() {
         <div className="relative z-10 font-sans">
           <Navbar />
           <Hero />
-          <About />
-          <Skills />
-          <Experience />
-          <Projects />
-          <Achievements />
-          <Contact />
-          <Footer />
+          <Suspense fallback={<SectionFallback />}>
+            <About />
+            <Skills />
+            <Experience />
+            <Projects />
+            <Achievements />
+            <Contact />
+            <Footer />
+          </Suspense>
         </div>
       </div>
     </ThemeProvider>

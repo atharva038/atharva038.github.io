@@ -340,3 +340,32 @@
   50% { transform: translate(5%, 5%) scale(1.1); }
   100% { transform: translate(-5%, 10%) scale(0.9); }
 }
+
+@media (max-width: 768px) {
+  .ambient-orb {
+    animation: none;
+    filter: blur(80px);
+    opacity: 0.35;
+  }
+
+  .orb-3 {
+    display: none;
+  }
+
+  .bounce-arrow {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-orb,
+  .marquee-left,
+  .marquee-right,
+  .floating,
+  .bounce-arrow,
+  .animate-gradient,
+  .experience-shimmer,
+  .shimmer::before {
+    animation: none !important;
+  }
+}

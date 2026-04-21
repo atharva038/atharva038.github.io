@@ -17,15 +17,15 @@ export default function Navbar() {
   return (
     <nav
       className={cn(
-        "fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 w-[92%] max-w-5xl rounded-full border",
+        "fixed top-2 sm:top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 w-[94%] sm:w-[92%] max-w-5xl rounded-full border",
         scrolled 
           ? "backdrop-blur-2xl bg-surface border-border shadow-[0_8px_32px_var(--glass-shadow)]" 
           : "bg-transparent border-transparent"
       )}
     >
       <div className={cn(
-        "flex items-center justify-between px-6 transition-all duration-300", 
-        scrolled ? "py-3" : "py-4"
+        "flex items-center justify-between px-4 sm:px-6 transition-all duration-300", 
+        scrolled ? "py-2.5 sm:py-3" : "py-3 sm:py-4"
       )}>
         <a
           href="#hero"
