@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Chess } from "chess.js";
+import type { Square } from "chess.js";
 import { Chessboard } from "react-chessboard";
 
 type ChessApiResponse = {
@@ -16,6 +17,11 @@ type MiniChessProps = {
   minBoardWidth?: number;
   maxBoardWidth?: number;
   mobileMaxBoardWidth?: number;
+};
+
+type LegalTarget = {
+  square: string;
+  isCapture: boolean;
 };
 
 function statusFromGame(game: Chess): string {
@@ -44,6 +50,9 @@ export default function MiniChess({
   const [error, setError] = useState<string | null>(null);
   const [boardWidth, setBoardWidth] = useState(320);
   const [isMobile, setIsMobile] = useState(false);
+  const [selectedSquare, setSelectedSquare] = useState<string | null>(null);
+  const [legalTargets, setLegalTargets] = useState<LegalTarget[]>([]);
+  const [lastMoveSquares, setLastMoveSquares] = useState<{ from: string; to: string } | null>(null);
   const requestRef = useRef(0);
   const boardWrapRef = useRef<HTMLDivElement | null>(null);
 
@@ -83,6 +92,8 @@ export default function MiniChess({
   const applyPosition = (nextGame: Chess) => {
     setGame(nextGame);
     setFen(nextGame.fen());
+    setSelectedSquare(null);
+    setLegalTargets([]);
   };
 
   const resetGame = () => {
@@ -91,6 +102,7 @@ export default function MiniChess({
     applyPosition(fresh);
     setIsThinking(false);
     setError(null);
+    setLastMoveSquares(null);
     setAiNote("New game started. You play White.");
   };
 
@@ -117,7 +129,21 @@ export default function MiniChess({
     }
 
     applyPosition(next);
+    setLastMoveSquares({ from: move.from, to: move.to });
     setAiNote(data.text || `Stockfish played ${move.san}.`);
+  };
+
+  const fallbackEngineMove = (positionFen: string): boolean => {
+    const fallback = new Chess(positionFen);
+    const legal = fallback.moves({ verbose: true });
+    if (legal.length === 0) return false;
+
+    const move = legal[Math.floor(Math.random() * legal.length)];
+    fallback.move(move);
+    applyPosition(fallback);
+    setLastMoveSquares({ from: move.from, to: move.to });
+    setAiNote(`Stockfish API was unreachable. Fallback played ${move.san}.`);
+    return true;
   };
 
   const askStockfish = async (positionFen: string) => {
@@ -125,21 +151,42 @@ export default function MiniChess({
     setIsThinking(true);
     setError(null);
 
-    try {
-      const response = await fetch(CHESS_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fen: positionFen, depth: 12, maxThinkingTime: 60 }),
-      });
+    let lastError: unknown = null;
 
-      if (!response.ok) {
-        throw new Error(`Chess API returned ${response.status}`);
+    try {
+      for (let attempt = 0; attempt < 2; attempt += 1) {
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(() => controller.abort(), 6000 + attempt * 3000);
+
+        try {
+          const response = await fetch(CHESS_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fen: positionFen, depth: 10, maxThinkingTime: 50 }),
+            signal: controller.signal,
+          });
+
+          if (!response.ok) {
+            throw new Error(`Chess API returned ${response.status}`);
+          }
+
+          const data = (await response.json()) as ChessApiResponse;
+
+          if (requestId !== requestRef.current) return;
+          applyAiMove(positionFen, data);
+          return;
+        } catch (err) {
+          lastError = err;
+        } finally {
+          window.clearTimeout(timeoutId);
+        }
       }
 
-      const data = (await response.json()) as ChessApiResponse;
-
       if (requestId !== requestRef.current) return;
-      applyAiMove(positionFen, data);
+      const playedFallback = fallbackEngineMove(positionFen);
+      if (!playedFallback) {
+        throw lastError instanceof Error ? lastError : new Error("Could not fetch Stockfish move.");
+      }
     } catch (err) {
       if (requestId !== requestRef.current) return;
       setError(err instanceof Error ? err.message : "Could not fetch Stockfish move.");
@@ -148,6 +195,45 @@ export default function MiniChess({
         setIsThinking(false);
       }
     }
+  };
+
+  const selectSquareMoves = (square: string) => {
+    const availableTargets = game
+      .moves({ square: square as Square, verbose: true })
+      .map((move) => ({ square: move.to, isCapture: Boolean(move.captured) }));
+
+    if (availableTargets.length === 0) {
+      setSelectedSquare(null);
+      setLegalTargets([]);
+      return;
+    }
+
+    setSelectedSquare(square);
+    setLegalTargets(availableTargets);
+  };
+
+  const tryPlayerMove = (sourceSquare: string, targetSquare: string, pieceType: string) => {
+    if (isThinking || game.isGameOver() || game.turn() !== "w") return false;
+
+    const next = new Chess(game.fen());
+    const isPawnPromotion = pieceType === "wP" && targetSquare[1] === "8";
+    const move = next.move({
+      from: sourceSquare,
+      to: targetSquare,
+      promotion: isPawnPromotion ? "q" : undefined,
+    });
+
+    if (!move) return false;
+
+    applyPosition(next);
+  setLastMoveSquares({ from: move.from, to: move.to });
+    setAiNote(`You played ${move.san}.`);
+
+    if (!next.isGameOver()) {
+      void askStockfish(next.fen());
+    }
+
+    return true;
   };
 
   const onDrop = ({
@@ -161,30 +247,85 @@ export default function MiniChess({
   }) => {
     if (!targetSquare) return false;
 
-    if (isThinking || game.isGameOver() || game.turn() !== "w") return false;
-
-    const next = new Chess(game.fen());
-    const isPawnPromotion = piece.pieceType === "wP" && targetSquare[1] === "8";
-    const move = next.move({
-      from: sourceSquare,
-      to: targetSquare,
-      promotion: isPawnPromotion ? "q" : undefined,
-    });
-
-    if (!move) return false;
-
-    applyPosition(next);
-    setAiNote(`You played ${move.san}.`);
-
-    if (!next.isGameOver()) {
-      void askStockfish(next.fen());
-    }
-
-    return true;
+    return tryPlayerMove(sourceSquare, targetSquare, piece.pieceType);
   };
 
+  const onSquareClick = ({
+    square,
+    piece,
+  }: {
+    square: string;
+    piece: { pieceType: string } | null;
+  }) => {
+    if (isThinking || game.isGameOver() || game.turn() !== "w") return;
+
+    const clickedOwnPiece = Boolean(piece && piece.pieceType.startsWith("w"));
+
+    if (!selectedSquare) {
+      if (clickedOwnPiece && piece) {
+        selectSquareMoves(square);
+      }
+      return;
+    }
+
+    if (square === selectedSquare) {
+      setSelectedSquare(null);
+      setLegalTargets([]);
+      return;
+    }
+
+    const sourcePiece = game.get(selectedSquare as Square);
+    const sourcePieceType = sourcePiece ? `w${sourcePiece.type.toUpperCase()}` : "";
+    const moved = tryPlayerMove(selectedSquare, square, sourcePieceType);
+
+    if (!moved) {
+      if (clickedOwnPiece && piece) {
+        selectSquareMoves(square);
+      } else {
+        setSelectedSquare(null);
+        setLegalTargets([]);
+      }
+    }
+  };
+
+  const squareStyles = useMemo<Record<string, React.CSSProperties>>(() => {
+    const styles: Record<string, React.CSSProperties> = {};
+
+    if (lastMoveSquares) {
+      styles[lastMoveSquares.from] = {
+        boxShadow: "inset 0 0 0 2px rgba(56, 189, 248, 0.35)",
+      };
+      styles[lastMoveSquares.to] = {
+        boxShadow: "inset 0 0 0 2px rgba(56, 189, 248, 0.65)",
+      };
+    }
+
+    if (selectedSquare) {
+      styles[selectedSquare] = {
+        boxShadow: "inset 0 0 0 3px rgba(56, 189, 248, 0.9)",
+      };
+    }
+
+    for (const target of legalTargets) {
+      styles[target.square] = target.isCapture
+        ? {
+            boxShadow: "inset 0 0 0 3px rgba(248, 113, 113, 0.9)",
+            background: "rgba(248, 113, 113, 0.18)",
+          }
+        : {
+            background:
+              "radial-gradient(circle, rgba(184, 103, 51, 0.42) 0%, rgba(184, 103, 51, 0.25) 30%, rgba(184, 103, 51, 0.08) 58%, rgba(184, 103, 51, 0) 72%)",
+          };
+    }
+
+    return styles;
+  }, [lastMoveSquares, legalTargets, selectedSquare]);
+
   return (
-    <div className={`glass-panel ${isMobile ? "p-3 rounded-2xl" : "p-5 sm:p-6 rounded-3xl"}`}>
+    <div
+      data-no-ripple="true"
+      className={`glass-panel ${isMobile ? "p-3 rounded-2xl" : "p-5 sm:p-6 rounded-3xl"}`}
+    >
       <div className={`flex items-center justify-between gap-2 ${isMobile ? "mb-2" : "mb-3"}`}>
         <h4 className={`font-serif font-semibold text-foreground ${isMobile ? "text-base" : "text-lg sm:text-xl"}`}>
           Mini Chess vs Stockfish
@@ -208,8 +349,10 @@ export default function MiniChess({
           options={{
             id: "portfolio-mini-chess",
             position: fen,
-            allowDragging: !isThinking && !game.isGameOver() && game.turn() === "w",
+            allowDragging: !isMobile && !isThinking && !game.isGameOver() && game.turn() === "w",
             onPieceDrop: onDrop,
+            onSquareClick: onSquareClick,
+            squareStyles: squareStyles,
             boardStyle: { width: `${boardWidth}px`, borderRadius: "0.75rem" },
             darkSquareStyle: { backgroundColor: "rgba(94, 88, 81, 0.5)" },
             lightSquareStyle: { backgroundColor: "rgba(247, 243, 236, 0.8)" },
@@ -223,6 +366,9 @@ export default function MiniChess({
       <p className={`text-foreground/80 ${isMobile ? "mt-1 text-xs" : "mt-1 text-xs sm:text-sm"}`}>
         {isThinking ? "Stockfish is calculating..." : aiNote}
       </p>
+      {isMobile && (
+        <p className="mt-1 text-[11px] text-muted-foreground/80">Tap a piece to preview moves, then tap target square.</p>
+      )}
       {error && <p className={`text-red-400 ${isMobile ? "mt-1 text-xs" : "mt-2 text-xs sm:text-sm"}`}>{error}</p>}
     </div>
   );

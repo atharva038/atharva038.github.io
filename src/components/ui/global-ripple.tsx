@@ -12,6 +12,11 @@ export default function GlobalRipple() {
 
   useEffect(() => {
     const handlePointerDown = (e: PointerEvent) => {
+      const target = e.target as Element | null;
+      if (target?.closest('[data-no-ripple="true"]')) {
+        return;
+      }
+
       // Create a ripple at the pointer coordinates
       const newRipple = {
         x: e.clientX,
