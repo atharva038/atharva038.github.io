@@ -217,16 +217,22 @@ export default function MiniChess({
 
     const next = new Chess(game.fen());
     const isPawnPromotion = pieceType === "wP" && targetSquare[1] === "8";
-    const move = next.move({
-      from: sourceSquare,
-      to: targetSquare,
-      promotion: isPawnPromotion ? "q" : undefined,
-    });
+    let move;
+    try {
+      move = next.move({
+        from: sourceSquare,
+        to: targetSquare,
+        promotion: isPawnPromotion ? "q" : undefined,
+      });
+    } catch (_e) {
+      // chess.js throws an error for illegal moves
+      return false;
+    }
 
     if (!move) return false;
 
     applyPosition(next);
-  setLastMoveSquares({ from: move.from, to: move.to });
+    setLastMoveSquares({ from: move.from, to: move.to });
     setAiNote(`You played ${move.san}.`);
 
     if (!next.isGameOver()) {

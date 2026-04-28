@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin } from "lucide-react";
 import { personalInfo } from "@/data/portfolio-data";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 const MiniChess = lazy(() => import("@/components/MiniChess"));
 const InfinitePlaneBg = lazy(() => import("@/components/ui/infinite-plane"));
@@ -87,14 +88,16 @@ export default function Hero() {
               </p>
 
               <div className="mt-6 sm:mt-10 flex flex-wrap gap-3 sm:gap-5 justify-center lg:justify-start">
-                <a
+                <MagneticButton
+                  as="a"
                   href="#projects"
-                  className="px-5 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-base bg-white text-black font-semibold rounded-xl transition-transform hover:scale-105 active:scale-95 shadow-lg tracking-wide"
+                  className="px-5 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-base bg-white text-black font-semibold rounded-xl transition-transform hover:scale-105 active:scale-95 shadow-lg tracking-wide flex items-center justify-center"
                 >
                   View My Work
-                </a>
+                </MagneticButton>
                 <div className="flex gap-3">
-                  <a
+                  <MagneticButton
+                    as="a"
                     href={personalInfo.github}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -102,8 +105,9 @@ export default function Hero() {
                     aria-label="GitHub"
                   >
                     <Github size={22} />
-                  </a>
-                  <a
+                  </MagneticButton>
+                  <MagneticButton
+                    as="a"
                     href={personalInfo.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -111,7 +115,7 @@ export default function Hero() {
                     aria-label="LinkedIn"
                   >
                     <Linkedin size={22} />
-                  </a>
+                  </MagneticButton>
                 </div>
               </div>
             </div>

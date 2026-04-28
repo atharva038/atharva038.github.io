@@ -1,4 +1,6 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
 import { achievements } from "@/data/portfolio-data";
 import {
   ChessKing,
@@ -39,6 +41,8 @@ function getBentoClasses(index: number) {
 }
 
 export default function Achievements() {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   return (
     <section id="achievements" className="py-20 sm:py-32 px-4 sm:px-6 relative">
       <div className="max-w-6xl mx-auto">
@@ -77,15 +81,30 @@ export default function Achievements() {
                   type: "spring",
                   stiffness: 40,
                 }}
-                className={`glass-panel rounded-3xl p-6 sm:p-8 group hover:-translate-y-2 transition-all duration-500 relative overflow-hidden flex flex-col justify-end ${getBentoClasses(
+                className={`glass-panel rounded-3xl p-6 sm:p-8 group hover:-translate-y-2 transition-all duration-500 relative overflow-hidden flex flex-col justify-end ${
+                  achievement.image ? "cursor-pointer" : ""
+                } ${getBentoClasses(
                   index
                 )}`}
+                onClick={() => achievement.image && setSelectedImage(achievement.image)}
               >
                 {/* Accent Glows */}
                 <div className="absolute inset-0 bg-gradient-to-br from-electric/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                 
+                {/* Achievement Image Background */}
+                {achievement.image && (
+                  <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-30 transition-all duration-700 pointer-events-none overflow-hidden rounded-3xl">
+                    <div 
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
+                      style={{ backgroundImage: `url(${achievement.image})` }}
+                    />
+                    {/* Gradient overlay to seamlessly merge the image with the card */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
+                  </div>
+                )}
+
                 {/* Massive Background Chess Piece Watermark */}
-                <div className="absolute -bottom-8 -right-8 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-700 pointer-events-none transform group-hover:scale-110 group-hover:-rotate-12">
+                <div className="absolute -bottom-8 -right-8 z-0 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-700 pointer-events-none transform group-hover:scale-110 group-hover:-rotate-12">
                   <PieceComponent size={index === 0 || index === 1 ? 320 : 200} />
                 </div>
 
@@ -126,6 +145,39 @@ export default function Achievements() {
           })}
         </div>
       </div>
+
+      {/* Image Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-background/80 backdrop-blur-sm"
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative max-w-5xl w-full max-h-[90vh] glass-panel rounded-2xl overflow-hidden flex items-center justify-center p-2"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/50 hover:bg-background text-foreground transition-colors"
+              >
+                <X size={24} />
+              </button>
+              <img
+                src={selectedImage}
+                alt="Achievement Fullscreen"
+                className="w-full h-auto max-h-[85vh] object-contain rounded-xl"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

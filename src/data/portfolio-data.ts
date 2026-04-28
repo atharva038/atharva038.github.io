@@ -386,22 +386,6 @@ export interface ExperienceItem {
 
 export const experiences: ExperienceItem[] = [
   {
-    id: 1,
-    type: "work",
-    role: "Head of Technology",
-    organization: "Tinrec",
-    duration: "Feb 2025 — Sep 2025",
-    description:
-      "Led the technology division, overseeing full-stack development and technical strategy. Drove engineering decisions, architecture planning, and team coordination across projects.",
-    highlights: [
-      "Led technical strategy and architecture decisions",
-      "Managed and mentored the development team",
-      "8 months of hands-on leadership experience",
-    ],
-    tech: ["React", "Node.js", "MongoDB", "Express", "Tailwind"],
-    piece: "king",
-  },
-  {
     id: 2,
     type: "work",
     role: "Full-Stack Developer",
@@ -459,6 +443,7 @@ export interface AchievementItem {
   icon: "trophy" | "medal" | "star" | "flame" | "crown" | "zap";
   rank?: string;
   piece?: "king" | "queen" | "rook" | "knight" | "bishop" | "pawn";
+  image?: string;
 }
 
 export const achievements: AchievementItem[] = [
@@ -472,6 +457,7 @@ export const achievements: AchievementItem[] = [
     icon: "trophy",
     rank: "1st Place",
     piece: "king",
+    image: "/achievments/Shark-Tank-Image.png",
   },
   {
     id: 2,
@@ -483,6 +469,7 @@ export const achievements: AchievementItem[] = [
     icon: "crown",
     rank: "Winner",
     piece: "queen",
+    image: "/achievments/sarvah.png",
   },
   {
     id: 3,
@@ -494,17 +481,7 @@ export const achievements: AchievementItem[] = [
     icon: "star",
     rank: "Top 16",
     piece: "knight",
-  },
-  {
-    id: 4,
-    title: "Head of Technology — Tinrec",
-    event: "8-Month Leadership Role",
-    year: "2025",
-    description:
-      "Led the technology division at Tinrec for 8 months, overseeing full-stack development, technical strategy, and engineering decisions across the organization.",
-    icon: "zap",
-    rank: "Lead",
-    piece: "rook",
+    image: "/achievments/Hackathon.png",
   },
   {
     id: 5,
@@ -515,6 +492,7 @@ export const achievements: AchievementItem[] = [
       "Built and managed live registration flows for both the Marathon event and the main Zenith 26 tech fest. Real participants registered through the platform under actual event pressure — no dry run, no test data.",
     icon: "flame",
     piece: "bishop",
+    image: "/achievments/Real-Event-Registration.png",
   },
   {
     id: 6,
