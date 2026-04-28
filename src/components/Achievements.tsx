@@ -81,20 +81,19 @@ export default function Achievements() {
                   type: "spring",
                   stiffness: 40,
                 }}
-                className={`glass-panel rounded-3xl p-6 sm:p-8 group hover:-translate-y-2 transition-all duration-500 relative overflow-hidden flex flex-col justify-end ${
-                  achievement.image ? "cursor-pointer" : ""
-                } ${getBentoClasses(
-                  index
-                )}`}
+                className={`glass-panel rounded-3xl p-6 sm:p-8 group hover:-translate-y-2 transition-all duration-500 relative overflow-hidden flex flex-col justify-end ${achievement.image ? "cursor-pointer" : ""
+                  } ${getBentoClasses(
+                    index
+                  )}`}
                 onClick={() => achievement.image && setSelectedImage(achievement.image)}
               >
                 {/* Accent Glows */}
                 <div className="absolute inset-0 bg-gradient-to-br from-electric/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-                
+
                 {/* Achievement Image Background */}
                 {achievement.image && (
                   <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-30 transition-all duration-700 pointer-events-none overflow-hidden rounded-3xl">
-                    <div 
+                    <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
                       style={{ backgroundImage: `url(${achievement.image})` }}
                     />
@@ -122,9 +121,8 @@ export default function Achievements() {
                   {/* Bottom: Text */}
                   <div>
                     <h3
-                      className={`font-semibold text-foreground leading-tight mb-2 ${
-                        index === 0 ? "text-2xl sm:text-4xl" : "text-xl sm:text-2xl"
-                      }`}
+                      className={`font-semibold text-foreground leading-tight mb-2 ${index === 0 ? "text-2xl sm:text-4xl" : "text-xl sm:text-2xl"
+                        }`}
                     >
                       {achievement.title}
                     </h3>
@@ -132,9 +130,8 @@ export default function Achievements() {
                       {achievement.event} &bull; {achievement.year}
                     </p>
                     <p
-                      className={`text-muted-foreground font-light leading-relaxed line-clamp-3 ${
-                        index === 0 || index === 1 ? "text-sm sm:text-base" : "text-xs sm:text-sm"
-                      }`}
+                      className={`text-muted-foreground font-light leading-relaxed line-clamp-3 ${index === 0 || index === 1 ? "text-sm sm:text-base" : "text-xs sm:text-sm"
+                        }`}
                     >
                       {achievement.description}
                     </p>

@@ -6,6 +6,7 @@ import MagneticButton from "@/components/ui/MagneticButton";
 
 const MiniChess = lazy(() => import("@/components/MiniChess"));
 const InfinitePlaneBg = lazy(() => import("@/components/ui/infinite-plane"));
+const Hero3DChessPiece = lazy(() => import("@/components/ui/Hero3DChessPiece"));
 
 function ChessFallback() {
   return (
@@ -59,25 +60,37 @@ export default function Hero() {
 
             <div className="relative grid lg:grid-cols-[minmax(0,1.5fr)_minmax(360px,1fr)] xl:grid-cols-[minmax(0,1.65fr)_minmax(440px,1fr)] gap-6 sm:gap-8 lg:gap-10 xl:gap-14 items-center">
             <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-              {/* Profile Photo */}
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
-                animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                className="relative w-36 h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 mb-5 sm:mb-8 group"
-              >
-                {/* Glowing Aura Behind Photo */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-electric to-purple-500 opacity-40 blur-[24px] group-hover:opacity-80 group-hover:scale-110 transition-all duration-700" />
+              <div className="flex items-center gap-6 sm:gap-10 mb-5 sm:mb-8">
+                {/* Profile Photo */}
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
+                  animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                  className="relative w-36 h-36 sm:w-44 sm:h-44 lg:w-48 lg:h-48 group shrink-0"
+                >
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-electric to-purple-500 opacity-40 blur-[24px] group-hover:opacity-80 group-hover:scale-110 transition-all duration-700" />
+                  <div className="relative w-full h-full rounded-full p-[3px] bg-gradient-to-b from-white/30 to-white/5 shadow-2xl backdrop-blur-md overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-500">
+                    <img
+                      src="/me.jpeg"
+                      alt={personalInfo.name}
+                      className="w-full h-full object-cover rounded-[calc(100%-3px)] border border-black/10 dark:border-white/5"
+                    />
+                  </div>
+                </motion.div>
 
-                {/* Glassmorphic Image Container */}
-                <div className="relative w-full h-full rounded-full p-[3px] bg-gradient-to-b from-white/30 to-white/5 shadow-2xl backdrop-blur-md overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-500">
-                  <img
-                    src="/me.jpeg"
-                    alt={personalInfo.name}
-                    className="w-full h-full object-cover rounded-[calc(100%-3px)] border border-black/10 dark:border-white/5"
-                  />
-                </div>
-              </motion.div>
+                {/* 3D Chess Piece */}
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
+                  animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+                  className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 group hidden sm:block shrink-0"
+                >
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-electric to-purple-500 opacity-30 blur-[40px] group-hover:opacity-60 group-hover:scale-110 transition-all duration-700" />
+                  <Suspense fallback={<div className="w-full h-full rounded-full bg-white/5 animate-pulse" />}>
+                    <Hero3DChessPiece />
+                  </Suspense>
+                </motion.div>
+              </div>
 
               <h1 className="text-4xl sm:text-6xl md:text-7xl 2xl:text-8xl font-serif font-bold text-gradient-heading leading-tight tracking-tight">
                 {personalInfo.name}

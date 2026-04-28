@@ -7,9 +7,10 @@ import { ThemeToggle } from "./ThemeToggle";
 interface NavbarProps {
   isTerminalMode?: boolean;
   setIsTerminalMode?: (val: boolean) => void;
+  onNavClick?: (hash: string) => void;
 }
 
-export default function Navbar({ isTerminalMode = false, setIsTerminalMode }: NavbarProps) {
+export default function Navbar({ isTerminalMode = false, setIsTerminalMode, onNavClick }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -18,6 +19,7 @@ export default function Navbar({ isTerminalMode = false, setIsTerminalMode }: Na
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
 
   return (
     <nav
@@ -52,6 +54,13 @@ export default function Navbar({ isTerminalMode = false, setIsTerminalMode }: Na
                 <li key={link.href}>
                   <a
                     href={link.href}
+                    onClick={(e) => {
+                      if (onNavClick) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onNavClick(link.href);
+                      }
+                    }}
                     className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group"
                   >
                     {link.label}
@@ -94,7 +103,14 @@ export default function Navbar({ isTerminalMode = false, setIsTerminalMode }: Na
               <li key={link.href}>
                 <a
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => {
+                    setMobileOpen(false);
+                    if (onNavClick) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onNavClick(link.href);
+                    }
+                  }}
                   className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors block p-2 rounded-lg hover:bg-surface-light w-full text-center"
                 >
                   {link.label}
