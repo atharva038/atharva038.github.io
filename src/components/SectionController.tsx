@@ -42,7 +42,6 @@ interface SectionControllerProps {
 export default function SectionController({ isTerminalMode, setIsTerminalMode }: SectionControllerProps) {
   const [activeSection, setActiveSection] = useState("hero");
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const [scrolled, setScrolled] = useState(false);
   const [transitionType, setTransitionType] = useState("depth");
   const sectionRef = useRef<HTMLDivElement>(null);
   
@@ -73,18 +72,16 @@ export default function SectionController({ isTerminalMode, setIsTerminalMode }:
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
-
   // When section changes, reset scroll to top of the container
   useEffect(() => {
     const container = document.getElementById("section-container");
     if (container) {
       container.scrollTo({ top: 0, behavior: "instant" });
-      setScrolled(false);
     }
   }, [activeSection]);
 
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    setScrolled(e.currentTarget.scrollTop > 50);
+  const handleScroll = (_e: React.UIEvent<HTMLDivElement>) => {
+    // scroll tracking reserved for future use
   };
 
   const getVariants = () => {
@@ -108,13 +105,13 @@ export default function SectionController({ isTerminalMode, setIsTerminalMode }:
             opacity: 1,
             clipPath: "circle(150% at 50% 50%)",
             scale: 1,
-            transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
+            transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] as [number,number,number,number] }
           },
           exit: { 
             opacity: 0,
             clipPath: "circle(0% at 50% 50%)",
             scale: 0.95,
-            transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] }
+            transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] as [number,number,number,number] }
           }
         };
 
@@ -131,14 +128,14 @@ export default function SectionController({ isTerminalMode, setIsTerminalMode }:
             rotateY: 0,
             scale: 1,
             z: 0,
-            transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+            transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }
           },
           exit: { 
             opacity: 0, 
             rotateY: -90,
             scale: 0.8,
             z: -400,
-            transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+            transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }
           }
         };
 
@@ -155,14 +152,14 @@ export default function SectionController({ isTerminalMode, setIsTerminalMode }:
             clipPath: "inset(0% 0 0% 0)",
             scale: 1,
             filter: "blur(0px)",
-            transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
+            transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] as [number,number,number,number] }
           },
           exit: { 
             opacity: 0,
             clipPath: "inset(50% 0 50% 0)",
             scale: 0.95,
             filter: "blur(10px)",
-            transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] }
+            transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] as [number,number,number,number] }
           }
         };
 
@@ -180,14 +177,14 @@ export default function SectionController({ isTerminalMode, setIsTerminalMode }:
             scale: 1,
             filter: "blur(0px)",
             y: 0,
-            transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+            transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }
           },
           exit: { 
             opacity: 0, 
             scale: 0.85,
             filter: "blur(12px)",
             y: -30,
-            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }
           }
         };
     }
@@ -198,8 +195,6 @@ export default function SectionController({ isTerminalMode, setIsTerminalMode }:
       <Navbar 
         isTerminalMode={isTerminalMode} 
         setIsTerminalMode={setIsTerminalMode} 
-        activeSection={activeSection}
-        scrolled={scrolled}
       />
       
       {/* Scrollable container for the active section, adding perspective for 3D Flips */}

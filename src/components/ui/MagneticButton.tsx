@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useRef, useState, createElement } from "react";
 import { motion } from "framer-motion";
 
 interface MagneticButtonProps {
   children: React.ReactNode;
   className?: string;
-  as?: React.ElementType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  as?: React.ElementType<any>;
   href?: string;
   target?: string;
   rel?: string;
@@ -16,7 +17,7 @@ interface MagneticButtonProps {
 export default function MagneticButton({ 
   children, 
   className = "", 
-  as: Component = "button", 
+  as: Component = "button",
   strength = 0.2,
   ...props 
 }: MagneticButtonProps) {
@@ -48,9 +49,7 @@ export default function MagneticButton({
       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
       className="inline-flex"
     >
-      <Component className={className} {...props}>
-        {children}
-      </Component>
+      {createElement(Component, { className, ...props }, children)}
     </motion.div>
   );
 }
