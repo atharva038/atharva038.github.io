@@ -18,6 +18,7 @@ function SectionFallback() {
   return <div className="h-24 sm:h-32" aria-hidden="true" />;
 }
 
+
 // Cinematic Dissolve Overlay Component
 function PageTransitionOverlay({
   isActive,
