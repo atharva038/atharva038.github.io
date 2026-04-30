@@ -31,8 +31,8 @@ export default function Experience() {
 
   return (
     <section id="experience" className="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden">
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-surface blur-[120px] pointer-events-none" />
+      {/* Ambient background glow (dark mode only) */}
+      <div className="hidden dark:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-surface blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
@@ -60,7 +60,7 @@ export default function Experience() {
 
           {/* Animated progress line */}
           <motion.div
-            className="absolute left-6 sm:left-8 top-0 w-px bg-gradient-to-b from-electric to-transparent shadow-[0_0_10px_rgba(56,189,248,0.5)]"
+            className="absolute left-6 sm:left-8 top-0 w-px bg-electric dark:bg-gradient-to-b dark:from-electric dark:to-transparent shadow-[0_0_10px_rgba(56,189,248,0.5)]"
             initial={{ height: 0 }}
             whileInView={{ height: "100%" }}
             viewport={{ once: true }}
@@ -120,7 +120,7 @@ export default function Experience() {
                   >
                     {/* Shimmer overlay on hover */}
                     <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-transparent via-surface-light to-transparent experience-shimmer" />
+                      <div className="hidden dark:block absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-transparent via-surface-light to-transparent experience-shimmer" />
                     </div>
 
                     {/* Massive Background Chess Piece Watermark */}

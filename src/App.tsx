@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import GlobalRipple from "@/components/ui/global-ripple";
 import TerminalView from "@/components/TerminalView";
+import SpotlightBackground from "@/components/SpotlightBackground";
 
 const About = lazy(() => import("@/components/About"));
 const Skills = lazy(() => import("@/components/Skills"));
@@ -113,11 +114,7 @@ function App() {
       )}
       {enableEffects && <GlobalRipple />}
       <div className="relative min-h-screen text-foreground overflow-x-hidden selection:bg-electric selection:text-background">
-        <div className="ambient-bg">
-          <div className="ambient-orb orb-1"></div>
-          <div className="ambient-orb orb-2"></div>
-          <div className="ambient-orb orb-3"></div>
-        </div>
+        <SpotlightBackground />
 
         <div className="relative z-10 font-sans">
           <Navbar

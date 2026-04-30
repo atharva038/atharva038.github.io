@@ -79,13 +79,13 @@ export default function Skills() {
               >
                 {/* Glass edge highlights */}
                 <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/10 pointer-events-none" />
-                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-surface-light to-transparent" />
+                <div className="hidden dark:block absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-surface-light to-transparent" />
                 
                 {/* Diagonal glassy sheen */}
-                <div className="absolute inset-0 bg-gradient-to-br from-surface via-transparent to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="hidden dark:block absolute inset-0 bg-gradient-to-br from-surface via-transparent to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 
                 {/* Background ambient hover glow */}
-                <div className="absolute -inset-24 bg-gradient-to-br from-electric/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none" />
+                <div className="hidden dark:block absolute -inset-24 bg-gradient-to-br from-electric/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none" />
                 
                 <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight mb-6 sm:mb-8 text-center sm:text-left relative z-10">
                   {category.title}

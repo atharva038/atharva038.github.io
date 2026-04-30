@@ -244,7 +244,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   alt={project.title}
                   className="w-full h-full object-cover opacity-75"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f14] via-[#0f0f14]/30 to-transparent" />
+                <div className="hidden dark:block absolute inset-0 bg-gradient-to-t from-[#0f0f14] via-[#0f0f14]/30 to-transparent" />
               </div>
 
               <div className="px-6 sm:px-10 pb-8 pt-5">

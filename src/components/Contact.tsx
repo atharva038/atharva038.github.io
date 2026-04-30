@@ -176,7 +176,7 @@ export default function Contact() {
             className="md:col-span-2 space-y-5 sm:space-y-6"
           >
             <div className="glass-panel p-6 sm:p-8 rounded-3xl group relative overflow-hidden flex flex-col justify-center">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-electric/10 rounded-full blur-[40px] translate-x-1/2 -translate-y-1/2 group-hover:bg-electric/20 transition-colors duration-500" />
+              <div className="hidden dark:block absolute top-0 right-0 w-32 h-32 bg-electric/10 rounded-full blur-[40px] translate-x-1/2 -translate-y-1/2 group-hover:bg-electric/20 transition-colors duration-500" />
               <h3 className="font-serif font-bold text-foreground mb-6 sm:mb-8 text-2xl sm:text-3xl relative z-10 text-center sm:text-left">
                 Connect
               </h3>

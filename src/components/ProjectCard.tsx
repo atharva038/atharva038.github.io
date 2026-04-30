@@ -42,7 +42,7 @@ export function ProjectCard({ project, onClick, featured = false }: ProjectCardP
       />
       
       {/* Background ambient hover glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-electric/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="hidden dark:block absolute inset-0 bg-gradient-to-br from-electric/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
       {/* Image section */}
       <div
@@ -67,10 +67,10 @@ export function ProjectCard({ project, onClick, featured = false }: ProjectCardP
           onLoad={() => setImageLoaded(true)}
         />
         {/* Bottom fade overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/30 to-transparent" />
+        <div className="hidden dark:block absolute inset-0 bg-gradient-to-t from-surface via-surface/30 to-transparent" />
         {/* Right fade overlay for featured */}
         {featured && (
-          <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0a0a0a]" />
+          <div className="hidden dark:lg:block absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0a0a0a]" />
         )}
 
         {featured && (

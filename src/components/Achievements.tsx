@@ -88,7 +88,7 @@ export default function Achievements() {
                 onClick={() => achievement.image && setSelectedImage(achievement.image)}
               >
                 {/* Accent Glows */}
-                <div className="absolute inset-0 bg-gradient-to-br from-electric/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                <div className="hidden dark:block absolute inset-0 bg-gradient-to-br from-electric/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
                 {/* Achievement Image Background */}
                 {achievement.image && (
@@ -98,7 +98,7 @@ export default function Achievements() {
                       style={{ backgroundImage: `url(${achievement.image})` }}
                     />
                     {/* Gradient overlay to seamlessly merge the image with the card */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
+                    <div className="hidden dark:block absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
                   </div>
                 )}
 

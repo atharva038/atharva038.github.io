@@ -141,7 +141,7 @@ export function Component() {
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
         {/* Subtle gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-[#0d0d0d]" />
+        <div className="hidden dark:block absolute inset-0 bg-gradient-to-b from-background via-background to-[#0d0d0d]" />
 
         {/* Section header - top */}
         <motion.div

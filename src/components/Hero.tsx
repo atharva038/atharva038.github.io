@@ -54,9 +54,9 @@ export default function Hero() {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="glass-panel rounded-[1.5rem] sm:rounded-[2rem] p-5 sm:p-8 lg:p-12 border border-border shadow-2xl relative overflow-hidden"
         >
-          {/* Internal Glow Effect */}
-          <div className="absolute -top-32 -left-32 w-64 h-64 bg-electric/20 rounded-full blur-[80px]" />
-          <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-purple-500/20 rounded-full blur-[80px]" />
+          {/* Internal Glow Effect (dark mode only) */}
+          <div className="hidden dark:block absolute -top-32 -left-32 w-64 h-64 bg-electric/20 rounded-full blur-[80px]" />
+          <div className="hidden dark:block absolute -bottom-32 -right-32 w-64 h-64 bg-purple-500/20 rounded-full blur-[80px]" />
 
             <div className="relative grid lg:grid-cols-[minmax(0,1.5fr)_minmax(360px,1fr)] xl:grid-cols-[minmax(0,1.65fr)_minmax(440px,1fr)] gap-6 sm:gap-8 lg:gap-10 xl:gap-14 items-center">
             <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
@@ -68,8 +68,8 @@ export default function Hero() {
                   transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                   className="relative w-36 h-36 sm:w-44 sm:h-44 lg:w-48 lg:h-48 group shrink-0"
                 >
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-electric to-purple-500 opacity-40 blur-[24px] group-hover:opacity-80 group-hover:scale-110 transition-all duration-700" />
-                  <div className="relative w-full h-full rounded-full p-[3px] bg-gradient-to-b from-white/30 to-white/5 shadow-2xl backdrop-blur-md overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-500">
+                  <div className="hidden dark:block absolute inset-0 rounded-full bg-gradient-to-tr from-electric to-purple-500 opacity-40 blur-[24px] group-hover:opacity-80 group-hover:scale-110 transition-all duration-700" />
+                  <div className="relative w-full h-full rounded-full p-[3px] bg-border dark:bg-gradient-to-b dark:from-white/30 dark:to-white/5 shadow-2xl backdrop-blur-md overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-500">
                     <img
                       src="/me.jpeg"
                       alt={personalInfo.name}
@@ -85,7 +85,7 @@ export default function Hero() {
                   transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                   className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 group hidden sm:block shrink-0"
                 >
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-electric to-purple-500 opacity-30 blur-[40px] group-hover:opacity-60 group-hover:scale-110 transition-all duration-700" />
+                  <div className="hidden dark:block absolute inset-0 rounded-full bg-gradient-to-tr from-electric to-purple-500 opacity-30 blur-[40px] group-hover:opacity-60 group-hover:scale-110 transition-all duration-700" />
                   <Suspense fallback={<div className="w-full h-full rounded-full bg-white/5 animate-pulse" />}>
                     <Hero3DChessPiece />
                   </Suspense>
