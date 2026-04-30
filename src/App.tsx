@@ -3,7 +3,6 @@ import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import GlobalRipple from "@/components/ui/global-ripple";
 import TerminalView from "@/components/TerminalView";
 import SpotlightBackground from "@/components/SpotlightBackground";
 
@@ -58,7 +57,6 @@ function PageTransitionOverlay({
 }
 
 function App() {
-  const [enableEffects, setEnableEffects] = useState(false);
   const [isTerminalMode, setIsTerminalMode] = useState(false);
 
   // Transition state
@@ -71,14 +69,6 @@ function App() {
     damping: 30,
     restDelta: 0.001
   });
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 768px), (prefers-reduced-motion: reduce)");
-    const updateEffects = () => setEnableEffects(!mediaQuery.matches);
-    updateEffects();
-    mediaQuery.addEventListener("change", updateEffects);
-    return () => mediaQuery.removeEventListener("change", updateEffects);
-  }, []);
 
   const handleNavClick = (hash: string) => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -100,7 +90,7 @@ function App() {
   };
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
+    <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
       <PageTransitionOverlay
         isActive={isTransitioning}
         onCovered={handleTransitionCovered}
@@ -112,7 +102,6 @@ function App() {
           style={{ scaleX }}
         />
       )}
-      {enableEffects && <GlobalRipple />}
       <div className="relative min-h-screen text-foreground overflow-x-hidden selection:bg-electric selection:text-background">
         <SpotlightBackground />
 

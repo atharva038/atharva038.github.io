@@ -55,6 +55,7 @@ export default function MiniChess({
   const [lastMoveSquares, setLastMoveSquares] = useState<{ from: string; to: string } | null>(null);
   const requestRef = useRef(0);
   const boardWrapRef = useRef<HTMLDivElement | null>(null);
+  const [hasMeasured, setHasMeasured] = useState(false);
 
   const status = useMemo(() => statusFromGame(game), [game]);
 
@@ -77,8 +78,12 @@ export default function MiniChess({
 
     const updateBoardWidth = () => {
       const effectiveMax = isMobile ? Math.min(maxBoardWidth, mobileMaxBoardWidth) : maxBoardWidth;
-      const nextWidth = Math.max(minBoardWidth, Math.min(effectiveMax, Math.floor(node.clientWidth)));
-      setBoardWidth(nextWidth);
+      const w = Math.floor(node.clientWidth);
+      if (w > 0) {
+        const nextWidth = Math.max(minBoardWidth, Math.min(effectiveMax, w));
+        setBoardWidth(nextWidth);
+        setHasMeasured(true);
+      }
     };
 
     updateBoardWidth();
@@ -351,21 +356,28 @@ export default function MiniChess({
         ref={boardWrapRef}
         className="mx-auto w-fit max-w-full rounded-2xl overflow-hidden border border-border bg-surface/40"
       >
-        <Chessboard
-          options={{
-            id: "portfolio-mini-chess",
-            position: fen,
-            allowDragging: !isMobile && !isThinking && !game.isGameOver() && game.turn() === "w",
-            onPieceDrop: onDrop,
-            onSquareClick: onSquareClick,
-            squareStyles: squareStyles,
-            boardStyle: { width: `${boardWidth}px`, borderRadius: "0.75rem" },
-            darkSquareStyle: { backgroundColor: "rgba(94, 88, 81, 0.5)" },
-            lightSquareStyle: { backgroundColor: "rgba(247, 243, 236, 0.8)" },
-            dropSquareStyle: { boxShadow: "inset 0 0 1px 5px rgba(184, 103, 51, 0.45)" },
-            animationDurationInMs: 180,
-          }}
-        />
+        {hasMeasured ? (
+          <Chessboard
+            options={{
+              id: "portfolio-mini-chess",
+              position: fen,
+              allowDragging: !isMobile && !isThinking && !game.isGameOver() && game.turn() === "w",
+              onPieceDrop: onDrop,
+              onSquareClick: onSquareClick,
+              squareStyles: squareStyles,
+              boardStyle: { width: `${boardWidth}px`, borderRadius: "0.75rem" },
+              darkSquareStyle: { backgroundColor: "rgba(94, 88, 81, 0.5)" },
+              lightSquareStyle: { backgroundColor: "rgba(247, 243, 236, 0.8)" },
+              dropSquareStyle: { boxShadow: "inset 0 0 1px 5px rgba(184, 103, 51, 0.45)" },
+              animationDurationInMs: 180,
+            }}
+          />
+        ) : (
+          <div
+            style={{ width: `${boardWidth}px`, height: `${boardWidth}px` }}
+            className="animate-pulse rounded-xl bg-muted/40"
+          />
+        )}
       </div>
 
       <p className={`text-muted-foreground ${isMobile ? "mt-2 text-xs" : "mt-3 text-xs sm:text-sm"}`}>{status}</p>

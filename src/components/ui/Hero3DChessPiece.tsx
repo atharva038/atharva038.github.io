@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/purity */
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Edges } from "@react-three/drei";
 import * as THREE from "three";
@@ -161,9 +161,32 @@ function ChessKing() {
 }
 
 export default function Hero3DChessPiece() {
+  const [contextLost, setContextLost] = useState(false);
+
+  if (contextLost) {
+    return (
+      <div className="w-full h-full flex items-center justify-center opacity-30">
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-16 h-16 text-foreground">
+          <path d="M19 22H5v-2h14v2M17.16 8.26C18.34 6.3 18.08 3.77 16.43 2.12A5 5 0 0 0 8.11 7.8L11 12.16V15h2v-2.84l4.16-3.9M9 18h6v2H9v-2m4-7.31V15H9v-4.31l-3-4.36C5 4.76 5.7 2.71 7.37 1.63A5 5 0 0 1 14.9 3.5c1.38 2.07.93 4.79-.9 6.35L11 12.84V13H9v-.16L9 18z" />
+        </svg>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full h-full relative cursor-pointer">
-      <Canvas camera={{ position: [0, 0, 8], fov: 45 }} className="w-full h-full absolute inset-0">
+      <Canvas
+        camera={{ position: [0, 0, 8], fov: 45 }}
+        className="w-full h-full absolute inset-0"
+        gl={{ powerPreference: "high-performance", antialias: false }}
+        onCreated={({ gl }) => {
+          const canvas = gl.domElement;
+          canvas.addEventListener("webglcontextlost", (e) => {
+            e.preventDefault();
+            setContextLost(true);
+          });
+        }}
+      >
         {/* Dynamic Studio Lighting */}
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 10, 5]} intensity={2.5} color="#06b6d4" />
