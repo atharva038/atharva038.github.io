@@ -140,8 +140,7 @@ export default function Hero() {
 
               {/* CTA buttons */}
               <div className="flex flex-wrap gap-3 sm:gap-4">
-                <MagneticButton
-                  as="a"
+                <a
                   href="#projects"
                   className="px-7 py-3 text-sm font-bold uppercase tracking-widest transition-all duration-200 border"
                   style={{
@@ -151,7 +150,7 @@ export default function Hero() {
                   }}
                 >
                   View Work →
-                </MagneticButton>
+                </a>
                 <MagneticButton
                   as="a"
                   href={personalInfo.github}
