@@ -1,6 +1,6 @@
 import {Suspense, lazy, useEffect, useState} from "react";
 import {motion} from "framer-motion";
-import {ArrowDown, Github, Linkedin, Brain,LaptopMinimalCheck} from "lucide-react";
+import {Github, Linkedin, Brain,LaptopMinimalCheck} from "lucide-react";
 import {personalInfo} from "@/data/portfolio-data";
 import MagneticButton from "@/components/ui/MagneticButton";
 import {useTheme} from "@/components/ThemeProvider";
