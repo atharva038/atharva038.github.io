@@ -4,28 +4,28 @@
 :root,
 .light {
   /* BLK/DEV Light — white background, black editorial, yellow accent */
-  --theme-background: #ffffff;
+  --theme-background: #F8F6F2;
   --theme-foreground: #0a0a0a;
   --theme-accent: #0a0a0a;
   --theme-accent-muted: #444444;
   --theme-accent-dim: #888888;
-  --theme-surface: #f5f5f5;
+  --theme-surface: #F8F6F2;
   --theme-surface-light: #ebebeb;
   --theme-border: #0a0a0a;
   --theme-border-hover: #000000;
-  --theme-muted: #e8e8e8;
+  --theme-muted: #2d2c2b;
   --theme-muted-foreground: #666666;
   --theme-electric: #0a0a0a;
 
-  --glass-bg: #f5f5f5;
+  --glass-bg: #F8F6F2;
   --glass-border: #0a0a0a;
   --glass-shadow: rgba(0, 0, 0, 0.1);
   --glass-blur: none;
   --glass-shadow-full: 4px 4px 0px 0px #0a0a0a;
   --glass-inset: transparent;
 
-  --glass-panel-bg1: #ffffff;
-  --glass-panel-bg2: #f5f5f5;
+  --glass-panel-bg1: #F8F6F2;
+  --glass-panel-bg2: #F8F6F2;
   --glass-panel-shadow-full: 4px 4px 0px 0px #0a0a0a;
 
   --glass-btn-base-bg: #ffffff;
