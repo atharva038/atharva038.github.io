@@ -406,13 +406,6 @@ export default function Hero() {
           </div>
         </motion.div>
       </div>
-
-      <a
-        href="#about"
-        className="absolute bottom-6 sm:bottom-10 text-muted-foreground/60 hover:text-foreground transition-colors bounce-arrow z-10 p-2 dark:glass-button rounded-full border border-foreground dark:border-transparent"
-      >
-        <ArrowDown size={24} />
-      </a>
     </section>
   );
 }
