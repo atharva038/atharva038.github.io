@@ -210,11 +210,11 @@ export default function Hero() {
                 <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-4">
                   ◆ Play Me In Chess
                 </p>
-                <div className="flex items-center">
+                <div className="flex-1 items-center">
                   <Suspense fallback={<ChessFallback />}>
                     <MiniChess
                       minBoardWidth={220}
-                      maxBoardWidth={500}
+                      maxBoardWidth={600}
                       mobileMaxBoardWidth={280}
                     />
                   </Suspense>
@@ -247,7 +247,7 @@ export default function Hero() {
                   initial={{opacity: 0, x: 16}}
                   animate={{opacity: 1, x: 0}}
                   transition={{duration: 0.4, delay: 0.5 + i * 0.1}}
-                  className="flex items-start gap-4 p-5 border-b border-border last:border-b-0 group hover:bg-muted transition-colors duration-200"
+                  className="flex items-start gap-4 p-5 border-b border-border last:border-b-0 group hover:bg-muted  transition-colors duration-200"
                 >
                   <span className="font-mono text-[10px] text-muted-foreground/50 mt-0.5 shrink-0">
                     {item.num}
