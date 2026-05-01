@@ -56,7 +56,7 @@ export default function Hero() {
       )}
 
       {/* ── DEFAULT MODE: BLK/DEV Industrial layout (light + blkdev themes) ── */}
-      <div className="dark:hidden relative z-10 px-4 sm:px-8 xl:px-16 w-full max-w-[1700px]">
+      <div className={`${theme === "dark" ? "hidden" : "block"} relative z-10 px-4 sm:px-8 xl:px-16 w-full max-w-[1700px]`}>
         <motion.div
           initial={{opacity: 0, y: 30}}
           animate={{opacity: 1, y: 0}}
@@ -293,7 +293,7 @@ export default function Hero() {
       </div>
 
       {/* ── DARK MODE: Glassmorphic panel (original) ── */}
-      <div className="hidden dark:block relative z-10 px-4 sm:px-6 xl:px-10 2xl:px-16 w-full max-w-[1700px]">
+      <div className={`${theme === "dark" ? "block" : "hidden"} relative z-10 px-4 sm:px-6 xl:px-10 2xl:px-16 w-full max-w-[1700px]`}>
         <motion.div
           initial={{opacity: 0, y: 40, scale: 0.95}}
           animate={{opacity: 1, y: 0, scale: 1}}
