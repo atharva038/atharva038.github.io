@@ -121,12 +121,12 @@ function App() {
             <>
               <Hero />
               <Suspense fallback={<SectionFallback />}>
+                <OpenToWork />
                 <About />
                 <Skills />
                 <Experience />
                 <Projects />
                 <Achievements />
-                <OpenToWork />
                 <Contact />
                 <Footer />
               </Suspense>
