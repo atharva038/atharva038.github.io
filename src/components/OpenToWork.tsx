@@ -73,7 +73,6 @@ const folders = ["api/", "routes/", "controllers/", "models/", "services/", "uti
 export default function OpenToWork() {
   return (
     <section
-      id="open-to-work"
       className="relative scroll-mt-28 overflow-hidden bg-transparent px-4 pb-16 pt-28 text-foreground sm:px-6 sm:pb-24 sm:pt-32"
     >
       <div

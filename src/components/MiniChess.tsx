@@ -230,7 +230,7 @@ export default function MiniChess({
         to: targetSquare,
         promotion: isPawnPromotion ? "q" : undefined,
       });
-    } catch (_e) {
+    } catch {
       // chess.js throws an error for illegal moves
       return false;
     }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { memo, useState, useEffect, useRef } from "react";
 import { Menu, X, TerminalSquare, MonitorSmartphone } from "lucide-react";
 import { navLinks } from "@/data/portfolio-data";
 import { cn } from "@/lib/utils";
@@ -11,23 +11,53 @@ interface NavbarProps {
   onNavClick?: (hash: string) => void;
 }
 
-export default function Navbar({ isTerminalMode = false, setIsTerminalMode, onNavClick }: NavbarProps) {
+function Navbar({ isTerminalMode = false, setIsTerminalMode, onNavClick }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navRef = useRef<HTMLElement | null>(null);
+  const scrolledRef = useRef(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => {
+      const nextScrolled = window.scrollY > 50;
+      if (scrolledRef.current === nextScrolled) return;
+      scrolledRef.current = nextScrolled;
+      setScrolled(nextScrolled);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (!navRef.current?.contains(event.target as Node)) {
+        setMobileOpen(false);
+      }
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileOpen(false);
+    };
+
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [mobileOpen]);
 
   return (
     <nav
+      ref={navRef}
       className={cn(
         "fixed top-2 sm:top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 w-[94%] sm:w-[92%] max-w-5xl rounded-full border",
         scrolled 
-          ? "backdrop-blur-2xl bg-surface border-border shadow-[0_8px_32px_var(--glass-shadow)]" 
+          ? "backdrop-blur-md sm:backdrop-blur-xl bg-surface border-border shadow-[0_8px_32px_var(--glass-shadow)]" 
           : "bg-transparent border-transparent"
       )}
     >
@@ -87,7 +117,10 @@ export default function Navbar({ isTerminalMode = false, setIsTerminalMode, onNa
           
           {setIsTerminalMode && (
             <MagneticButton
-              onClick={() => setIsTerminalMode(!isTerminalMode)}
+              onClick={() => {
+                setMobileOpen(false);
+                setIsTerminalMode(!isTerminalMode);
+              }}
               className="text-muted-foreground hover:text-foreground p-2 hover:bg-surface-light rounded-full transition-colors flex items-center"
               aria-label="Toggle Terminal Mode"
               title={isTerminalMode ? "Switch to Visual Mode" : "Switch to Terminal Mode"}
@@ -103,6 +136,9 @@ export default function Navbar({ isTerminalMode = false, setIsTerminalMode, onNa
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden text-foreground p-2 hover:bg-surface-light rounded-full transition-colors"
               aria-label="Toggle menu"
+              aria-controls="mobile-nav-menu"
+              aria-expanded={mobileOpen}
+              type="button"
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </MagneticButton>
@@ -111,7 +147,10 @@ export default function Navbar({ isTerminalMode = false, setIsTerminalMode, onNa
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden backdrop-blur-2xl bg-surface absolute top-full left-0 right-0 mt-2 mx-auto rounded-3xl p-5 border border-border shadow-[0_8px_32px_var(--glass-shadow)] animate-in fade-in slide-in-from-top-4 duration-300">
+        <div
+          id="mobile-nav-menu"
+          className="md:hidden backdrop-blur-md bg-surface absolute top-full left-0 right-0 mt-2 mx-auto rounded-3xl p-5 border border-border shadow-[0_8px_32px_var(--glass-shadow)] animate-in fade-in slide-in-from-top-4 duration-300"
+        >
           <ul className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -137,3 +176,5 @@ export default function Navbar({ isTerminalMode = false, setIsTerminalMode, onNa
     </nav>
   );
 }
+
+export default memo(Navbar);

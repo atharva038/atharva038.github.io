@@ -13,7 +13,7 @@ const fadeUp: Variants = {
 
 export default function About() {
   return (
-    <section id="about" className="py-20 sm:py-32 px-4 sm:px-6 relative">
+    <section className="py-20 sm:py-32 px-4 sm:px-6 relative">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

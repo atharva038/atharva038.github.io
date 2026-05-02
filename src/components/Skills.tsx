@@ -16,7 +16,15 @@ function MarqueeRow({ skills, reverse = false }: { skills: { name: string; icon:
               key={`${skill.name}-${i}`}
               className="flex items-center gap-2 sm:gap-3 px-5 sm:px-6 py-2 sm:py-3 mx-2 sm:mx-3 rounded-full glass hover:bg-surface text-sm sm:text-base text-foreground whitespace-nowrap transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_var(--glow-color1)] cursor-default"
             >
-              <img src={skill.icon} alt={skill.name} className="w-5 h-5 sm:w-6 sm:h-6 object-contain drop-shadow-md" />
+              <img
+                src={skill.icon}
+                alt={skill.name}
+                width={24}
+                height={24}
+                loading="lazy"
+                decoding="async"
+                className="w-5 h-5 sm:w-6 sm:h-6 object-contain drop-shadow-md"
+              />
               <span className="font-medium tracking-wide">{skill.name}</span>
             </div>
           );
@@ -32,7 +40,7 @@ export default function Skills() {
   const secondHalf = allSkillsWithIcons.slice(Math.ceil(allSkillsWithIcons.length / 2));
 
   return (
-    <section id="skills" className="py-20 sm:py-32 px-4 sm:px-6 relative">
+    <section className="py-20 sm:py-32 px-4 sm:px-6 relative">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -98,7 +106,15 @@ export default function Skills() {
                         key={skill.name}
                         className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm rounded-xl glass bg-surface text-foreground hover:bg-surface hover:text-foreground transition-colors duration-200"
                       >
-                        <img src={skill.icon} alt={skill.name} className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+                        <img
+                          src={skill.icon}
+                          alt={skill.name}
+                          width={20}
+                          height={20}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-4 h-4 sm:w-5 sm:h-5 object-contain"
+                        />
                         {skill.name}
                       </span>
                     );

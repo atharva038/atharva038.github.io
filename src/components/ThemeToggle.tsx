@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useTheme, type Theme } from "./ThemeProvider";
+import { useTheme, type Theme } from "./theme-context";
 import MagneticButton from "@/components/ui/MagneticButton";
 
 const themes: { value: Theme; label: string; icon: string; desc: string }[] = [
@@ -27,10 +27,16 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const openRef = useRef(false);
+
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
 
   // Close on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
+      if (!openRef.current) return;
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false);
       }

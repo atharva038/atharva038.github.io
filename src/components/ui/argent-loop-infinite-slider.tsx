@@ -117,12 +117,15 @@ export function Component() {
     container.addEventListener("touchmove", handleTouchMove, { passive: false });
     container.addEventListener("touchend", handleTouchEnd, { passive: true });
 
+    const timeoutRef = scrollTimeout;
+
     return () => {
+      const timeout = timeoutRef.current;
       window.removeEventListener("wheel", handleWheel);
       container.removeEventListener("touchstart", handleTouchStart);
       container.removeEventListener("touchmove", handleTouchMove);
       container.removeEventListener("touchend", handleTouchEnd);
-      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+      if (timeout) clearTimeout(timeout);
     };
   }, [activeIndex, changeSlide]);
 

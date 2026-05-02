@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
   X,
@@ -146,8 +146,9 @@ interface ProjectModalProps {
 }
 
 export function ProjectModal({ project, onClose }: ProjectModalProps) {
-  const [scrollProgress, setScrollProgress] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const scrollRafRef = useRef<number | null>(null);
 
   const cs = project.caseStudy!;
 
@@ -170,15 +171,33 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
   // Reset scroll progress on open
   useEffect(() => {
-    setScrollProgress(0);
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
+    if (progressRef.current) progressRef.current.style.transform = "scaleX(0)";
   }, [project.id]);
 
   const handleScroll = useCallback(() => {
-    if (!scrollRef.current) return;
-    const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
-    const max = scrollHeight - clientHeight;
-    setScrollProgress(max > 0 ? Math.min((scrollTop / max) * 100, 100) : 0);
+    if (scrollRafRef.current !== null) return;
+
+    scrollRafRef.current = requestAnimationFrame(() => {
+      if (!scrollRef.current || !progressRef.current) {
+        scrollRafRef.current = null;
+        return;
+      }
+
+      const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+      const max = scrollHeight - clientHeight;
+      const progress = max > 0 ? Math.min(scrollTop / max, 1) : 0;
+      progressRef.current.style.transform = `scaleX(${progress})`;
+      scrollRafRef.current = null;
+    });
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (scrollRafRef.current !== null) {
+        cancelAnimationFrame(scrollRafRef.current);
+      }
+    };
   }, []);
 
   return (
@@ -210,9 +229,9 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* ── Progress bar ───────────────────────────────────────────── */}
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-surface z-20 rounded-full overflow-hidden">
             <motion.div
+              ref={progressRef}
               className="h-full bg-electric rounded-full"
-              animate={{ width: `${scrollProgress}%` }}
-              transition={{ duration: 0.08, ease: "linear" }}
+              style={{ transform: "scaleX(0)", transformOrigin: "left" }}
             />
           </div>
 
@@ -243,6 +262,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <img
                   src={project.image}
                   alt={`${project.title} case study preview screenshot`}
+                  width={1600}
+                  height={700}
+                  loading="eager"
+                  decoding="async"
                   className="w-full h-full object-cover opacity-75"
                 />
                 <div className="hidden dark:block absolute inset-0 bg-gradient-to-t from-[#0f0f14] via-[#0f0f14]/30 to-transparent" />

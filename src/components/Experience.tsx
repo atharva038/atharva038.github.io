@@ -30,7 +30,7 @@ export default function Experience() {
   const [activeId, setActiveId] = useState<number | null>(null);
 
   return (
-    <section id="experience" className="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden">
+    <section className="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden">
       {/* Ambient background glow (dark mode only) */}
       <div className="hidden dark:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-surface blur-[120px] pointer-events-none" />
 

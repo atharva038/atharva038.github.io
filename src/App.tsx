@@ -1,10 +1,11 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import TerminalView from "@/components/TerminalView";
 import SpotlightBackground from "@/components/SpotlightBackground";
+import LazyOnVisible from "@/components/LazyOnVisible";
 
 const About = lazy(() => import("@/components/About"));
 const Skills = lazy(() => import("@/components/Skills"));
@@ -72,16 +73,16 @@ function App() {
     restDelta: 0.001
   });
 
-  const handleNavClick = (hash: string) => {
+  const handleNavClick = useCallback((hash: string) => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       window.location.hash = hash;
       return;
     }
     setTargetHash(hash);
     setIsTransitioning(true);
-  };
+  }, []);
 
-  const handleTransitionCovered = () => {
+  const handleTransitionCovered = useCallback(() => {
     const element = document.querySelector(targetHash);
     if (element) {
       const offset = element.getBoundingClientRect().top + window.scrollY;
@@ -89,7 +90,7 @@ function App() {
       window.history.pushState(null, '', targetHash);
     }
     setIsTransitioning(false);
-  };
+  }, [targetHash]);
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
@@ -120,16 +121,42 @@ function App() {
           ) : (
             <>
               <Hero />
-              <Suspense fallback={<SectionFallback />}>
-                <OpenToWork />
-                <About />
-                <Skills />
-                <Experience />
-                <Projects />
-                <Achievements />
-                <Contact />
-                <Footer />
-              </Suspense>
+              <LazyOnVisible id="open-to-work" minHeight="18rem">
+                <Suspense fallback={<SectionFallback />}>
+                  <OpenToWork />
+                </Suspense>
+              </LazyOnVisible>
+              <LazyOnVisible id="about">
+                <Suspense fallback={<SectionFallback />}>
+                  <About />
+                </Suspense>
+              </LazyOnVisible>
+              <LazyOnVisible id="skills">
+                <Suspense fallback={<SectionFallback />}>
+                  <Skills />
+                </Suspense>
+              </LazyOnVisible>
+              <LazyOnVisible id="experience">
+                <Suspense fallback={<SectionFallback />}>
+                  <Experience />
+                </Suspense>
+              </LazyOnVisible>
+              <LazyOnVisible id="projects" minHeight="32rem">
+                <Suspense fallback={<SectionFallback />}>
+                  <Projects />
+                </Suspense>
+              </LazyOnVisible>
+              <LazyOnVisible id="achievements" minHeight="32rem">
+                <Suspense fallback={<SectionFallback />}>
+                  <Achievements />
+                </Suspense>
+              </LazyOnVisible>
+              <LazyOnVisible id="contact" minHeight="18rem">
+                <Suspense fallback={<SectionFallback />}>
+                  <Contact />
+                  <Footer />
+                </Suspense>
+              </LazyOnVisible>
             </>
           )}
         </div>

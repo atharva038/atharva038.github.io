@@ -57,20 +57,25 @@ export default function SectionController({ isTerminalMode, setIsTerminalMode }:
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace("#", "");
-      if (sectionComponents[hash] && hash !== activeSection) {
-        setTransitionType(getRandomTransition());
-        setActiveSection(hash);
-      } else if (!hash && activeSection !== "hero") {
-        setTransitionType(getRandomTransition());
-        setActiveSection("hero");
+      const nextSection = sectionComponents[hash] ? hash : !hash ? "hero" : null;
+
+      if (nextSection) {
+        setActiveSection((currentSection) => {
+          if (currentSection === nextSection) return currentSection;
+          setTransitionType(getRandomTransition());
+          return nextSection;
+        });
       }
     };
 
     handleHashChange(); // handle initial load
-    setTimeout(() => setIsInitialLoad(false), 100);
+    const initialLoadTimer = window.setTimeout(() => setIsInitialLoad(false), 100);
 
     window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
+    return () => {
+      window.clearTimeout(initialLoadTimer);
+      window.removeEventListener("hashchange", handleHashChange);
+    };
   }, []);
   // When section changes, reset scroll to top of the container
   useEffect(() => {
@@ -80,7 +85,7 @@ export default function SectionController({ isTerminalMode, setIsTerminalMode }:
     }
   }, [activeSection]);
 
-  const handleScroll = (_e: React.UIEvent<HTMLDivElement>) => {
+  const handleScroll = () => {
     // scroll tracking reserved for future use
   };
 

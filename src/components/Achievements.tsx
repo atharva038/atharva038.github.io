@@ -45,7 +45,7 @@ export default function Achievements() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
-    <section id="achievements" className="py-20 sm:py-32 px-4 sm:px-6 relative">
+    <section className="py-20 sm:py-32 px-4 sm:px-6 relative">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -171,6 +171,10 @@ export default function Achievements() {
               <img
                 src={selectedImage}
                 alt="Achievement Fullscreen"
+                width={1200}
+                height={900}
+                loading="eager"
+                decoding="async"
                 className="w-full h-auto max-h-[85vh] object-contain rounded-xl"
               />
             </motion.div>

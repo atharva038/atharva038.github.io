@@ -3,7 +3,7 @@ import {motion} from "framer-motion";
 import {Github, Linkedin, Brain,LaptopMinimalCheck} from "lucide-react";
 import {personalInfo} from "@/data/portfolio-data";
 import MagneticButton from "@/components/ui/MagneticButton";
-import {useTheme} from "@/components/ThemeProvider";
+import {useTheme} from "@/components/theme-context";
 
 const MiniChess = lazy(() => import("@/components/MiniChess"));
 const InfinitePlaneBg = lazy(() => import("@/components/ui/infinite-plane"));
@@ -98,6 +98,11 @@ export default function Hero() {
                   <img
                     src="/me.jpeg"
                     alt={`${personalInfo.name}, full-stack developer`}
+                    width={1600}
+                    height={899}
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
                     className="w-full h-full object-cover"
                   />
                 </motion.div>
@@ -319,6 +324,11 @@ export default function Hero() {
                     <img
                       src="/me.jpeg"
                       alt={`${personalInfo.name}, full-stack developer and builder`}
+                      width={1600}
+                      height={899}
+                      loading="eager"
+                      fetchPriority="high"
+                      decoding="async"
                       className="w-full h-full object-cover rounded-[calc(100%-3px)] border border-white/5"
                     />
                   </div>

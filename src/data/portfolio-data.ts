@@ -37,34 +37,34 @@ export const skillCategories: SkillCategory[] = [
   {
     title: "Frontend",
     skills: [
-      { name: "React.js", icon: "/img/skills/reactjs.png" },
-      { name: "HTML/CSS/JS", icon: "/img/skills/html-css-js.png" },
-      { name: "TypeScript", icon: "/img/skills/typescript.png" },
-      { name: "Tailwind CSS", icon: "/img/skills/tailwind.png" },
-      { name: "Bootstrap", icon: "/img/skills/bootstrap.png" },
+      { name: "React.js", icon: "/img/skills/reactjs.webp" },
+      { name: "HTML/CSS/JS", icon: "/img/skills/html-css-js.webp" },
+      { name: "TypeScript", icon: "/img/skills/typescript.webp" },
+      { name: "Tailwind CSS", icon: "/img/skills/tailwind.webp" },
+      { name: "Bootstrap", icon: "/img/skills/bootstrap.webp" },
     ],
   },
   {
     title: "Backend",
     skills: [
-      { name: "Node.js", icon: "/img/skills/nodejs.png" },
-      { name: "Express.js", icon: "/img/skills/nodejs.png" },
+      { name: "Node.js", icon: "/img/skills/nodejs.webp" },
+      { name: "Express.js", icon: "/img/skills/nodejs.webp" },
     ],
   },
   {
     title: "Database",
     skills: [
-      { name: "MongoDB", icon: "/img/skills/mongo-db.png" },
-      { name: "SQL", icon: "/img/skills/sql.png" },
+      { name: "MongoDB", icon: "/img/skills/mongo-db.webp" },
+      { name: "SQL", icon: "/img/skills/sql.webp" },
     ],
   },
   {
     title: "AI & Tools",
     skills: [
-      { name: "Agentic AI", icon: "/img/skills/openAi-agent.png" },
-      { name: "AI", icon: "/img/skills/ai.png" },
-      { name: "Git & GitHub", icon: "/img/skills/git.png" },
-      { name: "Framer Motion", icon: "/img/skills/framer-motion.png" },
+      { name: "Agentic AI", icon: "/img/skills/openAi-agent.webp" },
+      { name: "AI", icon: "/img/skills/ai.webp" },
+      { name: "Git & GitHub", icon: "/img/skills/git.webp" },
+      { name: "Framer Motion", icon: "/img/skills/framer-motion.webp" },
     ],
   },
 ];
@@ -457,7 +457,7 @@ export const achievements: AchievementItem[] = [
     icon: "trophy",
     rank: "1st Place",
     piece: "king",
-    image: "/achievments/Shark-Tank-Image.png",
+    image: "/achievments/Shark-Tank-Image.webp",
   },
   {
     id: 2,
@@ -469,7 +469,7 @@ export const achievements: AchievementItem[] = [
     icon: "crown",
     rank: "Winner",
     piece: "queen",
-    image: "/achievments/sarvah.png",
+    image: "/achievments/sarvah.webp",
   },
   {
     id: 3,
@@ -481,7 +481,7 @@ export const achievements: AchievementItem[] = [
     icon: "star",
     rank: "Top 16",
     piece: "knight",
-    image: "/achievments/Hackathon.png",
+    image: "/achievments/Hackathon.webp",
   },
   {
     id: 5,
@@ -492,7 +492,7 @@ export const achievements: AchievementItem[] = [
       "Built and managed live registration flows for both the Marathon event and the main Zenith 26 tech fest. Real participants registered through the platform under actual event pressure — no dry run, no test data.",
     icon: "flame",
     piece: "bishop",
-    image: "/achievments/Real-Event-Registration.png",
+    image: "/achievments/Real-Event-Registration.webp",
   },
   {
     id: 6,

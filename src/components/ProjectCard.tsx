@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import type { Project } from "@/data/portfolio-data";
@@ -12,10 +12,6 @@ interface ProjectCardProps {
 export function ProjectCard({ project, onClick, featured = false }: ProjectCardProps) {
   const cs = project.caseStudy;
   const [imageLoaded, setImageLoaded] = useState(false);
-
-  useEffect(() => {
-    setImageLoaded(false);
-  }, [project.image]);
 
   return (
     <motion.article
@@ -61,9 +57,12 @@ export function ProjectCard({ project, onClick, featured = false }: ProjectCardP
         <img
           src={project.image}
           alt={`${project.title} ${project.category} project screenshot by Atharva Joshi`}
+          width={1600}
+          height={900}
           className={`w-full h-full object-cover group-hover:scale-[1.04] transition-all duration-500 ${imageLoaded ? "opacity-65 group-hover:opacity-85" : "opacity-0"}`}
           loading="lazy"
           decoding="async"
+          sizes={featured ? "(min-width: 1024px) 560px, 100vw" : "(min-width: 640px) 50vw, 100vw"}
           onLoad={() => setImageLoaded(true)}
         />
         {/* Bottom fade overlay */}
