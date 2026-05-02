@@ -37,7 +37,8 @@ export default function Navbar({ isTerminalMode = false, setIsTerminalMode, onNa
       )}>
         <a
           href="#hero"
-          className="text-xl font-bold text-foreground flex items-center gap-2 hover:text-electric transition-colors"
+          aria-label="Atharva Sachin Joshi - Home"
+          className="group/logo relative inline-flex h-10 w-12 items-center overflow-hidden rounded-full text-foreground outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#F5D000]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-36"
           onClick={(e) => {
             if (isTerminalMode && setIsTerminalMode) {
               e.preventDefault();
@@ -45,7 +46,19 @@ export default function Navbar({ isTerminalMode = false, setIsTerminalMode, onNa
             }
           }}
         >
-          <span className="font-serif tracking-wide">AJ</span>
+          <span className="inline-flex h-9 w-10 items-center justify-center rounded-full border border-border/70 bg-surface/70 font-serif text-lg font-bold tracking-wide shadow-[2px_2px_0_var(--theme-border)] transition-all duration-300 motion-reduce:transition-none sm:group-hover/logo:-translate-x-2 sm:group-hover/logo:opacity-0 sm:group-focus-visible/logo:-translate-x-2 sm:group-focus-visible/logo:opacity-0">
+            <span>A</span>
+            <span className="text-[#F5D000]">J</span>
+          </span>
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1 hidden h-9 translate-x-3 items-center whitespace-nowrap font-mono text-sm font-semibold opacity-0 transition-all duration-300 motion-reduce:transition-none sm:inline-flex sm:group-hover/logo:translate-x-0 sm:group-hover/logo:opacity-100 sm:group-focus-visible/logo:translate-x-0 sm:group-focus-visible/logo:opacity-100"
+          >
+            <span className="text-[#F5D000]">&lt;</span>
+            <span>Atharva</span>
+            <span className="text-[#F5D000]">&nbsp;/&gt;</span>
+            <span className="ml-1 h-4 w-px bg-[#F5D000] opacity-80 transition-opacity duration-150 group-hover/logo:animate-pulse group-focus-visible/logo:animate-pulse" />
+          </span>
         </a>
 
         <div className="flex items-center gap-4 md:gap-8">
