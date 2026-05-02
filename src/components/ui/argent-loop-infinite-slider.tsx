@@ -191,7 +191,7 @@ export function Component() {
                       ) : (
                         <img
                           src={project.image}
-                          alt={project.title}
+                          alt={`${project.title} featured project screenshot`}
                           className="w-full h-full object-cover object-top"
                         />
                       )}

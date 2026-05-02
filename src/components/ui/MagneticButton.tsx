@@ -9,6 +9,7 @@ interface MagneticButtonProps {
   href?: string;
   target?: string;
   rel?: string;
+  download?: string | boolean;
   onClick?: React.MouseEventHandler;
   onMouseEnter?: React.MouseEventHandler;
   onMouseLeave?: React.MouseEventHandler;

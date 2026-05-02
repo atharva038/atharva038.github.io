@@ -242,7 +242,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               <div className="relative w-full aspect-[16/7] overflow-hidden bg-surface-light">
                 <img
                   src={project.image}
-                  alt={project.title}
+                  alt={`${project.title} case study preview screenshot`}
                   className="w-full h-full object-cover opacity-75"
                 />
                 <div className="hidden dark:block absolute inset-0 bg-gradient-to-t from-[#0f0f14] via-[#0f0f14]/30 to-transparent" />

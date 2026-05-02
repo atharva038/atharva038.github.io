@@ -182,10 +182,11 @@ export default function OpenToWork() {
                 />
               </MagneticButton>
               <MagneticButton
-                href="#experience"
-                className="glass-button  inline-flex w-full min-h-14 items-center justify-center gap-2 whitespace-nowrap px-4 py-3 text-sm font-semibold text-foreground"
+                href="/Atharva-Resume.pdf"
+                download="Atharva-Resume.pdf"
+                className="glass-button inline-flex w-full min-h-14 items-center justify-center gap-2 whitespace-nowrap px-4 py-3 text-sm font-semibold text-foreground"
               >
-                View Resume
+                Download Resume
                 <ArrowDownToLine size={17} />
               </MagneticButton>
               <MagneticButton

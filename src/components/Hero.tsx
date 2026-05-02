@@ -97,7 +97,7 @@ export default function Hero() {
                 >
                   <img
                     src="/me.jpeg"
-                    alt={personalInfo.name}
+                    alt={`${personalInfo.name}, full-stack developer`}
                     className="w-full h-full object-cover"
                   />
                 </motion.div>
@@ -318,7 +318,7 @@ export default function Hero() {
                   <div className="relative w-full h-full rounded-full p-[3px] bg-gradient-to-b from-white/30 to-white/5 shadow-2xl backdrop-blur-md overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-500">
                     <img
                       src="/me.jpeg"
-                      alt={personalInfo.name}
+                      alt={`${personalInfo.name}, full-stack developer and builder`}
                       className="w-full h-full object-cover rounded-[calc(100%-3px)] border border-white/5"
                     />
                   </div>

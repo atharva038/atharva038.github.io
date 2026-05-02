@@ -60,7 +60,7 @@ export function ProjectCard({ project, onClick, featured = false }: ProjectCardP
         />
         <img
           src={project.image}
-          alt={project.title}
+          alt={`${project.title} ${project.category} project screenshot by Atharva Joshi`}
           className={`w-full h-full object-cover group-hover:scale-[1.04] transition-all duration-500 ${imageLoaded ? "opacity-65 group-hover:opacity-85" : "opacity-0"}`}
           loading="lazy"
           decoding="async"
