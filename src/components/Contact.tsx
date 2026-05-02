@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Send, Github, Mail, Linkedin } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { personalInfo } from "@/data/portfolio-data";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
@@ -147,14 +148,14 @@ export default function Contact() {
                 placeholder="Let's build something great..."
               />
             </div>
-            <button
+            <MagneticButton
               type="submit"
               disabled={isSubmitting}
               className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-foreground text-background font-semibold rounded-xl hover:bg-electric hover:text-foreground hover:shadow-[0_0_20px_var(--glow-color1)] transition-all duration-300 flex items-center justify-center gap-2 group w-full sm:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
             >
               <Send size={18} className="group-hover:translate-x-1 transition-transform" />
               {isSubmitting ? "Sending..." : "Send Message"}
-            </button>
+            </MagneticButton>
 
             {submitStatus === "success" && (
               <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3 text-sm text-green-200">

@@ -2,6 +2,7 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, ChevronDown } from "lucide-react";
 import { projects } from "@/data/portfolio-data";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 function BrowserFrame({ url, children }: { url: string; children: React.ReactNode }) {
   return (
@@ -244,7 +245,7 @@ export function Component() {
                 {/* Action buttons */}
                 <div className="flex gap-3 mt-2 sm:mt-3">
                   {project.github && (
-                    <a
+                    <MagneticButton
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -252,10 +253,10 @@ export function Component() {
                     >
                       <Github size={14} className="group-hover:scale-110 transition-transform" />
                       Source
-                    </a>
+                    </MagneticButton>
                   )}
                   {project.live && (
-                    <a
+                    <MagneticButton
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -263,7 +264,7 @@ export function Component() {
                     >
                       <ExternalLink size={14} className="group-hover:scale-110 transition-transform" />
                       Live Demo
-                    </a>
+                    </MagneticButton>
                   )}
                 </div>
               </motion.div>

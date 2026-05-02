@@ -21,6 +21,7 @@ import {
   ArrowDown,
 } from "lucide-react";
 import type { Project, ArchLayer } from "@/data/portfolio-data";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 // ─── Icon registry ────────────────────────────────────────────────────────────
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -216,13 +217,13 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
 
           {/* ── Close button ───────────────────────────────────────────── */}
-          <button
+          <MagneticButton
             onClick={onClose}
             className="absolute top-4 right-4 z-20 p-2 rounded-full bg-surface border border-border text-muted-foreground hover:text-foreground hover:bg-white/[0.1] transition-all duration-200"
             aria-label="Close case study"
           >
             <X size={16} />
-          </button>
+          </MagneticButton>
 
           {/* ── Scrollable content ─────────────────────────────────────── */}
           <div
@@ -270,7 +271,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 {/* CTA buttons */}
                 <div className="flex flex-wrap gap-3">
                   {project.live && (
-                    <a
+                    <MagneticButton
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -278,10 +279,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     >
                       <ExternalLink size={14} />
                       Live Demo
-                    </a>
+                    </MagneticButton>
                   )}
                   {project.github && (
-                    <a
+                    <MagneticButton
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -289,7 +290,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     >
                       <Github size={14} />
                       GitHub
-                    </a>
+                    </MagneticButton>
                   )}
                 </div>
               </div>

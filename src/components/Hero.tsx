@@ -162,14 +162,14 @@ export default function Hero() {
                 <div className="flex-1 px-4 py-3 font-mono text-xs text-muted-foreground bg-surface">
                   $ contact --hire atharva
                 </div>
-                <a
+                <MagneticButton
                   href="#contact"
                   className="flex items-center justify-center px-5 py-3 font-mono text-xs font-bold text-black transition-colors duration-200"
                   style={{backgroundColor: "#F5D000", minWidth: "3rem"}}
                   aria-label="Go to contact"
                 >
                   →
-                </a>
+                </MagneticButton>
               </motion.div>
 
               {/* CTA buttons */}

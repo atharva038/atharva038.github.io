@@ -10,6 +10,7 @@ import {
   ChessBishop,
   ChessPawn,
 } from "@/components/ui/chess-pieces";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 const pieceMap = {
   king: ChessKing,
@@ -160,12 +161,13 @@ export default function Achievements() {
               className="relative max-w-5xl w-full max-h-[90vh] glass-panel rounded-2xl overflow-hidden flex items-center justify-center p-2"
               onClick={(e) => e.stopPropagation()}
             >
-              <button
+              <MagneticButton
                 onClick={() => setSelectedImage(null)}
                 className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/50 hover:bg-background text-foreground transition-colors"
+                aria-label="Close achievement image"
               >
                 <X size={24} />
-              </button>
+              </MagneticButton>
               <img
                 src={selectedImage}
                 alt="Achievement Fullscreen"

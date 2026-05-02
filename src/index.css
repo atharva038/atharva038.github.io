@@ -73,8 +73,8 @@
   --glass-btn-base-bg: #1a1a1a;
   --glass-btn-hover-bg: #F5D000;
   --glass-btn-hover-border: #F5D000;
-  --glass-btn-shadow-full: 0 0 0 1px rgba(255,255,255,0.1);
-  --glass-btn-hover-shadow-full: 0 0 20px rgba(245,208,0,0.3);
+  --glass-btn-shadow-full: 0 0 0 1px rgba(245,208,0,0.16), 0 8px 22px rgba(245,208,0,0.08);
+  --glass-btn-hover-shadow-full: 0 0 0 1px rgba(245,208,0,0.42), 0 12px 30px rgba(245,208,0,0.24);
 
   --glow-color1: rgba(245, 208, 0, 0.08);
   --glow-color2: rgba(245, 208, 0, 0.04);
@@ -118,8 +118,8 @@
   --glass-btn-base-bg: rgba(255, 255, 255, 0.03);
   --glass-btn-hover-bg: rgba(255, 255, 255, 0.08);
   --glass-btn-hover-border: rgba(255, 255, 255, 0.1);
-  --glass-btn-shadow-full: 0 4px 15px var(--glass-shadow);
-  --glass-btn-hover-shadow-full: 0 6px 20px rgba(255, 255, 255, 0.05);
+  --glass-btn-shadow-full: 0 8px 24px rgba(255, 255, 255, 0.035), inset 0 1px 0 0 var(--glass-inset);
+  --glass-btn-hover-shadow-full: 0 12px 34px rgba(255, 255, 255, 0.09), 0 0 0 1px rgba(255, 255, 255, 0.12);
 
   --glow-color1: rgba(255, 255, 255, 0.05);
   --glow-color2: rgba(255, 255, 255, 0.02);

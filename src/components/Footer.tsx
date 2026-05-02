@@ -1,5 +1,6 @@
 import { ArrowUp } from "lucide-react";
 import { ChessPawn } from "@/components/ui/chess-pieces";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 export default function Footer() {
   return (
@@ -9,13 +10,13 @@ export default function Footer() {
           Built with <ChessPawn size={14} className="inline text-electric mx-1" /> and code &copy; {new Date().getFullYear()} Atharva Joshi
         </p>
 
-        <button
+        <MagneticButton
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="p-3 rounded-xl glass border border-border text-muted-foreground hover:text-electric hover:border-electric/30 transition-all duration-300"
           aria-label="Back to top"
         >
           <ArrowUp size={18} />
-        </button>
+        </MagneticButton>
       </div>
     </footer>
   );

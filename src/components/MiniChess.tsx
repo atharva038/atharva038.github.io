@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Chess } from "chess.js";
 import type { Square } from "chess.js";
 import { Chessboard } from "react-chessboard";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 type ChessApiResponse = {
   lan?: string;
@@ -341,7 +342,7 @@ export default function MiniChess({
         <h4 className={`font-serif font-semibold text-foreground ${isMobile ? "text-base" : "text-lg sm:text-xl"}`}>
           Mini Chess vs Stockfish
         </h4>
-        <button
+        <MagneticButton
           type="button"
           onClick={resetGame}
           className={`rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-border-hover transition-colors ${
@@ -349,7 +350,7 @@ export default function MiniChess({
           }`}
         >
           New Game
-        </button>
+        </MagneticButton>
       </div>
 
       <div

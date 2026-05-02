@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTheme, type Theme } from "./ThemeProvider";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 const themes: { value: Theme; label: string; icon: string; desc: string }[] = [
   {
@@ -43,7 +44,7 @@ export function ThemeToggle() {
   return (
     <div ref={ref} className="relative" id="theme-dropdown">
       {/* Trigger button */}
-      <button
+      <MagneticButton
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
         aria-expanded={open}
@@ -62,7 +63,7 @@ export function ThemeToggle() {
         >
           <path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-      </button>
+      </MagneticButton>
 
       {/* Dropdown panel */}
       {open && (
@@ -83,7 +84,7 @@ export function ThemeToggle() {
           {themes.map((t) => {
             const isActive = theme === t.value;
             return (
-              <button
+              <MagneticButton
                 key={t.value}
                 role="option"
                 aria-selected={isActive}
@@ -122,7 +123,7 @@ export function ThemeToggle() {
                     ✓
                   </span>
                 )}
-              </button>
+              </MagneticButton>
             );
           })}
         </div>

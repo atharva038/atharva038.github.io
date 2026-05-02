@@ -3,6 +3,7 @@ import { Menu, X, TerminalSquare, MonitorSmartphone } from "lucide-react";
 import { navLinks } from "@/data/portfolio-data";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 interface NavbarProps {
   isTerminalMode?: boolean;
@@ -72,26 +73,26 @@ export default function Navbar({ isTerminalMode = false, setIsTerminalMode, onNa
           )}
           
           {setIsTerminalMode && (
-            <button
+            <MagneticButton
               onClick={() => setIsTerminalMode(!isTerminalMode)}
               className="text-muted-foreground hover:text-foreground p-2 hover:bg-surface-light rounded-full transition-colors flex items-center"
               aria-label="Toggle Terminal Mode"
               title={isTerminalMode ? "Switch to Visual Mode" : "Switch to Terminal Mode"}
             >
               {isTerminalMode ? <MonitorSmartphone size={20} /> : <TerminalSquare size={20} />}
-            </button>
+            </MagneticButton>
           )}
 
           <ThemeToggle />
 
           {!isTerminalMode && (
-            <button
+            <MagneticButton
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden text-foreground p-2 hover:bg-surface-light rounded-full transition-colors"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
+            </MagneticButton>
           )}
         </div>
       </div>

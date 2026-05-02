@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { personalInfo } from "@/data/portfolio-data";
 import { NOISE_PNG } from "@/lib/noise-texture";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 const availability = [
   {
@@ -111,7 +112,7 @@ export default function OpenToWork() {
                 Designing{" "}
                 <span className="text-electric">Beautiful Frontends.</span>{" "}
                 Engineering{" "}
-                <span className="bg-gradient-to-r from-foreground via-purple-400 to-emerald-400 bg-clip-text text-transparent">
+                <span className="text-foreground underline decoration-electric/45 decoration-4 underline-offset-[0.18em]">
                   Powerful Systems.
                 </span>
               </h2>
@@ -170,30 +171,30 @@ export default function OpenToWork() {
             </div>
 
             <div className="mt-9 grid gap-3 sm:grid-cols-3">
-              <a
+              <MagneticButton
                 href="#contact"
-                className="group inline-flex min-h-12 items-center justify-center gap-2 whitespace-nowrap border border-electric bg-electric px-3 py-3 text-sm font-bold text-background shadow-[var(--glass-btn-hover-shadow-full)] transition-all duration-300 hover:-translate-y-0.5"
+                className="group inline-flex w-full min-h-14 items-center justify-center gap-2 whitespace-nowrap border border-electric bg-electric px-4 py-3 text-sm font-bold text-background shadow-[var(--glass-btn-shadow-full)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--glass-btn-hover-shadow-full)]"
               >
                 Hire Me
                 <ArrowUpRight
                   size={17}
                   className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 />
-              </a>
-              <a
+              </MagneticButton>
+              <MagneticButton
                 href="#experience"
-                className="glass-button inline-flex min-h-12 items-center justify-center gap-2 whitespace-nowrap px-3 py-3 text-sm font-semibold text-foreground"
+                className="glass-button inline-flex w-full min-h-14 items-center justify-center gap-2 whitespace-nowrap px-4 py-3 text-sm font-semibold text-foreground"
               >
                 View Resume
                 <ArrowDownToLine size={17} />
-              </a>
-              <a
+              </MagneticButton>
+              <MagneticButton
                 href={`mailto:${personalInfo.email}?subject=Quick%20call%20with%20Atharva&body=Hi%20Atharva%2C%20I%27d%20like%20to%20schedule%20a%20call%20about...`}
-                className="glass-button inline-flex min-h-12 items-center justify-center gap-2 whitespace-nowrap px-3 py-3 text-sm font-semibold text-foreground"
+                className="glass-button inline-flex w-full min-h-14 items-center justify-center gap-2 whitespace-nowrap px-4 py-3 text-sm font-semibold text-foreground"
               >
                 Schedule a Call
                 <ArrowRight size={17} />
-              </a>
+              </MagneticButton>
             </div>
           </div>
 
@@ -299,12 +300,24 @@ export default function OpenToWork() {
               </div>
 
               <div className="grid border-t border-border sm:grid-cols-[1fr_1.2fr]">
-                <div className="flex items-center gap-3 border-b border-border px-5 py-4 sm:border-b-0 sm:border-r">
-                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,0.65)]" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">Currently building</p>
-                    <p className="text-sm font-semibold text-foreground">KnockNFix Mobile App</p>
+                <div className="flex flex-col items-start gap-3 border-b border-border px-5 py-4 sm:border-b-0 sm:border-r">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,0.65)]" />
+                    <div className="min-w-0">
+                      <p className="text-xs text-muted-foreground">Explore</p>
+                      <p className="text-sm font-semibold text-foreground">Selected projects</p>
+                    </div>
                   </div>
+                  <MagneticButton
+                    href="#projects"
+                    className="group inline-flex min-h-10 items-center justify-center gap-2 border border-electric/50 bg-electric px-3.5 py-2 text-xs font-bold uppercase tracking-[0.16em] text-background shadow-[var(--glass-btn-hover-shadow-full)] transition-all duration-300 hover:border-electric"
+                  >
+                    My work
+                    <ArrowUpRight
+                      size={14}
+                      className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
+                  </MagneticButton>
                 </div>
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-2 px-5 py-4 text-sm text-muted-foreground">
                   <span className="text-xs uppercase tracking-[0.22em]">Focus</span>

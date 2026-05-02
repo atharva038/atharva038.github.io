@@ -9,23 +9,41 @@ interface MagneticButtonProps {
   href?: string;
   target?: string;
   rel?: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler;
+  onMouseEnter?: React.MouseEventHandler;
+  onMouseLeave?: React.MouseEventHandler;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  title?: string;
+  role?: string;
+  style?: React.CSSProperties;
   strength?: number;
   "aria-label"?: string;
+  "aria-haspopup"?: React.AriaAttributes["aria-haspopup"];
+  "aria-expanded"?: React.AriaAttributes["aria-expanded"];
+  "aria-selected"?: React.AriaAttributes["aria-selected"];
 }
 
 export default function MagneticButton({ 
   children, 
   className = "", 
-  as: Component = "button",
+  as,
+  href,
   strength = 0.2,
+  disabled = false,
   ...props 
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const Component = as ?? (href ? "a" : "button");
+  const wrapperWidthClass = className.includes("w-full")
+    ? className.includes("sm:w-auto")
+      ? "w-full sm:w-auto"
+      : "w-full"
+    : "";
 
   const handleMouse = (e: React.MouseEvent) => {
-    if (!ref.current) return;
+    if (!ref.current || disabled) return;
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current.getBoundingClientRect();
     
@@ -47,9 +65,9 @@ export default function MagneticButton({
       onMouseLeave={reset}
       animate={{ x: position.x, y: position.y }}
       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
-      className="inline-flex"
+      className={`inline-flex max-w-full ${wrapperWidthClass}`}
     >
-      {createElement(Component, { className, ...props }, children)}
+      {createElement(Component, { className, href, disabled, ...props }, children)}
     </motion.div>
   );
 }
