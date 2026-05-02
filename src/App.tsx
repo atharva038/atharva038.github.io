@@ -11,12 +11,14 @@ const Skills = lazy(() => import("@/components/Skills"));
 const Experience = lazy(() => import("@/components/Experience"));
 const Projects = lazy(() => import("@/components/Projects"));
 const Achievements = lazy(() => import("@/components/Achievements"));
+const OpenToWork = lazy(() => import("@/components/OpenToWork"));
 const Contact = lazy(() => import("@/components/Contact"));
 const Footer = lazy(() => import("@/components/Footer"));
 
 function SectionFallback() {
   return <div className="h-24 sm:h-32" aria-hidden="true" />;
 }
+
 
 
 // Cinematic Dissolve Overlay Component
@@ -124,6 +126,7 @@ function App() {
                 <Experience />
                 <Projects />
                 <Achievements />
+                <OpenToWork />
                 <Contact />
                 <Footer />
               </Suspense>
