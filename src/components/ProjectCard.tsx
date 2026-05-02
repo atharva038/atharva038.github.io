@@ -22,7 +22,7 @@ export function ProjectCard({ project, onClick, featured = false }: ProjectCardP
       aria-label={`View case study for ${project.title}`}
       className={`
         group relative cursor-pointer rounded-3xl overflow-hidden
-        glass-panel
+        glass-panel bg-[#F8F6F2] dark:bg-transparent
         ${featured ? "lg:flex lg:flex-row min-h-[350px]" : "flex flex-col h-full"}
       `}
       whileHover={{ scale: 1.015, y: -4 }}
@@ -43,12 +43,12 @@ export function ProjectCard({ project, onClick, featured = false }: ProjectCardP
       {/* Image section */}
       <div
         className={`
-          relative overflow-hidden bg-surface-light shrink-0
+          relative overflow-hidden bg-[#ebe7df] dark:bg-surface-light shrink-0
           ${featured
             ? "w-full lg:w-[52%] aspect-video lg:aspect-auto"
             : "w-full aspect-[16/9]"
           }
-          px-1.5 sm:px-2.5 py-1.5 sm:py-2
+          p-2 sm:p-3 dark:px-1.5 dark:py-1.5 dark:sm:px-2.5 dark:sm:py-2
         `}
       >
         <div
@@ -59,7 +59,7 @@ export function ProjectCard({ project, onClick, featured = false }: ProjectCardP
           alt={`${project.title} ${project.category} project screenshot by Atharva Joshi`}
           width={1600}
           height={900}
-          className={`w-full h-full object-cover group-hover:scale-[1.04] transition-all duration-500 ${imageLoaded ? "opacity-65 group-hover:opacity-85" : "opacity-0"}`}
+          className={`w-full h-full rounded-[1rem] border border-black/10 object-cover shadow-[0_12px_32px_rgba(10,10,10,0.12)] transition-all duration-500 group-hover:scale-[1.025] group-hover:shadow-[0_16px_40px_rgba(10,10,10,0.18)] dark:rounded-none dark:border-0 dark:shadow-none dark:group-hover:scale-[1.04] ${imageLoaded ? "opacity-100 dark:opacity-65 dark:group-hover:opacity-85" : "opacity-0"}`}
           loading="lazy"
           decoding="async"
           sizes={featured ? "(min-width: 1024px) 560px, 100vw" : "(min-width: 640px) 50vw, 100vw"}

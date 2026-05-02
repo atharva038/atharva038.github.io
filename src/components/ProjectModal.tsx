@@ -236,13 +236,14 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
 
           {/* ── Close button ───────────────────────────────────────────── */}
-          <MagneticButton
+          <button
+            type="button"
             onClick={onClose}
-            className="absolute top-4 right-4 z-20 p-2 rounded-full bg-surface border border-border text-muted-foreground hover:text-foreground hover:bg-white/[0.1] transition-all duration-200"
+            className="absolute right-3 top-3 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/85 text-muted-foreground shadow-sm backdrop-blur-sm transition-colors duration-200 hover:bg-surface hover:text-foreground sm:right-4 sm:top-4"
             aria-label="Close case study"
           >
             <X size={16} />
-          </MagneticButton>
+          </button>
 
           {/* ── Scrollable content ─────────────────────────────────────── */}
           <div
