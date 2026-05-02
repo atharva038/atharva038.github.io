@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import TerminalView from "@/components/TerminalView";
 import SpotlightBackground from "@/components/SpotlightBackground";
 import LazyOnVisible from "@/components/LazyOnVisible";
+import ThemeFavicon from "@/components/ThemeFavicon";
 
 const About = lazy(() => import("@/components/About"));
 const Skills = lazy(() => import("@/components/Skills"));
@@ -94,6 +95,7 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
+      <ThemeFavicon />
       <PageTransitionOverlay
         isActive={isTransitioning}
         onCovered={handleTransitionCovered}
