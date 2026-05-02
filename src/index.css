@@ -30,6 +30,7 @@
 
   --glass-btn-base-bg: #ffffff;
   --glass-btn-hover-bg: #F5D000;
+  --glass-btn-hover-text: #000000;
   --glass-btn-hover-border: #0a0a0a;
   --glass-btn-shadow-full: 3px 3px 0px 0px #0a0a0a;
   --glass-btn-hover-shadow-full: 4px 4px 0px 0px #0a0a0a;
@@ -117,6 +118,7 @@
   
   --glass-btn-base-bg: rgba(255, 255, 255, 0.03);
   --glass-btn-hover-bg: rgba(255, 255, 255, 0.08);
+  --glass-btn-hover-text: rgb(255, 255, 255); 
   --glass-btn-hover-border: rgba(255, 255, 255, 0.1);
   --glass-btn-shadow-full: 0 8px 24px rgba(255, 255, 255, 0.035), inset 0 1px 0 0 var(--glass-inset);
   --glass-btn-hover-shadow-full: 0 12px 34px rgba(255, 255, 255, 0.09), 0 0 0 1px rgba(255, 255, 255, 0.12);
@@ -212,6 +214,7 @@
   &:hover {
     background: var(--glass-btn-hover-bg);
     border: 1px solid var(--glass-btn-hover-border);
+    color: var(--glass-btn-hover-text); 
     transform: translateY(-2px);
     box-shadow: var(--glass-btn-hover-shadow-full);
   }
