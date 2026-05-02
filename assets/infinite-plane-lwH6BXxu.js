@@ -1,4 +1,4 @@
-import{r as i,j as m}from"./index-BO3p5MRe.js";const N=`#version 300 es
+import{r as i,j as m}from"./index-BHRPhtUF.js";const N=`#version 300 es
 precision mediump float;
 
 uniform float u_time;
