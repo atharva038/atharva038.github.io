@@ -1,5 +1,12 @@
+import { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { skillCategories } from "@/data/portfolio-data";
+
+const Skills3DModel = lazy(() =>
+  import("@/components/ui/Section3DModels").then((module) => ({
+    default: module.Skills3DModel,
+  })),
+);
 
 function MarqueeRow({ skills, reverse = false }: { skills: { name: string; icon: string }[]; reverse?: boolean }) {
   const doubled = [...skills, ...skills, ...skills]; // Extra duplication for seamless scrolling
@@ -40,7 +47,11 @@ export default function Skills() {
   const secondHalf = allSkillsWithIcons.slice(Math.ceil(allSkillsWithIcons.length / 2));
 
   return (
-    <section className="py-20 sm:py-32 px-4 sm:px-6 relative">
+    <section className="py-20 sm:py-32 px-4 sm:px-6 relative overflow-hidden">
+      <Suspense fallback={null}>
+        <Skills3DModel />
+      </Suspense>
+
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -1,10 +1,16 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Send, Github, Mail, Linkedin } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { personalInfo } from "@/data/portfolio-data";
 import MagneticButton from "@/components/ui/MagneticButton";
+
+const Contact3DModel = lazy(() =>
+  import("@/components/ui/Section3DModels").then((module) => ({
+    default: module.Contact3DModel,
+  })),
+);
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
@@ -178,6 +184,9 @@ export default function Contact() {
           >
             <div className="glass-panel p-6 sm:p-8 rounded-3xl group relative overflow-hidden flex flex-col justify-center">
               <div className="hidden dark:block absolute top-0 right-0 w-32 h-32 bg-electric/10 rounded-full blur-[40px] translate-x-1/2 -translate-y-1/2 group-hover:bg-electric/20 transition-colors duration-500" />
+              <Suspense fallback={null}>
+                <Contact3DModel />
+              </Suspense>
               <h3 className="font-serif font-bold text-foreground mb-6 sm:mb-8 text-2xl sm:text-3xl relative z-10 text-center sm:text-left">
                 Connect
               </h3>

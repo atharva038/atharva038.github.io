@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "@/data/portfolio-data";
 import type { Project } from "@/data/portfolio-data";
 import { ProjectCard } from "./ProjectCard";
 import { ProjectModal } from "./ProjectModal";
+
+const Projects3DModel = lazy(() =>
+  import("@/components/ui/Section3DModels").then((module) => ({
+    default: module.Projects3DModel,
+  })),
+);
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -17,6 +23,9 @@ export default function Projects() {
   return (
     <>
       <section className="relative py-20 sm:py-32 px-4 sm:px-6 overflow-hidden">
+        <Suspense fallback={null}>
+          <Projects3DModel />
+        </Suspense>
 
         <div className="relative max-w-6xl mx-auto">
 

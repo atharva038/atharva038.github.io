@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import { experiences } from "@/data/portfolio-data";
@@ -10,6 +10,12 @@ import {
   ChessBishop,
   ChessPawn,
 } from "@/components/ui/chess-pieces";
+
+const Experience3DModel = lazy(() =>
+  import("@/components/ui/Section3DModels").then((module) => ({
+    default: module.Experience3DModel,
+  })),
+);
 
 const pieceMap = {
   king: ChessKing,
@@ -33,6 +39,9 @@ export default function Experience() {
     <section className="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden">
       {/* Ambient background glow (dark mode only) */}
       <div className="hidden dark:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-surface blur-[120px] pointer-events-none" />
+      <Suspense fallback={null}>
+        <Experience3DModel />
+      </Suspense>
 
       <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
@@ -83,10 +92,10 @@ export default function Experience() {
                 >
                   {/* Timeline node */}
                   <motion.div
-                    className={`absolute left-3.5 sm:left-5.5 top-5 sm:top-6 w-5 h-5 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center cursor-pointer z-10 transition-all duration-300 ${
+                    className={`absolute left-3.5 sm:left-5.5 top-5 sm:top-6 w-5 h-5 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center cursor-pointer z-10 transition-all duration-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] before:absolute before:inset-[-5px] before:rounded-full before:border before:border-border/45 before:rotate-45 before:transition-colors ${
                       isActive
-                        ? "border-electric bg-electric/20 shadow-[0_0_15px_rgba(56,189,248,0.5)] scale-125"
-                        : "border-border-hover bg-background hover:border-electric/50 hover:bg-electric/10 hover:shadow-[0_0_10px_var(--glow-color1)] hover:scale-110"
+                        ? "border-electric bg-electric/20 shadow-[0_0_15px_var(--glow-color1),inset_0_1px_0_rgba(255,255,255,0.22)] scale-125 before:border-electric/50"
+                        : "border-border-hover bg-background hover:border-electric/50 hover:bg-electric/10 hover:shadow-[0_0_10px_var(--glow-color1),inset_0_1px_0_rgba(255,255,255,0.18)] hover:scale-110 before:border-border/45"
                     }`}
                     onClick={() => setActiveId(isActive ? null : exp.id)}
                     whileHover={{ scale: 1.2 }}

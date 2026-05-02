@@ -1,9 +1,15 @@
 /* eslint-disable react-hooks/purity */
 import { useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Edges } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import { Edges } from "@react-three/drei";
 import * as THREE from "three";
-import { useTheme, type Theme } from "@/components/theme-context";
+import type { Theme } from "@/components/theme-context";
+import {
+  FloatingModel,
+  ResponsiveCanvas,
+  SceneLights,
+} from "@/components/ui/three-system";
+import { MODEL_PALETTES, useThemeModelPalette } from "@/components/ui/three-system-core";
 
 const ORIGINAL_POSITIONS = [
   new THREE.Vector3(0, -1.65, 0), // plinth
@@ -31,67 +37,10 @@ const ORIGINAL_ROTATIONS = [
   new THREE.Euler(0, 0, 0),
 ];
 
-const MODEL_THEMES: Record<
-  Theme,
-  {
-    body: string;
-    accent: string;
-    secondary: string;
-    edge: string;
-    edgeSoft: string;
-    lightA: string;
-    lightB: string;
-    lightC: string;
-    metalness: number;
-    roughness: number;
-    opacity: number;
-  }
-> = {
-  light: {
-    body: "#090909",
-    accent: "#F5D000",
-    secondary: "#262626",
-    edge: "#F5D000",
-    edgeSoft: "#0a0a0a",
-    lightA: "#F5D000",
-    lightB: "#ffffff",
-    lightC: "#1f1f1f",
-    metalness: 0.78,
-    roughness: 0.28,
-    opacity: 0.96,
-  },
-  blkdev: {
-    body: "#050505",
-    accent: "#F5D000",
-    secondary: "#171717",
-    edge: "#F5D000",
-    edgeSoft: "#fafafa",
-    lightA: "#F5D000",
-    lightB: "#ffffff",
-    lightC: "#3b3b3b",
-    metalness: 0.9,
-    roughness: 0.22,
-    opacity: 0.98,
-  },
-  dark: {
-    body: "#0d1117",
-    accent: "#f8fafc",
-    secondary: "#1f2937",
-    edge: "#e5e7eb",
-    edgeSoft: "#94a3b8",
-    lightA: "#ffffff",
-    lightB: "#cbd5e1",
-    lightC: "#64748b",
-    metalness: 0.72,
-    roughness: 0.12,
-    opacity: 0.76,
-  },
-};
-
 function ChessKing({ theme }: { theme: Theme }) {
   const groupRef = useRef<THREE.Group>(null);
   const partsRef = useRef<(THREE.Mesh | null)[]>([]);
-  const palette = MODEL_THEMES[theme];
+  const palette = MODEL_PALETTES[theme];
 
   const scatteredPositionsRef = useRef<THREE.Vector3[] | null>(null);
   if (!scatteredPositionsRef.current) {
@@ -173,7 +122,7 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <cylinderGeometry args={[0.96, 1.12, 0.24, 48]} />
         <meshStandardMaterial {...materialProps} color={palette.secondary} />
-        <Edges scale={1.035} threshold={15} color={palette.edgeSoft} />
+        <Edges scale={1.035} threshold={15} color={palette.softEdge} />
       </mesh>
       <mesh
         ref={(el) => {
@@ -195,7 +144,7 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <cylinderGeometry args={[0.42, 0.72, 1.72, 48]} />
         <meshStandardMaterial {...materialProps} color={palette.secondary} />
-        <Edges scale={1.025} threshold={15} color={palette.edgeSoft} />
+        <Edges scale={1.025} threshold={15} color={palette.softEdge} />
       </mesh>
       <mesh
         ref={(el) => {
@@ -217,7 +166,7 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <cylinderGeometry args={[0.56, 0.46, 0.34, 48]} />
         <meshStandardMaterial {...materialProps} />
-        <Edges scale={1.035} threshold={15} color={palette.edgeSoft} />
+        <Edges scale={1.035} threshold={15} color={palette.softEdge} />
       </mesh>
       <mesh
         ref={(el) => {
@@ -269,8 +218,7 @@ function ChessKing({ theme }: { theme: Theme }) {
 
 export default function Hero3DChessPiece() {
   const [contextLost, setContextLost] = useState(false);
-  const { theme } = useTheme();
-  const palette = MODEL_THEMES[theme];
+  const { theme } = useThemeModelPalette();
 
   if (contextLost) {
     return (
@@ -284,29 +232,32 @@ export default function Hero3DChessPiece() {
 
   return (
     <div className="w-full h-full relative cursor-pointer">
-      <Canvas
+      <ResponsiveCanvas
         camera={{ position: [0, 0, 8], fov: 45 }}
-        dpr={[1, 1.5]}
         className="w-full h-full absolute inset-0"
-        gl={{ powerPreference: "high-performance", antialias: true, alpha: true }}
-        onCreated={({ gl }) => {
-          const canvas = gl.domElement;
-          canvas.addEventListener("webglcontextlost", (e) => {
-            e.preventDefault();
-            setContextLost(true);
-          });
-        }}
+        minWidth={360}
       >
-        <ambientLight intensity={theme === "dark" ? 0.42 : 0.58} />
-        <directionalLight position={[4, 8, 5]} intensity={2.25} color={palette.lightA} />
-        <directionalLight position={[-5, 4, 4]} intensity={1.65} color={palette.lightB} />
-        <directionalLight position={[0, -4, -5]} intensity={1.1} color={palette.lightC} />
-        <pointLight position={[0, 1.8, 3]} intensity={theme === "light" ? 0.7 : 1.15} color={palette.accent} />
+        <WebglContextWatcher onLost={() => setContextLost(true)} />
+        <SceneLights intensity={1.2} />
 
-        <Float speed={1.7} rotationIntensity={0.08} floatIntensity={0.72}>
+        <FloatingModel speed={1.7} rotationIntensity={0.08} floatIntensity={0.72}>
           <ChessKing theme={theme} />
-        </Float>
-      </Canvas>
+        </FloatingModel>
+      </ResponsiveCanvas>
     </div>
   );
+}
+
+function WebglContextWatcher({ onLost }: { onLost: () => void }) {
+  useFrame(({ gl }) => {
+    const canvas = gl.domElement;
+    if (canvas.dataset.contextWatcherAttached) return;
+    canvas.dataset.contextWatcherAttached = "true";
+    canvas.addEventListener("webglcontextlost", (event) => {
+      event.preventDefault();
+      onLost();
+    });
+  });
+
+  return null;
 }
