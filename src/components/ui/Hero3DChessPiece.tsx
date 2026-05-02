@@ -3,30 +3,95 @@ import { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Edges } from "@react-three/drei";
 import * as THREE from "three";
+import { useTheme, type Theme } from "@/components/theme-context";
 
 const ORIGINAL_POSITIONS = [
-  new THREE.Vector3(0, -1.5, 0), // Base 1
-  new THREE.Vector3(0, -1.2, 0), // Base 2
-  new THREE.Vector3(0, 0, 0), // Body
-  new THREE.Vector3(0, 1.2, 0), // Neck
-  new THREE.Vector3(0, 1.4, 0), // Head Base
-  new THREE.Vector3(0, 1.8, 0), // Cross V
-  new THREE.Vector3(0, 1.8, 0), // Cross H
+  new THREE.Vector3(0, -1.65, 0), // plinth
+  new THREE.Vector3(0, -1.34, 0), // lower bevel
+  new THREE.Vector3(0, -1.08, 0), // upper bevel
+  new THREE.Vector3(0, -0.1, 0), // tapered body
+  new THREE.Vector3(0, 0.96, 0), // collar
+  new THREE.Vector3(0, 1.24, 0), // crown cup
+  new THREE.Vector3(0, 1.55, 0), // crown cap
+  new THREE.Vector3(0, 1.92, 0), // vertical crown mark
+  new THREE.Vector3(0, 1.92, 0), // horizontal crown mark
+  new THREE.Vector3(0, 2.24, 0), // crown gem
 ];
 
 const ORIGINAL_ROTATIONS = [
   new THREE.Euler(0, 0, 0),
   new THREE.Euler(0, 0, 0),
   new THREE.Euler(0, 0, 0),
-  new THREE.Euler(Math.PI / 2, 0, 0), // Torus neck needs rotation to lay flat
+  new THREE.Euler(0, 0, 0),
+  new THREE.Euler(Math.PI / 2, 0, 0),
+  new THREE.Euler(0, 0, 0),
+  new THREE.Euler(0, 0, 0),
   new THREE.Euler(0, 0, 0),
   new THREE.Euler(0, 0, 0),
   new THREE.Euler(0, 0, 0),
 ];
 
-function ChessKing() {
+const MODEL_THEMES: Record<
+  Theme,
+  {
+    body: string;
+    accent: string;
+    secondary: string;
+    edge: string;
+    edgeSoft: string;
+    lightA: string;
+    lightB: string;
+    lightC: string;
+    metalness: number;
+    roughness: number;
+    opacity: number;
+  }
+> = {
+  light: {
+    body: "#090909",
+    accent: "#F5D000",
+    secondary: "#262626",
+    edge: "#F5D000",
+    edgeSoft: "#0a0a0a",
+    lightA: "#F5D000",
+    lightB: "#ffffff",
+    lightC: "#1f1f1f",
+    metalness: 0.78,
+    roughness: 0.28,
+    opacity: 0.96,
+  },
+  blkdev: {
+    body: "#050505",
+    accent: "#F5D000",
+    secondary: "#171717",
+    edge: "#F5D000",
+    edgeSoft: "#fafafa",
+    lightA: "#F5D000",
+    lightB: "#ffffff",
+    lightC: "#3b3b3b",
+    metalness: 0.9,
+    roughness: 0.22,
+    opacity: 0.98,
+  },
+  dark: {
+    body: "#0d1117",
+    accent: "#f8fafc",
+    secondary: "#1f2937",
+    edge: "#e5e7eb",
+    edgeSoft: "#94a3b8",
+    lightA: "#ffffff",
+    lightB: "#cbd5e1",
+    lightC: "#64748b",
+    metalness: 0.72,
+    roughness: 0.12,
+    opacity: 0.76,
+  },
+};
+
+function ChessKing({ theme }: { theme: Theme }) {
   const groupRef = useRef<THREE.Group>(null);
   const partsRef = useRef<(THREE.Mesh | null)[]>([]);
+  const palette = MODEL_THEMES[theme];
 
   const scatteredPositionsRef = useRef<THREE.Vector3[] | null>(null);
   if (!scatteredPositionsRef.current) {
@@ -58,103 +123,145 @@ function ChessKing() {
   useFrame((state) => {
     if (!groupRef.current) return;
 
-    // Smoothly assemble the pieces over time
     partsRef.current.forEach((part, i) => {
       if (!part) return;
-      // Lerp position
-      part.position.lerp(ORIGINAL_POSITIONS[i], 0.04);
+      part.position.lerp(ORIGINAL_POSITIONS[i], 0.045);
 
-      // Lerp rotation using Quaternions for shortest-path smooth rotation
       const currentQuat = new THREE.Quaternion().setFromEuler(part.rotation);
       const targetQuat = new THREE.Quaternion().setFromEuler(ORIGINAL_ROTATIONS[i]);
-      currentQuat.slerp(targetQuat, 0.04);
+      currentQuat.slerp(targetQuat, 0.045);
       part.rotation.setFromQuaternion(currentQuat);
     });
 
-    // Make the entire group look at the mouse cursor
-    // Pointer is normalized between -1 and 1
-    const mouseTarget = new THREE.Vector3(state.pointer.x * 2.5, state.pointer.y * 2.5, 5);
-    // Create a target quaternion that looks at the mouse position
-    const targetRotation = new THREE.Quaternion().setFromRotationMatrix(
-      new THREE.Matrix4().lookAt(groupRef.current.position, mouseTarget, groupRef.current.up)
+    const targetRotation = new THREE.Quaternion().setFromEuler(
+      new THREE.Euler(
+        -state.pointer.y * 0.22,
+        state.pointer.x * 0.34 + Math.sin(state.clock.elapsedTime * 0.5) * 0.05,
+        Math.sin(state.clock.elapsedTime * 0.35) * 0.035
+      )
     );
-    // Slerp the group's quaternion towards the target for smooth tracking
-    groupRef.current.quaternion.slerp(targetRotation, 0.05);
+    groupRef.current.quaternion.slerp(targetRotation, 0.06);
   });
 
   const materialProps = {
-    roughness: 0.15,
-    metalness: 0.9,
+    roughness: palette.roughness,
+    metalness: palette.metalness,
     transparent: true,
-    opacity: 0.9,
-    color: "#0f172a", // Dark obsidian
+    opacity: palette.opacity,
+    color: palette.body,
   };
 
   return (
-    <group ref={groupRef} scale={1.2}>
+    <group ref={groupRef} scale={1.08}>
       <mesh
-        ref={(el) => (partsRef.current[0] = el)}
+        ref={(el) => {
+          partsRef.current[0] = el;
+        }}
         position={scatteredPositions[0]}
         rotation={scatteredRotations[0]}
       >
-        <cylinderGeometry args={[1, 1.2, 0.4, 32]} />
+        <cylinderGeometry args={[1.18, 1.34, 0.32, 48]} />
         <meshStandardMaterial {...materialProps} />
-        <Edges scale={1.05} threshold={15} color="#38bdf8" />
+        <Edges scale={1.035} threshold={15} color={palette.edge} />
       </mesh>
       <mesh
-        ref={(el) => (partsRef.current[1] = el)}
+        ref={(el) => {
+          partsRef.current[1] = el;
+        }}
         position={scatteredPositions[1]}
         rotation={scatteredRotations[1]}
       >
-        <cylinderGeometry args={[0.9, 1, 0.2, 32]} />
-        <meshStandardMaterial {...materialProps} />
-        <Edges scale={1.05} threshold={15} color="#38bdf8" />
+        <cylinderGeometry args={[0.96, 1.12, 0.24, 48]} />
+        <meshStandardMaterial {...materialProps} color={palette.secondary} />
+        <Edges scale={1.035} threshold={15} color={palette.edgeSoft} />
       </mesh>
       <mesh
-        ref={(el) => (partsRef.current[2] = el)}
+        ref={(el) => {
+          partsRef.current[2] = el;
+        }}
         position={scatteredPositions[2]}
         rotation={scatteredRotations[2]}
       >
-        <cylinderGeometry args={[0.4, 0.8, 2.2, 32]} />
-        <meshStandardMaterial {...materialProps} color="#1e293b" />
-        <Edges scale={1.05} threshold={15} color="#818cf8" />
+        <cylinderGeometry args={[0.82, 0.92, 0.22, 48]} />
+        <meshStandardMaterial {...materialProps} />
+        <Edges scale={1.035} threshold={15} color={palette.edge} />
       </mesh>
       <mesh
-        ref={(el) => (partsRef.current[3] = el)}
+        ref={(el) => {
+          partsRef.current[3] = el;
+        }}
         position={scatteredPositions[3]}
         rotation={scatteredRotations[3]}
       >
-        <torusGeometry args={[0.5, 0.15, 16, 32]} />
-        <meshStandardMaterial {...materialProps} />
-        <Edges scale={1.05} threshold={15} color="#c084fc" />
+        <cylinderGeometry args={[0.42, 0.72, 1.72, 48]} />
+        <meshStandardMaterial {...materialProps} color={palette.secondary} />
+        <Edges scale={1.025} threshold={15} color={palette.edgeSoft} />
       </mesh>
       <mesh
-        ref={(el) => (partsRef.current[4] = el)}
+        ref={(el) => {
+          partsRef.current[4] = el;
+        }}
         position={scatteredPositions[4]}
         rotation={scatteredRotations[4]}
       >
-        <cylinderGeometry args={[0.6, 0.5, 0.3, 32]} />
+        <torusGeometry args={[0.52, 0.12, 18, 48]} />
         <meshStandardMaterial {...materialProps} />
-        <Edges scale={1.05} threshold={15} color="#38bdf8" />
+        <Edges scale={1.03} threshold={15} color={palette.edge} />
       </mesh>
-      {/* The Cross */}
       <mesh
-        ref={(el) => (partsRef.current[5] = el)}
+        ref={(el) => {
+          partsRef.current[5] = el;
+        }}
         position={scatteredPositions[5]}
         rotation={scatteredRotations[5]}
       >
-        <boxGeometry args={[0.2, 0.6, 0.15]} />
+        <cylinderGeometry args={[0.56, 0.46, 0.34, 48]} />
         <meshStandardMaterial {...materialProps} />
-        <Edges scale={1.05} threshold={15} color="#e879f9" />
+        <Edges scale={1.035} threshold={15} color={palette.edgeSoft} />
       </mesh>
       <mesh
-        ref={(el) => (partsRef.current[6] = el)}
+        ref={(el) => {
+          partsRef.current[6] = el;
+        }}
         position={scatteredPositions[6]}
         rotation={scatteredRotations[6]}
       >
-        <boxGeometry args={[0.5, 0.2, 0.15]} />
-        <meshStandardMaterial {...materialProps} />
-        <Edges scale={1.05} threshold={15} color="#e879f9" />
+        <cylinderGeometry args={[0.42, 0.56, 0.22, 48]} />
+        <meshStandardMaterial {...materialProps} color={palette.secondary} />
+        <Edges scale={1.035} threshold={15} color={palette.edge} />
+      </mesh>
+      <mesh
+        ref={(el) => {
+          partsRef.current[7] = el;
+        }}
+        position={scatteredPositions[7]}
+        rotation={scatteredRotations[7]}
+      >
+        <boxGeometry args={[0.14, 0.55, 0.12]} />
+        <meshStandardMaterial {...materialProps} color={palette.accent} emissive={palette.accent} emissiveIntensity={theme === "dark" ? 0.1 : 0.18} />
+        <Edges scale={1.04} threshold={15} color={palette.edge} />
+      </mesh>
+      <mesh
+        ref={(el) => {
+          partsRef.current[8] = el;
+        }}
+        position={scatteredPositions[8]}
+        rotation={scatteredRotations[8]}
+      >
+        <boxGeometry args={[0.46, 0.14, 0.12]} />
+        <meshStandardMaterial {...materialProps} color={palette.accent} emissive={palette.accent} emissiveIntensity={theme === "dark" ? 0.1 : 0.18} />
+        <Edges scale={1.04} threshold={15} color={palette.edge} />
+      </mesh>
+      <mesh
+        ref={(el) => {
+          partsRef.current[9] = el;
+        }}
+        position={scatteredPositions[9]}
+        rotation={scatteredRotations[9]}
+      >
+        <octahedronGeometry args={[0.14, 0]} />
+        <meshStandardMaterial {...materialProps} color={palette.accent} emissive={palette.accent} emissiveIntensity={0.24} />
+        <Edges scale={1.05} threshold={15} color={palette.edge} />
       </mesh>
     </group>
   );
@@ -162,6 +269,8 @@ function ChessKing() {
 
 export default function Hero3DChessPiece() {
   const [contextLost, setContextLost] = useState(false);
+  const { theme } = useTheme();
+  const palette = MODEL_THEMES[theme];
 
   if (contextLost) {
     return (
@@ -177,8 +286,9 @@ export default function Hero3DChessPiece() {
     <div className="w-full h-full relative cursor-pointer">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 45 }}
+        dpr={[1, 1.5]}
         className="w-full h-full absolute inset-0"
-        gl={{ powerPreference: "high-performance", antialias: false }}
+        gl={{ powerPreference: "high-performance", antialias: true, alpha: true }}
         onCreated={({ gl }) => {
           const canvas = gl.domElement;
           canvas.addEventListener("webglcontextlost", (e) => {
@@ -187,14 +297,14 @@ export default function Hero3DChessPiece() {
           });
         }}
       >
-        {/* Dynamic Studio Lighting */}
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 10, 5]} intensity={2.5} color="#06b6d4" />
-        <directionalLight position={[-5, 5, 5]} intensity={2.5} color="#a855f7" />
-        <directionalLight position={[0, -5, -5]} intensity={2.0} color="#ec4899" />
+        <ambientLight intensity={theme === "dark" ? 0.42 : 0.58} />
+        <directionalLight position={[4, 8, 5]} intensity={2.25} color={palette.lightA} />
+        <directionalLight position={[-5, 4, 4]} intensity={1.65} color={palette.lightB} />
+        <directionalLight position={[0, -4, -5]} intensity={1.1} color={palette.lightC} />
+        <pointLight position={[0, 1.8, 3]} intensity={theme === "light" ? 0.7 : 1.15} color={palette.accent} />
 
-        <Float speed={2.5} rotationIntensity={0.2} floatIntensity={1.5}>
-          <ChessKing />
+        <Float speed={1.7} rotationIntensity={0.08} floatIntensity={0.72}>
+          <ChessKing theme={theme} />
         </Float>
       </Canvas>
     </div>
