@@ -98,34 +98,23 @@ export function ThemeToggle() {
                   setTheme(t.value);
                   setOpen(false);
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2.5 text-left transition-colors duration-150 group"
-                style={{
-                  background: isActive ? "var(--theme-muted)" : "transparent",
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive)
-                    (e.currentTarget as HTMLElement).style.background =
-                      "var(--theme-muted)";
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive)
-                    (e.currentTarget as HTMLElement).style.background =
-                      "transparent";
-                }}
+                data-active={isActive}
+                className="theme-option w-full flex items-center gap-3 px-3 py-2.5 text-left transition-colors duration-150 group"
+                style={{ background: "transparent" }}
               >
                 <span className="text-base w-5 text-center leading-none shrink-0">
                   {t.icon}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="font-mono text-xs font-bold text-foreground uppercase tracking-wider leading-none mb-0.5">
+                  <p className="font-mono text-xs font-bold uppercase tracking-wider leading-none mb-0.5">
                     {t.label}
                   </p>
-                  <p className="font-mono text-[10px] text-muted-foreground">
+                  <p className="theme-option-muted font-mono text-[10px]">
                     {t.desc}
                   </p>
                 </div>
                 {isActive && (
-                  <span style={{ color: "var(--theme-electric)" }} className="text-xs shrink-0">
+                  <span className="text-xs shrink-0">
                     ✓
                   </span>
                 )}

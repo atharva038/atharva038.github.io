@@ -15,6 +15,12 @@
   --theme-muted: #2d2c2b;
   --theme-muted-foreground: #666666;
   --theme-electric: #0a0a0a;
+  --theme-on-electric: #F8F6F2;
+  --theme-menu-hover: #F5D000;
+  --theme-menu-hover-text: #0a0a0a;
+  --theme-menu-active: #0a0a0a;
+  --theme-menu-active-text: #F8F6F2;
+  --theme-menu-active-muted: rgba(248, 246, 242, 0.7);
 
   --glass-bg: #F8F6F2;
   --glass-border: #0a0a0a;
@@ -58,6 +64,12 @@
   --theme-muted: #2a2a2a;
   --theme-muted-foreground: #888888;
   --theme-electric: #F5D000;
+  --theme-on-electric: #0d0d0d;
+  --theme-menu-hover: rgba(245, 208, 0, 0.16);
+  --theme-menu-hover-text: #ffffff;
+  --theme-menu-active: #F5D000;
+  --theme-menu-active-text: #0d0d0d;
+  --theme-menu-active-muted: rgba(13, 13, 13, 0.72);
 
   --glass-bg: #1a1a1a;
   --glass-border: rgba(255, 255, 255, 0.1);
@@ -100,6 +112,12 @@
   --theme-muted: #27272a;
   --theme-muted-foreground: #a1a1aa;
   --theme-electric: #f4f4f5;
+  --theme-on-electric: #050505;
+  --theme-menu-hover: rgba(255, 255, 255, 0.12);
+  --theme-menu-hover-text: #ffffff;
+  --theme-menu-active: rgba(255, 255, 255, 0.18);
+  --theme-menu-active-text: #ffffff;
+  --theme-menu-active-muted: rgba(255, 255, 255, 0.68);
 
   /* Glass Effects Dark */
   --glass-bg: rgba(10, 10, 10, 0.6);
@@ -216,6 +234,39 @@
     color: var(--glass-btn-hover-text); 
     transform: translateY(-2px);
     box-shadow: var(--glass-btn-hover-shadow-full);
+  }
+}
+
+.theme-option {
+  color: var(--theme-foreground);
+
+  &:hover {
+    background: var(--theme-menu-hover) !important;
+    color: var(--theme-menu-hover-text);
+  }
+}
+
+.theme-option[data-active="true"] {
+  background: var(--theme-menu-active) !important;
+  color: var(--theme-menu-active-text);
+}
+
+.theme-option[data-active="true"] .theme-option-muted {
+  color: var(--theme-menu-active-muted);
+}
+
+.theme-option:not([data-active="true"]) .theme-option-muted {
+  color: var(--theme-muted-foreground);
+}
+
+.send-message-button {
+  background: var(--theme-foreground);
+  color: var(--theme-background);
+
+  &:hover {
+    background: var(--theme-electric);
+    color: var(--theme-on-electric);
+    border-color: var(--theme-electric);
   }
 }
 

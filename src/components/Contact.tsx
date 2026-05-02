@@ -151,7 +151,7 @@ export default function Contact() {
             <MagneticButton
               type="submit"
               disabled={isSubmitting}
-              className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-foreground text-background font-semibold rounded-xl hover:bg-electric hover:text-foreground hover:shadow-[0_0_20px_var(--glow-color1)] transition-all duration-300 flex items-center justify-center gap-2 group w-full sm:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
+              className="send-message-button px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold rounded-xl border border-transparent hover:shadow-[0_0_20px_var(--glow-color1)] transition-all duration-300 flex items-center justify-center gap-2 group w-full sm:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
             >
               <Send size={18} className="group-hover:translate-x-1 transition-transform" />
               {isSubmitting ? "Sending..." : "Send Message"}
