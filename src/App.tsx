@@ -60,8 +60,21 @@ function PageTransitionOverlay({
   );
 }
 
+const ModelsGallery = lazy(() => import("@/components/ModelsGallery"));
+
 function App() {
   const [isTerminalMode, setIsTerminalMode] = useState(false);
+
+  if (window.location.pathname === '/models') {
+    return (
+      <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
+        <ThemeFavicon />
+        <Suspense fallback={<SectionFallback />}>
+          <ModelsGallery />
+        </Suspense>
+      </ThemeProvider>
+    );
+  }
 
   // Transition state
   const [isTransitioning, setIsTransitioning] = useState(false);
