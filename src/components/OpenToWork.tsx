@@ -75,18 +75,20 @@ export default function OpenToWork() {
     <section
       className="relative scroll-mt-28 overflow-hidden bg-transparent px-4 pb-16 pt-28 text-foreground sm:px-6 sm:pb-24 sm:pt-32"
     >
+      {/* Hidden for now, kept for future use */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.06] dark:opacity-0 blkdev:opacity-[0.12]"
+        className="hidden pointer-events-none absolute inset-0 opacity-[0.06] dark:opacity-0 blkdev:opacity-[0.12]"
         style={{ backgroundImage: `url(${NOISE_PNG})` }}
       />
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.12] dark:opacity-0 blkdev:opacity-[0.16]"
+        className="hidden pointer-events-none absolute inset-0 opacity-[0.12] dark:opacity-0 blkdev:opacity-[0.16]"
         style={{
           backgroundImage:
             "linear-gradient(var(--theme-border) 1px, transparent 1px), linear-gradient(90deg, var(--theme-border) 1px, transparent 1px)",
           backgroundSize: "72px 72px",
         }}
       />
+
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric/10 blur-[120px] dark:bg-electric/[0.035]" />
 
       <motion.div
@@ -94,7 +96,7 @@ export default function OpenToWork() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="glass-panel relative z-10 mx-auto max-w-7xl overflow-hidden rounded-none p-5 sm:p-8 lg:p-10 xl:p-12 dark:rounded-[2rem] blkdev:rounded-none"
+        className="glass-panel !bg-transparent !bg-none relative z-10 mx-auto max-w-7xl overflow-hidden rounded-none p-5 sm:p-8 lg:p-10 xl:p-12 dark:rounded-[2rem] blkdev:rounded-none"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(245,208,0,0.11),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(168,85,247,0.08),transparent_30%),radial-gradient(circle_at_76%_78%,rgba(34,197,94,0.08),transparent_30%)] opacity-70 dark:opacity-40" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-electric/70 to-transparent" />
@@ -189,7 +191,7 @@ export default function OpenToWork() {
                 <ArrowDownToLine size={17} />
               </MagneticButton>
               <MagneticButton
-                href={`mailto:${personalInfo.email}?subject=Quick%20call%20with%20Atharva&body=Hi%20Atharva%2C%20I%27d%20like%20to%20schedule%20a%20call%20about...`}
+                href={`https://cal.com/atharva-joshi/30min`}
                 className="glass-button inline-flex w-full min-h-14 items-center justify-center gap-2 whitespace-nowrap px-4 py-3 text-sm font-semibold text-foreground"
               >
                 Schedule a Call
