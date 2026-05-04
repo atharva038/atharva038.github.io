@@ -1,9 +1,9 @@
-import {Suspense, lazy, useEffect, useState} from "react";
-import {motion} from "framer-motion";
-import {Github, Linkedin, Brain,LaptopMinimalCheck} from "lucide-react";
-import {personalInfo} from "@/data/portfolio-data";
+import { Suspense, lazy, useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Github, Linkedin, Brain, LaptopMinimalCheck } from "lucide-react";
+import { personalInfo } from "@/data/portfolio-data";
 import MagneticButton from "@/components/ui/MagneticButton";
-import {useTheme} from "@/components/theme-context";
+import { useTheme } from "@/components/theme-context";
 
 const MiniChess = lazy(() => import("@/components/MiniChess"));
 const InfinitePlaneBg = lazy(() => import("@/components/ui/infinite-plane"));
@@ -21,7 +21,7 @@ function ChessFallback() {
 }
 
 export default function Hero() {
-  const {theme} = useTheme();
+  const { theme } = useTheme();
   const isLight = theme === "light";
   const [showAnimatedPlane, setShowAnimatedPlane] = useState(false);
 
@@ -58,9 +58,9 @@ export default function Hero() {
       {/* ── DEFAULT MODE: BLK/DEV Industrial layout (light + blkdev themes) ── */}
       <div className={`${theme === "dark" ? "hidden" : "block"} relative z-10 px-4 sm:px-8 xl:px-16 w-full max-w-[1700px]`}>
         <motion.div
-          initial={{opacity: 0, y: 30}}
-          animate={{opacity: 1, y: 0}}
-          transition={{duration: 0.7, ease: [0.16, 1, 0.3, 1]}}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           {/* ── Top label row ── */}
           <div className="flex items-center justify-between mb-6 sm:mb-8">
@@ -72,11 +72,11 @@ export default function Hero() {
               style={
                 isLight
                   ? {
-                      backgroundColor: "#F5D000",
-                      borderColor: "#F5D000",
-                      color: "#000",
-                    }
-                  : {borderColor: "#F5D000", color: "#F5D000"}
+                    backgroundColor: "#F5D000",
+                    borderColor: "#F5D000",
+                    color: "#000",
+                  }
+                  : { borderColor: "#F5D000", color: "#F5D000" }
               }
             >
               ● Available for work
@@ -90,9 +90,9 @@ export default function Hero() {
               {/* Profile pill & 3D Piece */}
               <div className="flex flex-wrap items-center gap-4 mb-8 sm:mb-10">
                 <motion.div
-                  initial={{scale: 0.9, opacity: 0}}
-                  animate={{scale: 1, opacity: 1}}
-                  transition={{duration: 0.5, delay: 0.15}}
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.15 }}
                   className="w-20 h-20 sm:w-24 sm:h-24 shrink-0 overflow-hidden border border-border"
                 >
                   <img
@@ -107,18 +107,14 @@ export default function Hero() {
                   />
                 </motion.div>
 
-                {/* 3D King for Default mode */}
+                {/* 3D King */}
                 <motion.div
-                  initial={{scale: 0.8, opacity: 0}}
-                  animate={{scale: 1, opacity: 1}}
-                  transition={{duration: 0.8, delay: 0.3}}
-                  className="w-20 h-20 sm:w-24 sm:h-24 hidden sm:block shrink-0 relative"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="w-20 h-20 sm:w-28 sm:h-28 hidden sm:block shrink-0 relative"
                 >
-                  <Suspense
-                    fallback={
-                      <div className="w-full h-full animate-pulse bg-muted" />
-                    }
-                  >
+                  <Suspense fallback={<div className="w-full h-full animate-pulse bg-muted rounded-xl" />}>
                     <Hero3DChessPiece />
                   </Suspense>
                 </motion.div>
@@ -135,9 +131,9 @@ export default function Hero() {
 
               {/* Big name */}
               <motion.h1
-                initial={{opacity: 0, y: 20}}
-                animate={{opacity: 1, y: 0}}
-                transition={{duration: 0.6, delay: 0.2}}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-[clamp(3rem,8vw,7.5rem)] font-serif font-black text-foreground leading-[0.88] tracking-tighter mb-8 sm:mb-10 uppercase"
               >
                 {personalInfo.name.split(" ").map((word, i) => (
@@ -149,9 +145,9 @@ export default function Hero() {
 
               {/* Subtitle */}
               <motion.p
-                initial={{opacity: 0}}
-                animate={{opacity: 1}}
-                transition={{duration: 0.6, delay: 0.35}}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.35 }}
                 className="text-sm sm:text-base text-muted-foreground max-w-lg font-light leading-relaxed mb-10"
               >
                 {personalInfo.subtitle}
@@ -159,9 +155,9 @@ export default function Hero() {
 
               {/* Terminal command row */}
               <motion.div
-                initial={{opacity: 0, y: 8}}
-                animate={{opacity: 1, y: 0}}
-                transition={{duration: 0.5, delay: 0.45}}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.45 }}
                 className="flex items-center gap-0 mb-10 border border-border overflow-hidden max-w-md"
               >
                 <div className="flex-1 px-4 py-3 font-mono text-xs text-muted-foreground bg-surface">
@@ -170,7 +166,7 @@ export default function Hero() {
                 <MagneticButton
                   href="#contact"
                   className="flex items-center justify-center px-5 py-3 font-mono text-xs font-bold text-black transition-colors duration-200"
-                  style={{backgroundColor: "#F5D000", minWidth: "3rem"}}
+                  style={{ backgroundColor: "#F5D000", minWidth: "3rem" }}
                   aria-label="Go to contact"
                 >
                   →
@@ -249,9 +245,9 @@ export default function Hero() {
               ].map((item, i) => (
                 <motion.div
                   key={item.num}
-                  initial={{opacity: 0, x: 16}}
-                  animate={{opacity: 1, x: 0}}
-                  transition={{duration: 0.4, delay: 0.5 + i * 0.1}}
+                  initial={{ opacity: 0, x: 16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.5 + i * 0.1 }}
                   className="flex items-start gap-4 p-5 border-b border-border last:border-b-0 group hover:bg-muted  transition-colors duration-200"
                 >
                   <span className="font-mono text-[10px] text-muted-foreground/50 mt-0.5 shrink-0">
@@ -281,7 +277,7 @@ export default function Hero() {
             <div className="flex items-center gap-2 text-muted-foreground">
               <span
                 className="w-1.5 h-1.5 rounded-full animate-pulse"
-                style={{backgroundColor: "#4ade80"}}
+                style={{ backgroundColor: "#4ade80" }}
               />
               Status: All Systems Operational
             </div>
@@ -300,9 +296,9 @@ export default function Hero() {
       {/* ── DARK MODE: Glassmorphic panel (original) ── */}
       <div className={`${theme === "dark" ? "block" : "hidden"} relative z-10 px-4 sm:px-6 xl:px-10 2xl:px-16 w-full max-w-[1700px]`}>
         <motion.div
-          initial={{opacity: 0, y: 40, scale: 0.95}}
-          animate={{opacity: 1, y: 0, scale: 1}}
-          transition={{duration: 1, ease: [0.16, 1, 0.3, 1]}}
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="glass-panel rounded-[1.5rem] sm:rounded-[2rem] p-5 sm:p-8 lg:p-12 border border-border shadow-2xl relative overflow-hidden"
         >
           {/* Internal Glow Effect (dark mode only) */}
@@ -314,9 +310,9 @@ export default function Hero() {
               <div className="flex items-center gap-6 sm:gap-10 mb-5 sm:mb-8">
                 {/* Profile Photo */}
                 <motion.div
-                  initial={{scale: 0.8, opacity: 0, filter: "blur(10px)"}}
-                  animate={{scale: 1, opacity: 1, filter: "blur(0px)"}}
-                  transition={{duration: 0.8, delay: 0.2, ease: "easeOut"}}
+                  initial={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
+                  animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                   className="relative w-36 h-36 sm:w-44 sm:h-44 lg:w-48 lg:h-48 group shrink-0"
                 >
                   <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-electric to-purple-500 opacity-40 blur-[24px] group-hover:opacity-80 group-hover:scale-110 transition-all duration-700" />
@@ -336,17 +332,13 @@ export default function Hero() {
 
                 {/* 3D Chess Piece */}
                 <motion.div
-                  initial={{scale: 0.8, opacity: 0, filter: "blur(10px)"}}
-                  animate={{scale: 1, opacity: 1, filter: "blur(0px)"}}
-                  transition={{duration: 0.8, delay: 0.4, ease: "easeOut"}}
+                  initial={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
+                  animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                   className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 group hidden sm:block shrink-0"
                 >
                   <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-electric to-purple-500 opacity-30 blur-[40px] group-hover:opacity-60 group-hover:scale-110 transition-all duration-700" />
-                  <Suspense
-                    fallback={
-                      <div className="w-full h-full rounded-full bg-white/5 animate-pulse" />
-                    }
-                  >
+                  <Suspense fallback={<div className="w-full h-full rounded-full bg-white/5 animate-pulse" />}>
                     <Hero3DChessPiece />
                   </Suspense>
                 </motion.div>
@@ -397,9 +389,9 @@ export default function Hero() {
             </div>
 
             <motion.div
-              initial={{opacity: 0, x: 24}}
-              animate={{opacity: 1, x: 0}}
-              transition={{duration: 0.8, delay: 0.35, ease: "easeOut"}}
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
               className="w-full max-w-sm sm:max-w-md xl:max-w-xl 2xl:max-w-[640px] mx-auto lg:mx-0 lg:justify-self-end"
             >
               <p className="inline-flex items-center rounded-full px-3 py-1 text-xs tracking-wide uppercase border border-border bg-surface/60 text-muted-foreground mb-3">

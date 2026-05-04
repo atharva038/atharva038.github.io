@@ -24,6 +24,7 @@ type ResponsiveCanvasProps = {
   minWidth?: number;
   fallbackClassName?: string;
   camera?: CanvasProps["camera"];
+  eventSource?: HTMLElement | null;
 };
 
 export function ResponsiveCanvas({
@@ -32,6 +33,7 @@ export function ResponsiveCanvas({
   minWidth = 640,
   fallbackClassName,
   camera = { position: [0, 0, 7], fov: 42 },
+  eventSource,
 }: ResponsiveCanvasProps) {
   const reducedMotion = useReducedMotion3D();
   const [canRender, setCanRender] = useState(false);
@@ -57,6 +59,7 @@ export function ResponsiveCanvas({
       dpr={[1, 1.35]}
       frameloop="always"
       className={className}
+      eventSource={eventSource || undefined}
       gl={{
         alpha: true,
         antialias: true,
@@ -70,12 +73,14 @@ export function ResponsiveCanvas({
   );
 }
 
+import { Environment } from "@react-three/drei";
+
 export function SceneLights({ intensity = 1 }: { intensity?: number }) {
   const { theme, palette } = useThemeModelPalette();
 
   return (
     <>
-      <ambientLight intensity={(theme === "dark" ? 0.42 : 0.56) * intensity} />
+      <ambientLight intensity={(theme === "dark" ? 0.42 : 0.7) * intensity} />
       <directionalLight position={[4, 7, 5]} intensity={1.8 * intensity} color={palette.lightA} />
       <directionalLight position={[-5, 3, 3]} intensity={1.2 * intensity} color={palette.lightB} />
       <directionalLight position={[0, -4, -4]} intensity={0.8 * intensity} color={palette.lightC} />

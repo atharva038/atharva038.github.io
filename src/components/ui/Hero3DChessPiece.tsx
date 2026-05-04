@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/purity */
-import { useRef, useState,Suspense } from "react";
+import { useRef, useState, Suspense, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Edges, useTexture } from "@react-three/drei";
+import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import type { Theme } from "@/components/theme-context";
 import {
@@ -37,7 +37,7 @@ const ORIGINAL_ROTATIONS = [
   new THREE.Euler(0, 0, 0),
 ];
 
-function ChessKing({ theme }: { theme: Theme }) {
+export function ChessKing({ theme }: { theme: Theme }) {
   const groupRef = useRef<THREE.Group>(null);
   const partsRef = useRef<(THREE.Mesh | null)[]>([]);
   const palette = MODEL_PALETTES[theme];
@@ -92,44 +92,30 @@ function ChessKing({ theme }: { theme: Theme }) {
     groupRef.current.quaternion.slerp(targetRotation, 0.06);
   });
 
-  const [woodTexture, metalTexture] = useTexture([
-    "/textures/wavy_wood_grain.png",
+  const [blackMarble, whiteMarble, metalTexture] = useTexture([
+    "/textures/black_marble.png",
+    "/textures/white_marble.png",
     "/textures/brushed_metal.png"
   ]);
-  
-  woodTexture.colorSpace = THREE.SRGBColorSpace;
-  woodTexture.wrapS = THREE.RepeatWrapping;
-  woodTexture.wrapT = THREE.RepeatWrapping;
 
-  metalTexture.colorSpace = THREE.SRGBColorSpace;
-  metalTexture.wrapS = THREE.RepeatWrapping;
-  metalTexture.wrapT = THREE.RepeatWrapping;
+  useMemo(() => {
+    [blackMarble, whiteMarble, metalTexture].forEach(tex => {
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      tex.needsUpdate = true;
+    });
+  }, [blackMarble, whiteMarble, metalTexture]);
 
   const getBodyMaterialProps = () => {
-    switch (theme) {
-      case "dark":
-        return {
-          map: woodTexture,
-          roughness: 0.85,
-          metalness: 0.15,
-          color: "#475569", // Slate color to match dark theme's blueish-gray palette
-        };
-      case "blkdev":
-        return {
-          map: woodTexture,
-          roughness: 0.95,
-          metalness: 0.1,
-          color: "#525252", // Pure neutral gray for blkdev's monochromatic palette
-        };
-      case "light":
-      default:
-        return {
-          map: woodTexture,
-          roughness: 0.9,
-          metalness: 0.1,
-          color: "#2a2a2a", // Dark charcoal to provide stark contrast against the light background
-        };
-    }
+    return {
+      map: theme === "light" ? whiteMarble : blackMarble,
+      roughness: 0.2, // Marble is naturally smoother
+      metalness: 0.1,
+      clearcoat: 0.2, // Give it a slight polish
+      // Tint pure white for black marble, but use a greyish off-white for the light marble
+      color: theme === "light" ? "#d4d4d8" : "#ffffff",
+    };
   };
 
   const getAccentMaterialProps = () => {
@@ -137,22 +123,22 @@ function ChessKing({ theme }: { theme: Theme }) {
       case "dark":
         return {
           map: metalTexture,
-          roughness: 0.5,
-          metalness: 0.8,
+          roughness: 0.9,
+          metalness: 0.1,
           color: palette.accent,
           emissive: palette.accent,
-          emissiveIntensity: 0.15,
+          emissiveIntensity: 0.05, // Very subtle glow
         };
       case "blkdev":
       case "light":
       default:
         return {
           map: metalTexture,
-          roughness: 0.6,
-          metalness: 0.7,
+          roughness: 0.9,
+          metalness: 0.1,
           color: palette.accent,
           emissive: palette.accent,
-          emissiveIntensity: 0.1,
+          emissiveIntensity: 0.02,
         };
     }
   };
@@ -161,7 +147,7 @@ function ChessKing({ theme }: { theme: Theme }) {
   const accentMaterialProps = getAccentMaterialProps();
 
   return (
-    <group ref={groupRef} scale={1.08}>
+    <group ref={groupRef} scale={1.2}>
       <mesh
         ref={(el) => {
           partsRef.current[0] = el;
@@ -171,7 +157,6 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <cylinderGeometry args={[1.18, 1.34, 0.32, 48]} />
         <meshPhysicalMaterial {...bodyMaterialProps} />
-        <Edges scale={1.035} threshold={15} color={palette.edge} />
       </mesh>
       <mesh
         ref={(el) => {
@@ -182,7 +167,6 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <cylinderGeometry args={[0.96, 1.12, 0.24, 48]} />
         <meshPhysicalMaterial {...bodyMaterialProps} />
-        <Edges scale={1.035} threshold={15} color={palette.softEdge} />
       </mesh>
       <mesh
         ref={(el) => {
@@ -193,7 +177,6 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <cylinderGeometry args={[0.82, 0.92, 0.22, 48]} />
         <meshPhysicalMaterial {...bodyMaterialProps} />
-        <Edges scale={1.035} threshold={15} color={palette.edge} />
       </mesh>
       <mesh
         ref={(el) => {
@@ -204,7 +187,6 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <cylinderGeometry args={[0.42, 0.72, 1.72, 48]} />
         <meshPhysicalMaterial {...bodyMaterialProps} />
-        <Edges scale={1.025} threshold={15} color={palette.softEdge} />
       </mesh>
       <mesh
         ref={(el) => {
@@ -215,8 +197,8 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <torusGeometry args={[0.52, 0.12, 18, 48]} />
         <meshPhysicalMaterial {...bodyMaterialProps} />
-        <Edges scale={1.03} threshold={15} color={palette.edge} />
       </mesh>
+
       <mesh
         ref={(el) => {
           partsRef.current[5] = el;
@@ -226,7 +208,6 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <cylinderGeometry args={[0.56, 0.46, 0.34, 48]} />
         <meshPhysicalMaterial {...bodyMaterialProps} />
-        <Edges scale={1.035} threshold={15} color={palette.softEdge} />
       </mesh>
       <mesh
         ref={(el) => {
@@ -237,7 +218,6 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <cylinderGeometry args={[0.42, 0.56, 0.22, 48]} />
         <meshPhysicalMaterial {...bodyMaterialProps} />
-        <Edges scale={1.035} threshold={15} color={palette.edge} />
       </mesh>
       <mesh
         ref={(el) => {
@@ -248,7 +228,6 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <boxGeometry args={[0.14, 0.55, 0.12]} />
         <meshPhysicalMaterial {...accentMaterialProps} />
-        <Edges scale={1.04} threshold={15} color={palette.edge} />
       </mesh>
       <mesh
         ref={(el) => {
@@ -259,7 +238,6 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <boxGeometry args={[0.46, 0.14, 0.12]} />
         <meshPhysicalMaterial {...accentMaterialProps} />
-        <Edges scale={1.04} threshold={15} color={palette.edge} />
       </mesh>
       <mesh
         ref={(el) => {
@@ -270,7 +248,6 @@ function ChessKing({ theme }: { theme: Theme }) {
       >
         <octahedronGeometry args={[0.14, 0]} />
         <meshPhysicalMaterial {...accentMaterialProps} />
-        <Edges scale={1.05} threshold={15} color={palette.edge} />
       </mesh>
     </group>
   );
@@ -293,7 +270,7 @@ export default function Hero3DChessPiece() {
   return (
     <div className="w-full h-full relative cursor-pointer">
       <ResponsiveCanvas
-        camera={{ position: [0, 0, 8], fov: 45 }}
+        camera={{ position: [0, 0, 7], fov: 45 }}
         className="w-full h-full absolute inset-0"
         minWidth={360}
       >

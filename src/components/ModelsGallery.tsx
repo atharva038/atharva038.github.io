@@ -36,16 +36,16 @@ export default function ModelsGallery() {
           <div className="h-[500px] border border-border bg-surface/40 relative group overflow-hidden">
             <div className="absolute top-4 left-4 z-10 opacity-60 group-hover:opacity-100 transition-opacity">
               <h2 className="text-xl font-mono text-electric">01. Hero</h2>
-              <p className="text-xs text-muted-foreground mt-1">Chess King / Wavy Wood</p>
+              <p className="text-xs text-muted-foreground mt-1">King / Black Marble</p>
             </div>
             <Hero3DChessPiece />
           </div>
 
-          {/* Skills Token */}
+          {/* Pawns */}
           <div className="h-[500px] border border-border bg-surface/40 relative group overflow-hidden">
             <div className="absolute top-4 left-4 z-10 opacity-60 group-hover:opacity-100 transition-opacity">
               <h2 className="text-xl font-mono text-electric">02. Skills</h2>
-              <p className="text-xs text-muted-foreground mt-1">Orbiting Tokens / Silicon Wafer</p>
+              <p className="text-xs text-muted-foreground mt-1">Tactical Pawns / Black Marble</p>
             </div>
             <ResponsiveCanvas camera={{ position: [0, 0, 4.5], fov: 45 }} minWidth={300}>
               <SceneLights intensity={1.4} />
@@ -57,13 +57,13 @@ export default function ModelsGallery() {
             </ResponsiveCanvas>
           </div>
 
-          {/* Projects Module */}
+          {/* Rook */}
           <div className="h-[500px] border border-border bg-surface/40 relative group overflow-hidden">
             <div className="absolute top-4 left-4 z-10 opacity-60 group-hover:opacity-100 transition-opacity">
               <h2 className="text-xl font-mono text-electric">03. Projects</h2>
-              <p className="text-xs text-muted-foreground mt-1">Hologram / Gunmetal</p>
+              <p className="text-xs text-muted-foreground mt-1">Brutalist Rook / Black Marble</p>
             </div>
-            <ResponsiveCanvas camera={{ position: [0, 0, 4], fov: 45 }} minWidth={300}>
+            <ResponsiveCanvas camera={{ position: [0, 0, 4.5], fov: 45 }} minWidth={300}>
               <SceneLights intensity={1.4} />
               <FloatingModel>
                 <Suspense fallback={null}>
@@ -73,13 +73,13 @@ export default function ModelsGallery() {
             </ResponsiveCanvas>
           </div>
 
-          {/* Experience Gears */}
+          {/* Bishop */}
           <div className="h-[500px] border border-border bg-surface/40 relative group overflow-hidden">
             <div className="absolute top-4 left-4 z-10 opacity-60 group-hover:opacity-100 transition-opacity">
               <h2 className="text-xl font-mono text-electric">04. Experience</h2>
-              <p className="text-xs text-muted-foreground mt-1">Gears / Gunmetal</p>
+              <p className="text-xs text-muted-foreground mt-1">Strategic Bishop / Black Marble</p>
             </div>
-            <ResponsiveCanvas camera={{ position: [0, 0, 4.2], fov: 45 }} minWidth={300}>
+            <ResponsiveCanvas camera={{ position: [0, 0, 4.5], fov: 45 }} minWidth={300}>
               <SceneLights intensity={1.4} />
               <FloatingModel>
                 <Suspense fallback={null}>
@@ -89,13 +89,13 @@ export default function ModelsGallery() {
             </ResponsiveCanvas>
           </div>
 
-          {/* Contact Cube */}
+          {/* Queen */}
           <div className="h-[500px] border border-border bg-surface/40 relative group overflow-hidden md:col-span-2">
             <div className="absolute top-4 left-4 z-10 opacity-60 group-hover:opacity-100 transition-opacity">
               <h2 className="text-xl font-mono text-electric">05. Contact</h2>
-              <p className="text-xs text-muted-foreground mt-1">Terminal / Quantum Core</p>
+              <p className="text-xs text-muted-foreground mt-1">Signal Queen / Black Marble</p>
             </div>
-            <ResponsiveCanvas camera={{ position: [0, 0, 3.8], fov: 45 }} minWidth={300}>
+            <ResponsiveCanvas camera={{ position: [0, 0, 4.5], fov: 45 }} minWidth={300}>
               <SceneLights intensity={1.4} />
               <FloatingModel>
                 <Suspense fallback={null}>
