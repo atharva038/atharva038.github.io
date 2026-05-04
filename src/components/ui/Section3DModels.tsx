@@ -1,6 +1,6 @@
 import { Suspense, useMemo, useRef, useState, useEffect } from "react";
 import type { ComponentProps, ReactNode } from "react";
-import { useTexture, Environment, RoundedBox } from "@react-three/drei";
+import { useTexture, Environment } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import {
@@ -12,11 +12,10 @@ import { useThemeModelPalette } from "@/components/ui/three-system-core";
 import { getPawnPoints, getRookPoints, getBishopPoints, getQueenPoints } from "@/components/ui/ChessGeometries";
 
 function CircuitMaterial({
-  kind,
   variant = "body",
 }: {
-  kind: "chip" | "panel" | "terminal";
-  variant?: "body" | "secondary" | "accent";
+  kind?: "chip" | "panel" | "terminal";
+  variant?: "body" | "secondary" | "accent" | "tooth_textured";
 }) {
   const { theme, palette } = useThemeModelPalette();
   const [blackMarble, whiteMarble] = useTexture([

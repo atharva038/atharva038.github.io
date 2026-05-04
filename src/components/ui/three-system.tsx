@@ -73,7 +73,6 @@ export function ResponsiveCanvas({
   );
 }
 
-import { Environment } from "@react-three/drei";
 
 export function SceneLights({ intensity = 1 }: { intensity?: number }) {
   const { theme, palette } = useThemeModelPalette();

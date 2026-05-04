@@ -37,7 +37,7 @@ function ScrollController() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     const maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
     const currentScroll = window.scrollY / maxScroll;
     
