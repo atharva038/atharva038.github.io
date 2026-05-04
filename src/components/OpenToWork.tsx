@@ -13,7 +13,6 @@ import {
   Sparkles,
   UsersRound,
 } from "lucide-react";
-import { personalInfo } from "@/data/portfolio-data";
 import { NOISE_PNG } from "@/lib/noise-texture";
 import MagneticButton from "@/components/ui/MagneticButton";
 
