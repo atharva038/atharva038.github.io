@@ -1,7 +1,8 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from "react";
-import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
+import { lazy, Suspense, useCallback, useRef, useState } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import LiquidWipeOverlay from "@/components/LiquidWipeOverlay";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import TerminalView from "@/components/TerminalView";
 import SpotlightBackground from "@/components/SpotlightBackground";
@@ -19,54 +20,34 @@ const Contact = lazy(() => import("@/components/Contact"));
 const Footer = lazy(() => import("@/components/Footer"));
 
 function SectionFallback() {
-  return <div className="h-24 sm:h-32" aria-hidden="true" />;
-}
-
-
-
-// Cinematic Dissolve Overlay Component
-function PageTransitionOverlay({
-  isActive,
-  onCovered
-}: {
-  isActive: boolean,
-  onCovered: () => void
-}) {
-  useEffect(() => {
-    if (isActive) {
-      const timer = setTimeout(onCovered, 600); // Wait 600ms for full blur fade-in
-      return () => clearTimeout(timer);
-    }
-  }, [isActive, onCovered]);
-
-  return (
-    <AnimatePresence>
-      {isActive && (
-        <motion.div
-          className="fixed inset-0 z-[99999] flex items-center justify-center pointer-events-none bg-background/60 backdrop-blur-[50px]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }}
-          exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.32, 0, 0.67, 0] } }}
-        >
-          {/* Ambient central glow for the "birth" effect */}
-          <motion.div
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } }}
-            exit={{ scale: 1.5, opacity: 0, transition: { duration: 0.8, ease: "easeIn" } }}
-            className="w-[50vw] max-w-[500px] aspect-square bg-electric/20 rounded-full blur-[100px]"
-          />
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
+  return <div data-section-fallback="true" className="h-24 sm:h-32" aria-hidden="true" />;
 }
 
 const ModelsGallery = lazy(() => import("@/components/ModelsGallery"));
 
+const canUseLiquidWebGL = () => {
+  const canvas = document.createElement("canvas");
+  const context =
+    canvas.getContext("webgl2", { antialias: false, alpha: false }) ||
+    canvas.getContext("webgl", { antialias: false, alpha: false });
+  return Boolean(context);
+};
+
+const scrollToHash = (hash: string) => {
+  const element = document.querySelector(hash);
+  if (!element) return;
+
+  const offset = element.getBoundingClientRect().top + window.scrollY;
+  window.scrollTo({ top: offset, behavior: "instant" });
+  window.history.pushState(null, "", hash);
+};
+
 function App() {
   const [isTerminalMode, setIsTerminalMode] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [targetHash, setTargetHash] = useState("");
+  const [liquidTransitionId, setLiquidTransitionId] = useState<string | null>(null);
+  const transitionTargetHashRef = useRef<string | null>(null);
+  const queuedHashRef = useRef<string | null>(null);
+  const isLiquidTransitioningRef = useRef(false);
   const isModelsRoute = window.location.pathname === "/models";
 
   const { scrollYProgress } = useScroll();
@@ -78,22 +59,45 @@ function App() {
 
   const handleNavClick = useCallback((hash: string) => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      window.location.hash = hash;
+      scrollToHash(hash);
       return;
     }
-    setTargetHash(hash);
-    setIsTransitioning(true);
+
+    if (!canUseLiquidWebGL()) {
+      scrollToHash(hash);
+      return;
+    }
+
+    if (isLiquidTransitioningRef.current) {
+      queuedHashRef.current = hash;
+      return;
+    }
+
+    isLiquidTransitioningRef.current = true;
+    transitionTargetHashRef.current = hash;
+    setLiquidTransitionId(`${hash}-${Date.now()}`);
   }, []);
 
-  const handleTransitionCovered = useCallback(() => {
-    const element = document.querySelector(targetHash);
-    if (element) {
-      const offset = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: offset, behavior: 'instant' });
-      window.history.pushState(null, '', targetHash);
+  const handleLiquidCovered = useCallback(() => {
+    const targetHash = transitionTargetHashRef.current;
+    if (targetHash) {
+      scrollToHash(targetHash);
     }
-    setIsTransitioning(false);
-  }, [targetHash]);
+  }, []);
+
+  const finishLiquidTransition = useCallback(() => {
+    const targetHash = transitionTargetHashRef.current;
+    setLiquidTransitionId(null);
+    transitionTargetHashRef.current = null;
+    isLiquidTransitioningRef.current = false;
+
+    const queuedHash = queuedHashRef.current;
+    queuedHashRef.current = null;
+
+    if (queuedHash && queuedHash !== targetHash) {
+      window.setTimeout(() => handleNavClick(queuedHash), 0);
+    }
+  }, [handleNavClick]);
 
   if (isModelsRoute) {
     return (
@@ -110,10 +114,6 @@ function App() {
     <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
       <ThemeFavicon />
       <SmoothScroll />
-      <PageTransitionOverlay
-        isActive={isTransitioning}
-        onCovered={handleTransitionCovered}
-      />
 
       {!isTerminalMode && (
         <motion.div
@@ -177,6 +177,13 @@ function App() {
           )}
         </div>
       </div>
+
+      <LiquidWipeOverlay
+        transitionId={liquidTransitionId}
+        onCovered={handleLiquidCovered}
+        onComplete={finishLiquidTransition}
+        onError={finishLiquidTransition}
+      />
     </ThemeProvider>
   );
 }
