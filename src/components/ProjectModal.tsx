@@ -248,6 +248,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* ── Scrollable content ─────────────────────────────────────── */}
           <div
             ref={scrollRef}
+            data-lenis-prevent
             onScroll={handleScroll}
             className="flex-1 overflow-y-auto overscroll-contain"
           >

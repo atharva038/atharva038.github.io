@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { personalInfo, stats } from "@/data/portfolio-data";
+import { SectionHeader } from "@/components/shared/SectionHeader";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -15,19 +16,7 @@ export default function About() {
   return (
     <section className="py-20 sm:py-32 px-4 sm:px-6 relative">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16 sm:mb-24"
-        >
-          <span className="text-electric text-sm font-mono tracking-widest uppercase mb-3 block opacity-80">
-            The Middlegame
-          </span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-gradient-heading tracking-tight">
-            About Me
-          </h2>
-        </motion.div>
+        <SectionHeader eyebrow="The Middlegame" title="About Me" />
 
         <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 items-center">
           <motion.div

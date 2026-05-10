@@ -1,0 +1,4 @@
+interface:
+  display_name: "Portfolio QA"
+  short_description: "Check portfolio changes before shipping"
+  default_prompt: "Use $portfolio-qa to verify this portfolio change across build, responsive layout, links, and browser behavior."

@@ -109,11 +109,9 @@ function ScrollController() {
 }
 
 export default function Global3DBackground() {
-  const [root, setRoot] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    setRoot(document.getElementById("root"));
-  }, []);
+  const [root] = useState<HTMLElement | null>(() =>
+    document.getElementById("root"),
+  );
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">

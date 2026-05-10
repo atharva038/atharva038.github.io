@@ -1,0 +1,4 @@
+interface:
+  display_name: "Three.js Portfolio Scene"
+  short_description: "Build and tune portfolio 3D scenes"
+  default_prompt: "Use $threejs-portfolio-scene to add or refine a scroll-aware Three.js scene in this portfolio."

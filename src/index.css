@@ -180,6 +180,11 @@
     background-color: var(--theme-background);
   }
 
+  html.lenis,
+  html.lenis body {
+    scroll-behavior: auto;
+  }
+
   body {
     font-family: var(--font-sans);
     background-color: transparent;

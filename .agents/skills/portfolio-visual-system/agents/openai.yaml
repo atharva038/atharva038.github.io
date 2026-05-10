@@ -1,0 +1,4 @@
+interface:
+  display_name: "Portfolio Visual System"
+  short_description: "Keep portfolio themes and UI style coherent"
+  default_prompt: "Use $portfolio-visual-system to update themes, colors, glass effects, gradients, and UI styling in this portfolio."

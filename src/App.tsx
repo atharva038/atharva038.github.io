@@ -7,6 +7,7 @@ import TerminalView from "@/components/TerminalView";
 import SpotlightBackground from "@/components/SpotlightBackground";
 import LazyOnVisible from "@/components/LazyOnVisible";
 import ThemeFavicon from "@/components/ThemeFavicon";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const About = lazy(() => import("@/components/About"));
 const Skills = lazy(() => import("@/components/Skills"));
@@ -64,21 +65,9 @@ const ModelsGallery = lazy(() => import("@/components/ModelsGallery"));
 
 function App() {
   const [isTerminalMode, setIsTerminalMode] = useState(false);
-
-  if (window.location.pathname === '/models') {
-    return (
-      <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
-        <ThemeFavicon />
-        <Suspense fallback={<SectionFallback />}>
-          <ModelsGallery />
-        </Suspense>
-      </ThemeProvider>
-    );
-  }
-
-  // Transition state
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [targetHash, setTargetHash] = useState("");
+  const isModelsRoute = window.location.pathname === "/models";
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -106,9 +95,21 @@ function App() {
     setIsTransitioning(false);
   }, [targetHash]);
 
+  if (isModelsRoute) {
+    return (
+      <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
+        <ThemeFavicon />
+        <Suspense fallback={<SectionFallback />}>
+          <ModelsGallery />
+        </Suspense>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
       <ThemeFavicon />
+      <SmoothScroll />
       <PageTransitionOverlay
         isActive={isTransitioning}
         onCovered={handleTransitionCovered}

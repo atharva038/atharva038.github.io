@@ -1,0 +1,4 @@
+interface:
+  display_name: "Portfolio Animation"
+  short_description: "Design smooth portfolio motion"
+  default_prompt: "Use $portfolio-animation to add or refine motion, transitions, and scroll interactions in this portfolio."

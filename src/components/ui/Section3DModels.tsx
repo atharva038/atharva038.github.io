@@ -1,4 +1,4 @@
-import { Suspense, useMemo, useRef, useState, useEffect } from "react";
+import { Suspense, useMemo, useRef, useState } from "react";
 import type { ComponentProps, ReactNode } from "react";
 import { useTexture, Environment } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
@@ -275,11 +275,7 @@ function SectionModelShell({
   camera?: ComponentProps<typeof ResponsiveCanvas>["camera"];
 }) {
   const { theme } = useThemeModelPalette();
-  const [globalEventSource, setGlobalEventSource] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    setGlobalEventSource(document.body);
-  }, []);
+  const [globalEventSource] = useState<HTMLElement | null>(() => document.body);
 
   return (
     <div className={className} aria-hidden="true">
