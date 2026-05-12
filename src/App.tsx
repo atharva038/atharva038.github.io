@@ -9,6 +9,7 @@ import SpotlightBackground from "@/components/SpotlightBackground";
 import LazyOnVisible from "@/components/LazyOnVisible";
 import ThemeFavicon from "@/components/ThemeFavicon";
 import SmoothScroll from "@/components/SmoothScroll";
+import SidePeeks from "@/components/SidePeeks";
 
 const About = lazy(() => import("@/components/About"));
 const Skills = lazy(() => import("@/components/Skills"));
@@ -136,6 +137,7 @@ function App() {
             </Suspense>
           ) : (
             <>
+              <SidePeeks />
               <Hero />
               <LazyOnVisible id="open-to-work" minHeight="18rem">
                 <Suspense fallback={<SectionFallback />}>
