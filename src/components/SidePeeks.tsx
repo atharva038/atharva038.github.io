@@ -1,5 +1,5 @@
-import {useEffect, useRef, useState} from "react";
-import type {PointerEvent} from "react";
+import { useEffect, useRef, useState } from "react";
+import type { PointerEvent } from "react";
 import {
   motion,
   useAnimationControls,
@@ -8,7 +8,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import type {MotionValue} from "framer-motion";
+import type { MotionValue } from "framer-motion";
 
 const spring = {
   type: "spring" as const,
@@ -36,7 +36,7 @@ function scrollToProjects() {
 
 function usePeekCycle(
   controls: ReturnType<typeof useAnimationControls>,
-  states: {hidden: string; peek: string},
+  states: { hidden: string; peek: string },
   delayMs: number,
 ) {
   const shouldReduceMotion = useReducedMotion();
@@ -254,8 +254,8 @@ function BuilderIllustration({
       </motion.g>
 
       <motion.path
-        animate={shouldReduceMotion ? undefined : {y: [0, -4, 0]}}
-        transition={{duration: 6, repeat: Infinity, ease: "easeInOut"}}
+        animate={shouldReduceMotion ? undefined : { y: [0, -4, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         d="M88 254C89 215 116 189 151 189C187 189 214 215 215 254H88Z"
         fill="url(#botShell)"
         stroke="var(--theme-electric)"
@@ -295,8 +295,8 @@ function BuilderIllustration({
         cx="123"
         cy="116"
         rx="10"
-        initial={{ry: 10}}
-        animate={shouldReduceMotion ? {ry: 10} : {ry: [10, 10, 1.2, 10]}}
+        initial={{ ry: 10 }}
+        animate={shouldReduceMotion ? { ry: 10 } : { ry: [10, 10, 1.2, 10] }}
         transition={{
           duration: 0.22,
           repeat: Infinity,
@@ -305,14 +305,14 @@ function BuilderIllustration({
         }}
         fill="var(--theme-electric)"
         filter="url(#themeGlow)"
-        style={{x: eyeX, y: eyeY}}
+        style={{ x: eyeX, y: eyeY }}
       />
       <motion.ellipse
         cx="123"
         cy="116"
         rx="5"
-        initial={{ry: 5}}
-        animate={shouldReduceMotion ? {ry: 5} : {ry: [5, 5, 0.6, 5]}}
+        initial={{ ry: 5 }}
+        animate={shouldReduceMotion ? { ry: 5 } : { ry: [5, 5, 0.6, 5] }}
         transition={{
           duration: 0.22,
           repeat: Infinity,
@@ -321,14 +321,14 @@ function BuilderIllustration({
         }}
         fill="var(--theme-foreground)"
         fillOpacity="0.42"
-        style={{x: eyeX, y: eyeY}}
+        style={{ x: eyeX, y: eyeY }}
       />
       <motion.ellipse
         cx="180"
         cy="116"
         rx="10"
-        initial={{ry: 10}}
-        animate={shouldReduceMotion ? {ry: 10} : {ry: [10, 10, 1.2, 10]}}
+        initial={{ ry: 10 }}
+        animate={shouldReduceMotion ? { ry: 10 } : { ry: [10, 10, 1.2, 10] }}
         transition={{
           duration: 0.22,
           repeat: Infinity,
@@ -337,14 +337,14 @@ function BuilderIllustration({
         }}
         fill="var(--theme-electric)"
         filter="url(#themeGlow)"
-        style={{x: eyeX, y: eyeY}}
+        style={{ x: eyeX, y: eyeY }}
       />
       <motion.ellipse
         cx="180"
         cy="116"
         rx="5"
-        initial={{ry: 5}}
-        animate={shouldReduceMotion ? {ry: 5} : {ry: [5, 5, 0.6, 5]}}
+        initial={{ ry: 5 }}
+        animate={shouldReduceMotion ? { ry: 5 } : { ry: [5, 5, 0.6, 5] }}
         transition={{
           duration: 0.22,
           repeat: Infinity,
@@ -353,7 +353,7 @@ function BuilderIllustration({
         }}
         fill="var(--theme-foreground)"
         fillOpacity="0.42"
-        style={{x: eyeX, y: eyeY}}
+        style={{ x: eyeX, y: eyeY }}
       />
       <path
         d="M137 147C145 154 159 154 166 147"
@@ -589,10 +589,10 @@ function LivingProjectCore({
         animate={
           shouldReduceMotion
             ? undefined
-            : {y: [0, -3, 0], rotate: [-3, -1.8, -3]}
+            : { y: [0, -3, 0], rotate: [-3, -1.8, -3] }
         }
-        transition={{duration: 5.8, repeat: Infinity, ease: "easeInOut"}}
-        style={{originX: "255px", originY: "126px"}}
+        transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
+        style={{ originX: "255px", originY: "126px" }}
         filter="url(#resumeShadowPro)"
       >
         <rect
@@ -711,9 +711,9 @@ function LivingProjectCore({
           animate={
             shouldReduceMotion
               ? undefined
-              : {y: [0, 75, 0], opacity: [0.05, 0.55, 0.05]}
+              : { y: [0, 75, 0], opacity: [0.05, 0.55, 0.05] }
           }
-          transition={{duration: 3.4, repeat: Infinity, ease: "easeInOut"}}
+          transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.g>
 
@@ -722,10 +722,10 @@ function LivingProjectCore({
         animate={
           shouldReduceMotion
             ? undefined
-            : {y: [0, -5, 0], rotate: [-0.4, 0.45, -0.4]}
+            : { y: [0, -5, 0], rotate: [-0.4, 0.45, -0.4] }
         }
-        transition={{duration: 6.5, repeat: Infinity, ease: "easeInOut"}}
-        style={{originX: "140px", originY: "120px"}}
+        transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+        style={{ originX: "140px", originY: "120px" }}
       >
         {/* Body */}
         <path
@@ -853,7 +853,7 @@ function LivingProjectCore({
           strokeWidth="4.2"
           strokeLinecap="round"
           filter="url(#softGlowPro)"
-          animate={shouldReduceMotion ? undefined : {opacity: [1, 1, 0.22, 1]}}
+          animate={shouldReduceMotion ? undefined : { opacity: [1, 1, 0.22, 1] }}
           transition={{
             duration: 0.25,
             repeat: Infinity,
@@ -994,13 +994,13 @@ function DeveloperPeek() {
   const containerRef = useRef<HTMLButtonElement | null>(null);
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
-  const smoothX = useSpring(pointerX, {stiffness: 130, damping: 18, mass: 0.2});
-  const smoothY = useSpring(pointerY, {stiffness: 130, damping: 18, mass: 0.2});
+  const smoothX = useSpring(pointerX, { stiffness: 130, damping: 18, mass: 0.2 });
+  const smoothY = useSpring(pointerY, { stiffness: 130, damping: 18, mass: 0.2 });
   const eyeX = useTransform(smoothX, [-1, 1], [-3, 3]);
   const eyeY = useTransform(smoothY, [-1, 1], [-1.6, 1.6]);
-  const {isHovering, setIsHovering, shouldReduceMotion} = usePeekCycle(
+  const { isHovering, setIsHovering, shouldReduceMotion } = usePeekCycle(
     controls,
-    {hidden: "hidden", peek: "peek"},
+    { hidden: "hidden", peek: "peek" },
     7000,
   );
 
@@ -1043,9 +1043,9 @@ function DeveloperPeek() {
       onPointerMove={handlePointerMove}
       animate={controls}
       variants={{
-        hidden: {x: -205, opacity: 0},
-        peek: {x: -105, opacity: 1},
-        revealed: {x: -8, opacity: 1},
+        hidden: { x: -205, opacity: 0 },
+        peek: { x: -105, opacity: 1 },
+        revealed: { x: -8, opacity: 1 },
       }}
       transition={spring}
       className="group fixed left-0 top-[48%] z-40 hidden -translate-y-1/2 outline-none md:block"
@@ -1068,9 +1068,9 @@ function DeveloperPeek() {
 
 function ProjectPeek() {
   const controls = useAnimationControls();
-  const {isHovering, setIsHovering, shouldReduceMotion} = usePeekCycle(
+  const { isHovering, setIsHovering, shouldReduceMotion } = usePeekCycle(
     controls,
-    {hidden: "hidden", peek: "peek"},
+    { hidden: "hidden", peek: "peek" },
     9000,
   );
 
@@ -1095,9 +1095,9 @@ function ProjectPeek() {
       onBlur={handleHoverEnd}
       animate={controls}
       variants={{
-        hidden: {x: 310, opacity: 0},
-        peek: {x: 198, opacity: 1},
-        revealed: {x: 0, opacity: 1},
+        hidden: { x: 310, opacity: 0 },
+        peek: { x: 198, opacity: 1 },
+        revealed: { x: 0, opacity: 1 },
       }}
       transition={spring}
       className="group fixed right-0 top-[62%] z-40 hidden -translate-y-1/2 text-left outline-none md:block"

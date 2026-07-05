@@ -25,6 +25,8 @@ function SectionFallback() {
 }
 
 const ModelsGallery = lazy(() => import("@/components/ModelsGallery"));
+const AdminPanel = lazy(() => import("@/components/AdminPanel"));
+const AnnouncementBanner = lazy(() => import("@/components/AnnouncementBanner"));
 
 const canUseLiquidWebGL = () => {
   const canvas = document.createElement("canvas");
@@ -50,6 +52,7 @@ function App() {
   const queuedHashRef = useRef<string | null>(null);
   const isLiquidTransitioningRef = useRef(false);
   const isModelsRoute = window.location.pathname === "/models";
+  const isAdminRoute = window.location.pathname === "/admin";
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -111,10 +114,27 @@ function App() {
     );
   }
 
+  if (isAdminRoute) {
+    return (
+      <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
+        <ThemeFavicon />
+        <Suspense fallback={<SectionFallback />}>
+          <AdminPanel />
+        </Suspense>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
       <ThemeFavicon />
       <SmoothScroll />
+
+      {!isTerminalMode && (
+        <Suspense fallback={null}>
+          <AnnouncementBanner />
+        </Suspense>
+      )}
 
       {!isTerminalMode && (
         <motion.div

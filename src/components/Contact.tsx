@@ -5,6 +5,7 @@ import { Send, Github, Mail, Linkedin } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { personalInfo } from "@/data/portfolio-data";
 import MagneticButton from "@/components/ui/MagneticButton";
+import { supabase } from "@/lib/supabaseClient";
 
 const Contact3DModel = lazy(() =>
   import("@/components/ui/Section3DModels").then((module) => ({
@@ -55,6 +56,18 @@ export default function Contact() {
         },
         publicKey,
       );
+
+      // Log submission to Supabase messages table
+      try {
+        await supabase.from("portfolio_messages").insert({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          message: form.message,
+        });
+      } catch (dbErr) {
+        console.error("Supabase Log Error:", dbErr);
+      }
 
       setSubmitStatus("success");
       setForm({ name: "", email: "", phone: "", message: "" });
