@@ -52,7 +52,10 @@ function App() {
   const queuedHashRef = useRef<string | null>(null);
   const isLiquidTransitioningRef = useRef(false);
   const isModelsRoute = window.location.pathname === "/models";
-  const isAdminRoute = window.location.pathname === "/admin";
+  const isAdminRoute =
+    window.location.pathname === "/admin" ||
+    window.location.hash === "#/admin" ||
+    window.location.hash === "#admin";
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
