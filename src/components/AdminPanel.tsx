@@ -124,7 +124,7 @@ export default function AdminPanel() {
   // Auth handler
   const handleAuth = (e: React.FormEvent) => {
     e.preventDefault();
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
+    const adminPassword = 'admin123';
     if (passcode === adminPassword) {
       localStorage.setItem('portfolio_role', 'owner');
       setIsAuthenticated(true);
