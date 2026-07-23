@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <rect width="96" height="96" rx="48" fill="#0d0d0d"/>
+  <rect x="8" y="8" width="80" height="80" rx="40" fill="none" stroke="#F5D000" stroke-width="6"/>
+  <text x="48" y="59" text-anchor="middle" font-family="Space Grotesk, system-ui, -apple-system, sans-serif" font-size="34" font-weight="800" letter-spacing="1">
+    <tspan fill="#ffffff">A</tspan><tspan fill="#F5D000">J</tspan>
+  </text>
+</svg>
